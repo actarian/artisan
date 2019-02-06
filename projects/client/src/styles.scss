@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import 'scss/mixins';
+
 html,
 body {
 	margin: 0;
@@ -8,21 +10,42 @@ body {
 }
 
 section {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
 	justify-content: center;
 	min-height: 200px;
-	padding: 60px 0;
 	border-bottom: 1px solid #eee;
+}
+
+.background {
+	position: absolute;
+	top: 0;
+	left: 0;
+	min-width: 100%;
+	min-height: 100%;
+	overflow: hidden;
+
+	&>img,
+	&>video {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		min-width: 100%;
+		min-height: 100%;
+		transform: translateX(-50%) translateY(-50%);
+	}
 }
 
 .section--hero {
 	background: #ccc;
 	color: white;
+	// @include aspect(4, 3);
 }
 
 .container {
+	position: relative;
 	width: 100%;
 	max-width: 1040px;
 	margin: 0 auto;

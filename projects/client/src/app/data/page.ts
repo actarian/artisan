@@ -22,8 +22,8 @@ export const page: Page[] = [
 		images: [{
 			type: 1,
 			description: 'Image description',
-			fileName: '640x360',
-			url: 'https://imgplaceholder.com/640x360',
+			fileName: '1024x400',
+			url: 'https://imgplaceholder.com/1024x400',
 			id: 0
 		}],
 		features: [{
@@ -55,6 +55,13 @@ export const page: Page[] = [
 			keywords: 'richiesta di contatto, contatto',
 			robots: 'index,follow'
 		},
+		images: [{
+			type: 1,
+			description: 'Image description',
+			fileName: '1024x400',
+			url: 'https://imgplaceholder.com/1024x400',
+			id: 0
+		}],
 		related: [{
 			id: 0,
 			type: 1,

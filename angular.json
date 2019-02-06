@@ -54,7 +54,7 @@
 						"polyfills": "projects/client/src/polyfills.ts",
 						"tsConfig": "projects/client/tsconfig.app.json",
 						"assets": ["projects/client/src/favicon.ico", "projects/client/src/assets"],
-						"styles": ["projects/client/src/styles.css"],
+						"styles": ["projects/client/src/styles.scss"],
 						"scripts": []
 					},
 					"configurations": {
@@ -106,7 +106,7 @@
 						"polyfills": "projects/client/src/polyfills.ts",
 						"tsConfig": "projects/client/tsconfig.spec.json",
 						"karmaConfig": "projects/client/karma.conf.js",
-						"styles": ["projects/client/src/styles.css"],
+						"styles": ["projects/client/src/styles.scss"],
 						"scripts": [],
 						"assets": ["projects/client/src/favicon.ico", "projects/client/src/assets"]
 					}
@@ -147,5 +147,10 @@
 			}
 		}
 	},
-	"defaultProject": "@artisan/core"
+	"defaultProject": "@artisan/core",
+	"schematics": {
+		"@schematics/angular:component": {
+			"styleext": "scss"
+		}
+	}
 }

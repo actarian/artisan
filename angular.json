@@ -59,6 +59,8 @@
 					},
 					"configurations": {
 						"production": {
+							"baseHref": "/artisan/",
+							"deployUrl": "/artisan/",
 							"fileReplacements": [{
 								"replace": "projects/client/src/environments/environment.ts",
 								"with": "projects/client/src/environments/environment.prod.ts"

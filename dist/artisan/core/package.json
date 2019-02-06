@@ -1,0 +1,24 @@
+{
+  "name": "@artisan/core",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^7.1.0",
+    "@angular/core": "^7.1.0",
+    "mapbox-gl": "~0.52.0",
+    "marked": "~0.6.0",
+    "ngx-markdown": "~7.1.3"
+  },
+  "main": "bundles/artisan-core.umd.js",
+  "module": "fesm5/artisan-core.js",
+  "es2015": "fesm2015/artisan-core.js",
+  "esm5": "esm5/artisan-core.js",
+  "esm2015": "esm2015/artisan-core.js",
+  "fesm5": "fesm5/artisan-core.js",
+  "fesm2015": "fesm2015/artisan-core.js",
+  "typings": "artisan-core.d.ts",
+  "metadata": "artisan-core.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}

@@ -1,0 +1,23 @@
+<div class="page" [ngClass]="{ 'page--editing': editor.editing }">
+	<!-- <ws-google-tag-manager (pageView)="onPageView($event)"></ws-google-tag-manager> -->
+	<div class="wrapper">
+		<!-- <section-shop-reminder></section-shop-reminder> -->
+		<header-component></header-component>
+		<ws-logger></ws-logger>
+		<router-outlet></router-outlet>
+		<footer-component></footer-component>
+		<!-- <section-svg></section-svg> -->
+	</div>
+	<!--
+	<div *ngIf="!cookieAccepted" class="cookie-bar">
+		<div class="container">
+			<div class="cookie-bar-wrap">
+				Questo sito web utilizza cookie di profilazione, al fine di inviare messaggi pubblicitari in linea con le preferenze manifestate nell'ambito della navigazione in rete ed installa cookies di terze parti. La prosecuzione della navigazione, compreso lo scroll ed il click su elementi del sito, equivale a consenso. Per maggiori informazioni consulta l’<a [routerLink]="'cookie-policy' | slugAsync">informativa cookies completa</a> <button type="button" (click)="acceptCookie();" title="Accetto i cookies">Chiudi</button>
+			</div>
+		</div>
+	</div>
+	-->
+	<!-- <ws-modal-container-component></ws-modal-container-component> -->
+	<!-- <loading-transition></loading-transition> -->
+	<ws-editor #editor></ws-editor>
+</div>

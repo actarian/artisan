@@ -1,0 +1,32 @@
+import { AfterViewInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { MarkdownService } from 'ngx-markdown';
+import { ConfigService } from '../config/config.service';
+import { DisposableComponent } from '../disposable/disposable.component';
+import { ControlBase, ControlBaseOptions } from '../forms/controls/control-base';
+import { FormService } from '../forms/form.service';
+import { Page } from '../pages/page';
+import { PageResolverService } from '../pages/page-resolver.service';
+export declare class EditorComponent extends DisposableComponent implements AfterViewInit {
+    private platformId;
+    private configService;
+    private markdownService;
+    private formService;
+    private pageResolverService;
+    private _pageCopy;
+    private _page;
+    controls: ControlBase<any>[];
+    group: FormGroup;
+    editing: boolean;
+    busy: boolean;
+    submitted: boolean;
+    constructor(platformId: string, configService: ConfigService, markdownService: MarkdownService, formService: FormService, pageResolverService: PageResolverService);
+    page: Page;
+    readonly componentName: string;
+    getControlsByPage(page: Page): ControlBaseOptions<any>[];
+    ngAfterViewInit(): void;
+    onKeydown(e: KeyboardEvent): void;
+    onReset(): void;
+    onSubmit(model: any): void;
+    onAssign(model: any): void;
+}

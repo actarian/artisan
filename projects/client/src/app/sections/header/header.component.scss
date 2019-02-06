@@ -1,0 +1,16 @@
+@import "../../../scss/variables";
+
+.header {
+	.container {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		padding: 40px 0;
+	}
+}
+
+.nav--header {}
+
+.nav__item {
+	margin-right: 10px;
+}

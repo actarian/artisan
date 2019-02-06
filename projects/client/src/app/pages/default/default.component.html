@@ -1,0 +1,46 @@
+<section class="section section--hero">
+	<div class="container">
+		<div class="group group--headline">
+			<h1 [innerHTML]="page.title"></h1>
+			<h2 [innerHTML]="page.abstract"></h2>
+		</div>
+	</div>
+</section>
+<section class="section section--content">
+	<div class="container">
+		<div class="group group--content">
+			<p [innerHTML]="page.description"></p>
+		</div>
+	</div>
+</section>
+<ng-container *ngFor="let feature of page.features">
+	<section class="section section--feature">
+		<div class="container">
+			<div class="group group--headline">
+				<h3 [innerHTML]="feature.title"></h3>
+				<h4 [innerHTML]="feature.abstract"></h4>
+			</div>
+			<div class="group group--content">
+				<p [innerHTML]="feature.description"></p>
+			</div>
+			<div class="group group--cta">
+				<a [routerLink]="feature.slug | slugAsync">{{feature.title}}</a>
+			</div>
+		</div>
+	</section>
+</ng-container>
+<section class="section section--debug">
+	<div class="container">
+		<div class="group group--cta">
+			<button type="button" (click)="debug.active = !debug.active" #debug>Page</button>
+		</div>
+		<ng-container *ngIf="debug.active">
+			<div class="group group--meta">
+				<ul>
+					<li *ngFor="let item of page.meta | keyvalue"><b>{{item.key}}</b>&nbsp;<span>{{item.value}}</span></li>
+				</ul>
+			</div>
+			<json-formatter [json]="page"></json-formatter>
+		</ng-container>
+	</div>
+</section>

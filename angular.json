@@ -7,7 +7,7 @@
 			"root": "projects/artisan/core",
 			"sourceRoot": "projects/artisan/core/src",
 			"projectType": "library",
-			"prefix": "ws",
+			"prefix": "core",
 			"architect": {
 				"build": {
 					"builder": "@angular-devkit/build-ng-packagr:build",
@@ -30,6 +30,76 @@
 						"tsConfig": [
 							"projects/artisan/core/tsconfig.lib.json",
 							"projects/artisan/core/tsconfig.spec.json"
+						],
+						"exclude": [
+              				"**/node_modules/**"
+            			]
+					}
+				}
+			}
+		},
+		"@artisan/editor": {
+			"root": "projects/artisan/editor",
+			"sourceRoot": "projects/artisan/editor/src",
+			"projectType": "library",
+			"prefix": "editor",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-ng-packagr:build",
+					"options": {
+						"tsConfig": "projects/artisan/editor/tsconfig.lib.json",
+						"project": "projects/artisan/editor/ng-package.json"
+					}
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"main": "projects/artisan/editor/src/test.ts",
+						"tsConfig": "projects/artisan/editor/tsconfig.spec.json",
+						"karmaConfig": "projects/artisan/editor/karma.conf.js"
+					}
+				},
+				"lint": {
+					"builder": "@angular-devkit/build-angular:tslint",
+					"options": {
+						"tsConfig": [
+							"projects/artisan/editor/tsconfig.lib.json",
+							"projects/artisan/editor/tsconfig.spec.json"
+						],
+						"exclude": [
+              				"**/node_modules/**"
+            			]
+					}
+				}
+			}
+		},
+		"@artisan/plugins": {
+			"root": "projects/artisan/plugins",
+			"sourceRoot": "projects/artisan/plugins/src",
+			"projectType": "library",
+			"prefix": "plugins",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-ng-packagr:build",
+					"options": {
+						"tsConfig": "projects/artisan/plugins/tsconfig.lib.json",
+						"project": "projects/artisan/plugins/ng-package.json"
+					}
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"main": "projects/artisan/plugins/src/test.ts",
+						"tsConfig": "projects/artisan/plugins/tsconfig.spec.json",
+						"karmaConfig": "projects/artisan/plugins/karma.conf.js"
+					}
+				},
+				"lint": {
+					"builder": "@angular-devkit/build-angular:tslint",
+					"options": {
+						"tsConfig": [
+							"projects/artisan/plugins/tsconfig.lib.json",
+							"projects/artisan/plugins/tsconfig.spec.json"
 						],
 						"exclude": [
               				"**/node_modules/**"

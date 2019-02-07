@@ -1,0 +1,22 @@
+{
+  "name": "@artisan/plugins",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^7.1.0",
+    "@angular/core": "^7.1.0",
+    "mapbox-gl": "~0.52.0"
+  },
+  "main": "bundles/artisan-plugins.umd.js",
+  "module": "fesm5/artisan-plugins.js",
+  "es2015": "fesm2015/artisan-plugins.js",
+  "esm5": "esm5/artisan-plugins.js",
+  "esm2015": "esm2015/artisan-plugins.js",
+  "fesm5": "fesm5/artisan-plugins.js",
+  "fesm2015": "fesm2015/artisan-plugins.js",
+  "typings": "artisan-plugins.d.ts",
+  "metadata": "artisan-plugins.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}

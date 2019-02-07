@@ -3,7 +3,7 @@ import { DisposableComponent } from '../../disposable/disposable.component';
 import { Modal, ModalData } from './modal';
 
 @Component({
-	selector: 'ws-modal-view-component',
+	selector: 'core-modal-view-component',
 	templateUrl: './modal-view.component.html',
 	styleUrls: ['./modal-view.component.scss'],
 	encapsulation: ViewEncapsulation.Emulated,

@@ -3,7 +3,7 @@ import { AbstractControl, ControlValueAccessor, FormGroup, NG_VALUE_ACCESSOR } f
 import { ControlBase } from './control-base';
 
 @Component({
-	selector: 'ws-control',
+	selector: 'core-control',
 	templateUrl: './control.component.html',
 	styleUrls: ['./control.component.scss'],
 	providers: [{

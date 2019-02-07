@@ -1,0 +1,25 @@
+{
+  "name": "@artisan/editor",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^7.1.0",
+    "@angular/core": "^7.1.0",
+    "@artisan/core": "~0.0.0",
+    "mapbox-gl": "~0.52.0",
+    "marked": "~0.6.0",
+    "ngx-markdown": "~7.1.3"
+  },
+  "main": "bundles/artisan-editor.umd.js",
+  "module": "fesm5/artisan-editor.js",
+  "es2015": "fesm2015/artisan-editor.js",
+  "esm5": "esm5/artisan-editor.js",
+  "esm2015": "esm2015/artisan-editor.js",
+  "fesm5": "fesm5/artisan-editor.js",
+  "fesm2015": "fesm2015/artisan-editor.js",
+  "typings": "artisan-editor.d.ts",
+  "metadata": "artisan-editor.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}

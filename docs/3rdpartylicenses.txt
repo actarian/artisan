@@ -420,8 +420,12 @@ MIT
 
 @artisan/core
 
+@artisan/editor
+
 ngx-markdown
 MIT
+
+@artisan/plugins
 
 @angular/animations
 MIT

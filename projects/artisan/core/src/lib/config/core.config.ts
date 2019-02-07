@@ -1,12 +1,6 @@
 import { InjectionToken, Type } from '@angular/core';
 import { PageComponent } from '../pages/page.component';
 import { Pages } from '../pages/pages';
-import { FacebookConfig } from '../plugins/facebook/facebook.service';
-import { GoogleTagManagerConfig } from '../plugins/google/google-tag-manager.service';
-import { GoogleConfig } from '../plugins/google/google.service';
-import { MapboxConfig } from '../plugins/mapbox/mapbox.service';
-import { PayPalConfig } from '../plugins/paypal/paypal.service';
-import { TrustPilotConfig } from '../plugins/trustpilot/trustpilot.service';
 
 export enum AuthStrategy {
 	Bearer = 0,
@@ -17,22 +11,6 @@ export class Language {
 	id?: number;
 	name?: string;
 	lang?: string;
-}
-
-export class CoreConfigPlugins {
-	facebook?: FacebookConfig;
-	google?: GoogleConfig;
-	googleTagManager?: GoogleTagManagerConfig;
-	mapbox?: MapboxConfig;
-	paypal?: PayPalConfig;
-	trustPilot?: TrustPilotConfig;
-
-	constructor(options?: CoreConfigPlugins) {
-		console.log('CoreConfigPlugins', options);
-		if (options) {
-			Object.assign(this, options);
-		}
-	}
 }
 
 export class CoreTransitionConfig {
@@ -69,7 +47,6 @@ export class CoreConfig {
 	notFoundPage?: Type<PageComponent>;
 	origin?: string = '';
 	pages?: Pages = {};
-	plugins?: CoreConfigPlugins;
 	preboot?: CorePrebootConfig;
 	production?: boolean = false;
 	public?: string = '';
@@ -84,13 +61,11 @@ export class CoreConfig {
 		console.log('CoreConfig', options);
 		if (options) {
 			this.pages = options.pages || {};
-			this.plugins = new CoreConfigPlugins(options.plugins);
 			this.preboot = new CorePrebootConfig(options.preboot);
 			this.transition = new CoreTransitionConfig(options.transition);
 			this.defaultPage = options.defaultPage;
 			this.notFoundPage = options.notFoundPage;
 		} else {
-			this.plugins = new CoreConfigPlugins();
 			this.preboot = new CorePrebootConfig();
 			this.transition = new CoreTransitionConfig();
 		}

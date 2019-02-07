@@ -23,7 +23,7 @@ export const page: Page[] = [
 			type: 1,
 			description: 'Image description',
 			fileName: '1024x400',
-			url: 'https://imgplaceholder.com/1024x400',
+			url: 'https://dummyimage.com/1920x1080/888/999/',
 			id: 0
 		}],
 		features: [{
@@ -59,7 +59,7 @@ export const page: Page[] = [
 			type: 1,
 			description: 'Image description',
 			fileName: '1024x400',
-			url: 'https://imgplaceholder.com/1024x400',
+			url: 'https://dummyimage.com/1920x1080/888/999/',
 			id: 0
 		}],
 		related: [{

@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule, ReactiveFormsModule } from '@artisan/core';
+import { EditorModule } from '@artisan/editor';
+import { PluginsModule } from '@artisan/plugins';
 import { AppComponent } from './app.component';
 import { AppDatas } from './app.datas';
 import { AppPages } from './app.pages';
@@ -23,7 +24,8 @@ import { HeaderComponent } from './sections/header/header.component';
 		AppDatas,
 		AppRouting,
 		AppPages,
-		FormsModule, ReactiveFormsModule,
+		PluginsModule,
+		EditorModule,
 	],
 	providers: [],
 	declarations: [

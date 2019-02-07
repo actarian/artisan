@@ -1,5 +1,6 @@
 import { AfterViewChecked, AfterViewInit, Component, DoCheck, Inject, PLATFORM_ID } from '@angular/core';
-import { DisposableComponent, GoogleTagManagerPageViewEvent, Label, LabelService, LocalStorageService, RouteService, SlugService } from '@artisan/core';
+import { DisposableComponent, Label, LabelService, LocalStorageService, RouteService, SlugService } from '@artisan/core';
+import { GoogleTagManagerPageViewEvent } from '@artisan/plugins';
 // import { SwUpdate } from '@angular/service-worker';
 import { takeUntil } from 'rxjs/operators';
 // import { GtmService } from './models';

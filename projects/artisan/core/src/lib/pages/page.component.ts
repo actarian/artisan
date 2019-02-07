@@ -12,7 +12,7 @@ export interface PageInit {
 }
 
 @Component({
-	selector: 'ws-page',
+	selector: 'core-page',
 	template: `<h1>I'm a default view!</h1>`,
 })
 

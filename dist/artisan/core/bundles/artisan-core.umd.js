@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/animations'), require('ngx-markdown'), require('@angular/forms'), require('@angular/common/http'), require('util'), require('@angular/router'), require('@angular/platform-browser'), require('@angular/common'), require('rxjs'), require('rxjs/operators'), require('@angular/core')) :
-    typeof define === 'function' && define.amd ? define('@artisan/core', ['exports', '@angular/animations', 'ngx-markdown', '@angular/forms', '@angular/common/http', 'util', '@angular/router', '@angular/platform-browser', '@angular/common', 'rxjs', 'rxjs/operators', '@angular/core'], factory) :
-    (factory((global.artisan = global.artisan || {}, global.artisan.core = {}),global.ng.animations,global.ngxMarkdown,global.ng.forms,global.ng.common.http,global.util,global.ng.router,global.ng.platformBrowser,global.ng.common,global.rxjs,global.rxjs.operators,global.ng.core));
-}(this, (function (exports,animations,ngxMarkdown,forms,http,util,i4,i1,i1$1,rxjs,operators,i0) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('ngx-markdown'), require('@angular/forms'), require('@angular/common/http'), require('@angular/router'), require('util'), require('@angular/platform-browser'), require('@angular/common'), require('rxjs'), require('rxjs/operators'), require('@angular/core')) :
+    typeof define === 'function' && define.amd ? define('@artisan/core', ['exports', 'ngx-markdown', '@angular/forms', '@angular/common/http', '@angular/router', 'util', '@angular/platform-browser', '@angular/common', 'rxjs', 'rxjs/operators', '@angular/core'], factory) :
+    (factory((global.artisan = global.artisan || {}, global.artisan.core = {}),global.ngxMarkdown,global.ng.forms,global.ng.common.http,global.ng.router,global.util,global.ng.platformBrowser,global.ng.common,global.rxjs,global.rxjs.operators,global.ng.core));
+}(this, (function (exports,ngxMarkdown,forms,http,i4,util,i1,i1$1,rxjs,operators,i0) { 'use strict';
 
     /**
      * @fileoverview added by tsickle
@@ -770,15 +770,6 @@
     };
     AuthStrategy[AuthStrategy.Bearer] = 'Bearer';
     AuthStrategy[AuthStrategy.Cookie] = 'Cookie';
-    var CoreConfigPlugins = /** @class */ (function () {
-        function CoreConfigPlugins(options) {
-            console.log('CoreConfigPlugins', options);
-            if (options) {
-                Object.assign(this, options);
-            }
-        }
-        return CoreConfigPlugins;
-    }());
     var CoreTransitionConfig = /** @class */ (function () {
         function CoreTransitionConfig(options) {
             console.log('CoreTransitionConfig', options);
@@ -815,14 +806,12 @@
             console.log('CoreConfig', options);
             if (options) {
                 this.pages = options.pages || {};
-                this.plugins = new CoreConfigPlugins(options.plugins);
                 this.preboot = new CorePrebootConfig(options.preboot);
                 this.transition = new CoreTransitionConfig(options.transition);
                 this.defaultPage = options.defaultPage;
                 this.notFoundPage = options.notFoundPage;
             }
             else {
-                this.plugins = new CoreConfigPlugins();
                 this.preboot = new CorePrebootConfig();
                 this.transition = new CoreTransitionConfig();
             }
@@ -923,26 +912,27 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    var CoreComponent = /** @class */ (function () {
-        function CoreComponent() {
+    var CoreModuleComponent = /** @class */ (function () {
+        function CoreModuleComponent() {
+            this.version = '0.0.1';
         }
         /**
          * @return {?}
          */
-        CoreComponent.prototype.ngOnInit = /**
+        CoreModuleComponent.prototype.ngOnInit = /**
          * @return {?}
          */
             function () {
             };
-        CoreComponent.decorators = [
+        CoreModuleComponent.decorators = [
             { type: i0.Component, args: [{
-                        selector: 'ws-core',
-                        template: "\n    <span class=\"core__version\">core version 0.1.0</span>\n  "
+                        selector: 'core-module',
+                        template: "<span class=\"core-module\">core {{version}}</span>"
                     }] }
         ];
         /** @nocollapse */
-        CoreComponent.ctorParameters = function () { return []; };
-        return CoreComponent;
+        CoreModuleComponent.ctorParameters = function () { return []; };
+        return CoreModuleComponent;
     }());
 
     /*! *****************************************************************************
@@ -2274,7 +2264,7 @@
             };
         PageComponent.decorators = [
             { type: i0.Component, args: [{
-                        selector: 'ws-page',
+                        selector: 'core-page',
                         template: "<h1>I'm a default view!</h1>"
                     }] }
         ];
@@ -2850,14 +2840,14 @@
                 if (!page) {
                     return;
                 }
-                /** @type {?} */
-                var fbAppId = this.config.plugins && this.config.plugins.facebook ? this.config.plugins.facebook.appId.toString() : '';
+                // !!!
+                // const fbAppId: string = this.config.plugins && this.config.plugins.facebook ? this.config.plugins.facebook.appId.toString() : '';
                 this.titleService.setTitle(page.title);
                 this.addOrUpdateMeta({ property: 'og:title', content: page.title });
                 this.addOrUpdateMeta({ property: 'og:image', content: this.getSocialImage(page).url });
                 this.addOrUpdateMeta({ property: 'og:image:width', content: '1200' });
                 this.addOrUpdateMeta({ property: 'og:image:height', content: '630' });
-                this.addOrUpdateMeta({ property: 'fb:app_id', content: fbAppId });
+                // this.addOrUpdateMeta({ property: 'fb:app_id', content: fbAppId });
                 this.addOrUpdateMeta({ property: 'og:url', content: page.url || this.origin });
                 /** @type {?} */
                 var meta = page.meta;
@@ -3332,6 +3322,433 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    var ControlComponent = /** @class */ (function () {
+        function ControlComponent(renderer) {
+            this.renderer = renderer;
+            this.reveal = { checked: false };
+            this.onChange = function (value) { };
+            this.onTouched = function () { };
+        }
+        Object.defineProperty(ControlComponent.prototype, "controlRef", {
+            get: /**
+             * @return {?}
+             */ function () {
+                // console.log('controlRef', this.control.key, this.form.controls);
+                return this.form.controls[this.control.key];
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ControlComponent.prototype, "isValid", {
+            get: /**
+             * @return {?}
+             */ function () { return this.controlRef.valid; },
+            enumerable: true,
+            configurable: true
+        });
+        // ControlValueAccessor
+        // ControlValueAccessor
+        /**
+         * @return {?}
+         */
+        ControlComponent.prototype.getFormattedValue =
+            // ControlValueAccessor
+            /**
+             * @return {?}
+             */
+            function () {
+                // console.log('ControlComponent.getFormattedValue', this.controlRef.value);
+                return this.controlRef.value;
+            };
+        /**
+         * @param {?} $event
+         * @return {?}
+         */
+        ControlComponent.prototype.onInput = /**
+         * @param {?} $event
+         * @return {?}
+         */
+            function ($event) {
+                this.element = $event.target;
+                this.onChange(this.element.value);
+            };
+        /**
+         * @param {?} $event
+         * @return {?}
+         */
+        ControlComponent.prototype.onFocus = /**
+         * @param {?} $event
+         * @return {?}
+         */
+            function ($event) {
+                this.blurred = false;
+                this.element = $event.target;
+                // this.element.value = this.controlRef.value;
+                this.renderer.setProperty(this.element, 'value', this.controlRef.value);
+                // console.log('ControlComponent.onFocus', this.controlRef);
+            };
+        /**
+         * @param {?} $event
+         * @return {?}
+         */
+        ControlComponent.prototype.onBlur = /**
+         * @param {?} $event
+         * @return {?}
+         */
+            function ($event) {
+                this.blurred = true;
+                this.element = $event.target;
+                // this.element.value = this.controlRef.value;
+                this.renderer.setProperty(this.element, 'value', this.controlRef.value);
+                // console.log('ControlComponent.onBlur', this.controlRef);
+                /*
+                if (this.innervalue) {
+                    this.control.patchValue(this.innervalue + ' H', { emitEvent: false });
+                }
+                */
+            };
+        /**
+         * @private
+         * @param {?} value
+         * @return {?}
+         */
+        ControlComponent.prototype.formatValue = /**
+         * @private
+         * @param {?} value
+         * @return {?}
+         */
+            function (value) {
+                // console.log('ControlComponent.formatValue', value);
+                this.renderer.setProperty(this.element, 'value', value);
+                // console.log('ControlEditableComponent.writeValue', value);
+            };
+        /**
+         * @private
+         * @param {?} value
+         * @return {?}
+         */
+        ControlComponent.prototype.parseValue = /**
+         * @private
+         * @param {?} value
+         * @return {?}
+         */
+            function (value) {
+                // console.log('ControlComponent.parseValue', value);
+                /** @type {?} */
+                var parsed = this.innervalue;
+                this.onChange(parsed);
+            };
+        /**
+         * @param {?} value
+         * @return {?}
+         */
+        ControlComponent.prototype.writeValue = /**
+         * @param {?} value
+         * @return {?}
+         */
+            function (value) {
+                this.formatValue(value);
+            };
+        /**
+         * @param {?} fn
+         * @return {?}
+         */
+        ControlComponent.prototype.registerOnChange = /**
+         * @param {?} fn
+         * @return {?}
+         */
+            function (fn) {
+                this.onChange = fn;
+                // console.log('ControlEditableComponent.registerOnChange');
+            };
+        /**
+         * @param {?} fn
+         * @return {?}
+         */
+        ControlComponent.prototype.registerOnTouched = /**
+         * @param {?} fn
+         * @return {?}
+         */
+            function (fn) {
+                this.onTouched = fn;
+                // console.log('ControlEditableComponent.registerOnTouched');
+            };
+        /**
+         * @param {?} isDisabled
+         * @return {?}
+         */
+        ControlComponent.prototype.setDisabledState = /**
+         * @param {?} isDisabled
+         * @return {?}
+         */
+            function (isDisabled) {
+                // const node = this.textarea.nativeElement;
+                /*
+                if (isDisabled) {
+                    this.renderer.addClass(this.element, 'disabled');
+                } else {
+                    this.renderer.removeClass(this.element, 'disabled');
+                }
+                // console.log('ControlEditableComponent.setDisabledState', isDisabled);
+                */
+            };
+        ControlComponent.decorators = [
+            { type: i0.Component, args: [{
+                        selector: 'core-control',
+                        template: "<ng-container [ngSwitch]=\"control.schema\">\r\n\t<ng-container *ngSwitchCase=\"'checkbox'\">\r\n\t\t<b>Checkbox</b><br>\r\n\t</ng-container>\r\n\t<ng-container *ngSwitchCase=\"'email'\">\r\n\t\t<b>Email</b><br>\r\n\t</ng-container>\r\n\t<ng-container *ngSwitchCase=\"'number'\">\r\n\t\t<b>Number</b><br>\r\n\t</ng-container>\r\n\t<ng-container *ngSwitchCase=\"'password'\">\r\n\t\t<b>Password</b><br>\r\n\t</ng-container>\r\n</ng-container>\r\n<div class=\"form-group\" [formGroup]=\"form\">\r\n\t<div [ngSwitch]=\"control.schema\">\r\n\t\t<div *ngSwitchCase=\"'checkbox'\" class=\"form-group\">\r\n\t\t\t<!-- CHECKBOX -->\r\n\t\t\t<div class=\"checkbox\">\r\n\t\t\t\t<label>\r\n\t\t\t\t\t<input type=\"checkbox\" class=\"form-check-input\" [id]=\"control.key\" [formControlName]=\"control.key\">\r\n\t\t\t\t\t<span>{{ control.label | translate }}</span>\r\n\t\t\t\t</label>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div *ngSwitchCase=\"'email'\">\r\n\t\t\t<!-- EMAIL -->\r\n\t\t\t<label [attr.for]=\"control.key\">{{ control.label | translate }}</label>\r\n\t\t\t<input placeholder=\"{{ control.placeholder | translate }}\" class=\"form-control\" [id]=\"control.key\" [formControlName]=\"control.key\" [type]=\"control.type\">\r\n\t\t</div>\r\n\t\t<div *ngSwitchCase=\"'number'\">\r\n\t\t\t<!-- NUMBER -->\r\n\t\t\t<label [attr.for]=\"control.key\">{{ control.label | translate }}</label>\r\n\t\t\t<input placeholder=\"{{ control.placeholder | translate }}\" class=\"form-control\" [id]=\"control.key\" [type]=\"control.type\" [attr.step]=\"control.step\" (input)=\"onInput($event)\" (focus)=\"onFocus($event)\" (blur)=\"onBlur($event)\" [value]=\"getFormattedValue()\">\r\n\t\t</div>\r\n\t\t<div *ngSwitchCase=\"'password'\">\r\n\t\t\t<!-- PASSWORD -->\r\n\t\t\t<label [attr.for]=\"control.key\">{{ control.label | translate }}</label>\r\n\t\t\t<div class=\"input-group\">\r\n\t\t\t\t<input placeholder=\"{{ control.placeholder | translate }}\" class=\"form-control\" [id]=\"control.key\" [formControlName]=\"control.key\" [type]=\"control.type\" #password>\r\n\t\t\t\t<div class=\"input-group-append\" *ngIf=\"control.type === 'password'\">\r\n\t\t\t\t\t<div class=\"input-group-text\">\r\n\t\t\t\t\t\t<input type=\"checkbox\" [attr.aria-label]=\"control.label | translate\" (input)=\"password.type = reveal.checked ? 'text' : control.type\" #password>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div *ngSwitchCase=\"'radio'\" class=\"form-group\">\r\n\t\t\t<!-- RADIO -->\r\n\t\t\t<div class=\"radio\">\r\n\t\t\t\t<label>\r\n\t\t\t\t\t<input type=\"radio\" class=\"form-radio-input\" [id]=\"control.key\" [formControlName]=\"control.key\">\r\n\t\t\t\t\t<span>{{ control.label | translate }}</span>\r\n\t\t\t\t</label>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div *ngSwitchCase=\"'select'\">\r\n\t\t\t<!-- SELECT -->\r\n\t\t\t<label [attr.for]=\"control.key\">{{ control.label | translate }}</label>\r\n\t\t\t<select class=\"form-control\" [id]=\"control.key\" [formControlName]=\"control.key\">\r\n\t\t\t\t<option *ngFor=\"let opt of control.options\" [value]=\"opt.key\">{{opt.value}}</option>\r\n\t\t\t</select>\r\n\t\t</div>\r\n\t\t<div *ngSwitchCase=\"'markdown'\">\r\n\t\t\t<!-- MARKDOWN -->\r\n\t\t\t<label [attr.for]=\"control.key\">{{ control.label | translate }}</label>\r\n\t\t\t<textarea placeholder=\"{{ control.placeholder | translate }}\" class=\"form-control\" [id]=\"control.key\" [formControlName]=\"control.key\" rows=\"4\"></textarea>\r\n\t\t</div>\r\n\t\t<div *ngSwitchCase=\"'text'\">\r\n\t\t\t<!-- TEXT -->\r\n\t\t\t<label [attr.for]=\"control.key\">{{ control.label | translate }}</label>\r\n\t\t\t<input placeholder=\"{{ control.placeholder | translate }}\" class=\"form-control\" [id]=\"control.key\" [formControlName]=\"control.key\" [type]=\"control.type\">\r\n\t\t</div>\r\n\t</div>\r\n\t<div *ngIf=\"controlRef.invalid && (controlRef.dirty || controlRef.touched)\" class=\"alert alert-danger\">\r\n\t\t<div *ngIf=\"controlRef.errors.required\">{{ 'errors.required' | translate }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.requiredTrue\">{{ 'errors.required' | translate }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.min\">{{ 'errors.min' | translate : { value: control.min } }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.max\">{{ 'errors.max' | translate : { value: control.max } }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.email\">{{ 'errors.email' | translate }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.minLength\">{{ 'errors.minLength' | translate : { value: control.minLength } }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.maxLength\">{{ 'errors.maxLength' | translate : { value: control.maxLength } }}</div>\r\n\t\t<!-- <div *ngIf=\"controlRef.errors.pattern\">{{ 'errors.pattern' | translate }}</div> -->\r\n\t\t<div *ngIf=\"controlRef.errors.match\">{{ 'errors.match' | translate }}</div>\r\n\t</div>\r\n</div>\r\n",
+                        providers: [{
+                                provide: forms.NG_VALUE_ACCESSOR,
+                                useExisting: i0.forwardRef(function () { return ControlComponent; }),
+                                multi: true,
+                            }],
+                        styles: ["label{color:#55555a;font-weight:700;font-size:12px}.form-control{border-radius:0;background:#fff;color:#55555a;border:1px solid rgba(85,85,90,.1);font-size:16px;border-left:2px solid rgba(85,85,90,.2);display:block;width:100%;padding:8px;box-sizing:border-box;margin-bottom:10px}.form-control:hover{border-left-color:rgba(85,85,90,.8)}.form-control:active,.form-control:focus{background:rgba(0,0,0,.15);border-left-color:rgba(85,85,90,.8);outline:0;box-shadow:none}textarea.form-control{resize:none;overflow-x:hidden;overflow-y:auto}"]
+                    }] }
+        ];
+        /** @nocollapse */
+        ControlComponent.ctorParameters = function () {
+            return [
+                { type: i0.Renderer2 }
+            ];
+        };
+        ControlComponent.propDecorators = {
+            control: [{ type: i0.Input }],
+            form: [{ type: i0.Input }]
+        };
+        return ControlComponent;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    /**
+     * @param {?} otherKey
+     * @param {?=} reverse
+     * @param {?=} group
+     * @return {?}
+     */
+    function matchValidator(otherKey, reverse, group) {
+        if (reverse === void 0) {
+            reverse = false;
+        }
+        return function (control) {
+            /** @type {?} */
+            var otherControl = group.controls[otherKey];
+            /** @type {?} */
+            var value = control.value;
+            // value not equal
+            if (otherControl && value !== otherControl.value && !reverse) {
+                return {
+                    match: true,
+                };
+            }
+            // value equal and reverse
+            if (otherControl && value === otherControl.value && reverse) {
+                if (otherControl.errors) {
+                    delete otherControl.errors['match'];
+                    if (!Object.keys(otherControl.errors).length) {
+                        otherControl.setErrors(null);
+                    }
+                }
+            }
+            // value not equal and reverse
+            if (otherControl && value !== otherControl.value && reverse) {
+                otherControl.setErrors({
+                    match: true,
+                });
+            }
+            return null;
+        };
+    }
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var ControlService = /** @class */ (function () {
+        function ControlService() {
+        }
+        /**
+         * @param {?} control
+         * @param {?} group
+         * @return {?}
+         */
+        ControlService.prototype.getValidators = /**
+         * @param {?} control
+         * @param {?} group
+         * @return {?}
+         */
+            function (control, group) {
+                /** @type {?} */
+                var validators = [];
+                if (control.min) {
+                    validators.push(forms.Validators.min(control.min));
+                }
+                if (control.max) {
+                    validators.push(forms.Validators.max(control.max));
+                }
+                if (control.required) {
+                    validators.push(forms.Validators.required);
+                }
+                if (control.requiredTrue) {
+                    validators.push(forms.Validators.requiredTrue);
+                }
+                if (control.email) {
+                    validators.push(forms.Validators.email);
+                }
+                if (control.minLength) {
+                    validators.push(forms.Validators.minLength(control.minLength));
+                }
+                if (control.maxLength) {
+                    validators.push(forms.Validators.maxLength(control.maxLength));
+                }
+                if (control.pattern) {
+                    validators.push(forms.Validators.pattern(control.pattern));
+                }
+                if (control.match) {
+                    validators.push(matchValidator(control.match, control.reverse, group));
+                }
+                // console.log(control.key, validators);
+                return validators;
+            };
+        /**
+         * @param {?} controls
+         * @return {?}
+         */
+        ControlService.prototype.toFormGroup = /**
+         * @param {?} controls
+         * @return {?}
+         */
+            function (controls) {
+                var _this = this;
+                /** @type {?} */
+                var options = {};
+                controls.forEach(function (x) {
+                    // group[x.key] = new FormControl(x.value, this.getValidators(x, group));
+                    /** @type {?} */
+                    var formControl = new forms.FormControl(x.value);
+                    if (x.disabled) {
+                        formControl.disable();
+                    }
+                    options[x.key] = formControl;
+                    // x.setControl(formControl); // !!!
+                });
+                /** @type {?} */
+                var group = new forms.FormGroup(options);
+                // console.log(group);
+                controls.forEach(function (x) {
+                    /** @type {?} */
+                    var validators = _this.getValidators(x, group);
+                    // console.log(validators);
+                    group.controls[x.key].setValidators(validators);
+                });
+                return group;
+            };
+        ControlService.decorators = [
+            { type: i0.Injectable, args: [{
+                        providedIn: 'root'
+                    },] }
+        ];
+        /** @nocollapse */ ControlService.ngInjectableDef = i0.defineInjectable({ factory: function ControlService_Factory() { return new ControlService(); }, token: ControlService, providedIn: "root" });
+        return ControlService;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    /** @type {?} */
+    var DEBOUNCE_TIME = 250;
+    var ExistsValidator = /** @class */ (function () {
+        function ExistsValidator() {
+            var _this = this;
+            this.values = new rxjs.BehaviorSubject(null);
+            this.debounced$ = this.values.pipe(operators.debounceTime(DEBOUNCE_TIME), operators.switchMap(function (value) {
+                // console.log('ExistsValidator.debounced$', value);
+                return _this.exists$(value);
+            }), operators.catchError(function (response) {
+                console.log('ExistsValidator.debounced$.catchError', response);
+                return rxjs.of(null);
+            }), operators.take(1));
+        }
+        Object.defineProperty(ExistsValidator.prototype, "value", {
+            set: /**
+             * @param {?} value
+             * @return {?}
+             */ function (value) {
+                if (value && value.trim() !== '') {
+                    this.values.next(value);
+                }
+            },
+            enumerable: true,
+            configurable: true
+        });
+        /**
+         * @param {?} value
+         * @return {?}
+         */
+        ExistsValidator.prototype.exists$ = /**
+         * @param {?} value
+         * @return {?}
+         */
+            function (value) {
+                if (typeof this.exists === 'function') {
+                    // console.log('ExistsValidator.exists$', value);
+                    return this.exists(value).pipe(operators.switchMap(function (exists) {
+                        if (exists) {
+                            return rxjs.of({
+                                exists: true,
+                            });
+                        }
+                        else {
+                            return rxjs.of(null);
+                        }
+                    }));
+                }
+                else {
+                    return rxjs.of(null);
+                }
+            };
+        /**
+         * @param {?} control
+         * @return {?}
+         */
+        ExistsValidator.prototype.validate = /**
+         * @param {?} control
+         * @return {?}
+         */
+            function (control) {
+                this.value = control.value;
+                return this.debounced$;
+            };
+        ExistsValidator.decorators = [
+            { type: i0.Directive, args: [{
+                        selector: '[exists][formControlName],[exists][formControl],[exists][ngModel]',
+                        providers: [
+                            { provide: forms.NG_ASYNC_VALIDATORS, useExisting: i0.forwardRef(function () { return ExistsValidator; }), multi: true },
+                        ]
+                    },] }
+        ];
+        ExistsValidator.propDecorators = {
+            exists: [{ type: i0.Input }]
+        };
+        return ExistsValidator;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    /**
+     * @template T
+     */
+    var /**
+     * @template T
+     */ ControlBaseOptions = /** @class */ (function () {
+        function ControlBaseOptions() {
+        }
+        return ControlBaseOptions;
+    }());
     /**
      * @template T
      */
@@ -3527,142 +3944,6 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    /**
-     * @param {?} otherKey
-     * @param {?=} reverse
-     * @param {?=} group
-     * @return {?}
-     */
-    function matchValidator(otherKey, reverse, group) {
-        if (reverse === void 0) {
-            reverse = false;
-        }
-        return function (control) {
-            /** @type {?} */
-            var otherControl = group.controls[otherKey];
-            /** @type {?} */
-            var value = control.value;
-            // value not equal
-            if (otherControl && value !== otherControl.value && !reverse) {
-                return {
-                    match: true,
-                };
-            }
-            // value equal and reverse
-            if (otherControl && value === otherControl.value && reverse) {
-                if (otherControl.errors) {
-                    delete otherControl.errors['match'];
-                    if (!Object.keys(otherControl.errors).length) {
-                        otherControl.setErrors(null);
-                    }
-                }
-            }
-            // value not equal and reverse
-            if (otherControl && value !== otherControl.value && reverse) {
-                otherControl.setErrors({
-                    match: true,
-                });
-            }
-            return null;
-        };
-    }
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var ControlService = /** @class */ (function () {
-        function ControlService() {
-        }
-        /**
-         * @param {?} control
-         * @param {?} group
-         * @return {?}
-         */
-        ControlService.prototype.getValidators = /**
-         * @param {?} control
-         * @param {?} group
-         * @return {?}
-         */
-            function (control, group) {
-                /** @type {?} */
-                var validators = [];
-                if (control.min) {
-                    validators.push(forms.Validators.min(control.min));
-                }
-                if (control.max) {
-                    validators.push(forms.Validators.max(control.max));
-                }
-                if (control.required) {
-                    validators.push(forms.Validators.required);
-                }
-                if (control.requiredTrue) {
-                    validators.push(forms.Validators.requiredTrue);
-                }
-                if (control.email) {
-                    validators.push(forms.Validators.email);
-                }
-                if (control.minLength) {
-                    validators.push(forms.Validators.minLength(control.minLength));
-                }
-                if (control.maxLength) {
-                    validators.push(forms.Validators.maxLength(control.maxLength));
-                }
-                if (control.pattern) {
-                    validators.push(forms.Validators.pattern(control.pattern));
-                }
-                if (control.match) {
-                    validators.push(matchValidator(control.match, control.reverse, group));
-                }
-                // console.log(control.key, validators);
-                return validators;
-            };
-        /**
-         * @param {?} controls
-         * @return {?}
-         */
-        ControlService.prototype.toFormGroup = /**
-         * @param {?} controls
-         * @return {?}
-         */
-            function (controls) {
-                var _this = this;
-                /** @type {?} */
-                var options = {};
-                controls.forEach(function (x) {
-                    // group[x.key] = new FormControl(x.value, this.getValidators(x, group));
-                    /** @type {?} */
-                    var formControl = new forms.FormControl(x.value);
-                    if (x.disabled) {
-                        formControl.disable();
-                    }
-                    options[x.key] = formControl;
-                    // x.setControl(formControl); // !!!
-                });
-                /** @type {?} */
-                var group = new forms.FormGroup(options);
-                // console.log(group);
-                controls.forEach(function (x) {
-                    /** @type {?} */
-                    var validators = _this.getValidators(x, group);
-                    // console.log(validators);
-                    group.controls[x.key].setValidators(validators);
-                });
-                return group;
-            };
-        ControlService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */ ControlService.ngInjectableDef = i0.defineInjectable({ factory: function ControlService_Factory() { return new ControlService(); }, token: ControlService, providedIn: "root" });
-        return ControlService;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var FormService = /** @class */ (function () {
         function FormService(controlService) {
             this.controlService = controlService;
@@ -3743,494 +4024,6 @@
         };
         /** @nocollapse */ FormService.ngInjectableDef = i0.defineInjectable({ factory: function FormService_Factory() { return new FormService(i0.inject(ControlService)); }, token: FormService, providedIn: "root" });
         return FormService;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var EditorComponent = /** @class */ (function (_super) {
-        __extends(EditorComponent, _super);
-        function EditorComponent(platformId, configService, markdownService, formService, pageResolverService) {
-            var _this = _super.call(this) || this;
-            _this.platformId = platformId;
-            _this.configService = configService;
-            _this.markdownService = markdownService;
-            _this.formService = formService;
-            _this.pageResolverService = pageResolverService;
-            _this.editing = false;
-            _this.busy = false;
-            _this.submitted = false;
-            return _this;
-        }
-        Object.defineProperty(EditorComponent.prototype, "page", {
-            get: /**
-             * @return {?}
-             */ function () {
-                return this._page;
-            },
-            set: /**
-             * @param {?} page
-             * @return {?}
-             */ function (page) {
-                var _this = this;
-                this._pageCopy = Object.assign({}, page);
-                this._page = page;
-                if (this._page) {
-                    this.controls = this.formService.getControlsFromOptions(this.getControlsByPage(page));
-                    this.group = this.formService.getGroupFromControls(this.controls);
-                    this.group.valueChanges.subscribe(function (x) {
-                        _this.onAssign(x); // Object.assign(this._page, x);
-                    });
-                }
-                else {
-                    this.controls = [];
-                    this.group = null;
-                }
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(EditorComponent.prototype, "componentName", {
-            get: /**
-             * @return {?}
-             */ function () {
-                if (this._page) {
-                    /** @type {?} */
-                    var component = this.configService.options.pages[this._page.component];
-                    if (component) {
-                        return component.name;
-                    }
-                }
-            },
-            enumerable: true,
-            configurable: true
-        });
-        /**
-         * @param {?} page
-         * @return {?}
-         */
-        EditorComponent.prototype.getControlsByPage = /**
-         * @param {?} page
-         * @return {?}
-         */
-            function (page) {
-                return page ? Object.keys(page).filter(function (key) { return typeof page[key] !== 'object'; }).map(function (key, i) {
-                    return {
-                        key: key,
-                        value: page[key],
-                        schema: key === 'description' ? 'markdown' : 'text',
-                        label: key,
-                        placeholder: key,
-                        required: false,
-                        order: i + 1
-                    };
-                }) : [];
-            };
-        /**
-         * @return {?}
-         */
-        EditorComponent.prototype.ngAfterViewInit = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                if (i1$1.isPlatformBrowser(this.platformId)) {
-                    this.pageResolverService.events$.pipe(operators.takeUntil(this.unsubscribe)).subscribe(function (resolver) {
-                        // console.log('EditorComponent.resolver', resolver);
-                        _this.page = resolver ? resolver.page : null;
-                    });
-                }
-            };
-        /**
-         * @param {?} e
-         * @return {?}
-         */
-        EditorComponent.prototype.onKeydown = /**
-         * @param {?} e
-         * @return {?}
-         */
-            function (e) {
-                if (e.key === 'e' && e.ctrlKey) {
-                    // this.editing = this.configService.options.editor && !this.editing;
-                    this.editing = !this.editing;
-                    // console.log('AppComponent.document:keydown', e.key, e.ctrlKey, e.altKey, e.code);
-                }
-            };
-        /**
-         * @return {?}
-         */
-        EditorComponent.prototype.onReset = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                // console.log('EditorComponent.onReset');
-                Object.keys(this.group.controls).forEach(function (key) {
-                    _this.group.get(key).setValue(_this._pageCopy[key]);
-                });
-                /*
-                const keys = this.controls.map(x => x.key);
-                keys.forEach(k => {
-                    // console.log(k, this._page[k], this._pageCopy[k]);
-                    this._page[k] = this._pageCopy[k];
-                });
-                */
-            };
-        /**
-         * @param {?} model
-         * @return {?}
-         */
-        EditorComponent.prototype.onSubmit = /**
-         * @param {?} model
-         * @return {?}
-         */
-            function (model) {
-                // console.log('EditorComponent.onSubmit', model);
-                this.onAssign(model);
-                // Object.assign(this._page, model);
-            };
-        /**
-         * @param {?} model
-         * @return {?}
-         */
-        EditorComponent.prototype.onAssign = /**
-         * @param {?} model
-         * @return {?}
-         */
-            function (model) {
-                var _this = this;
-                Object.keys(this.group.controls).forEach(function (key) {
-                    switch (key) {
-                        case 'description':
-                            _this._page[key] = _this.markdownService.compile(model[key]);
-                            break;
-                        default:
-                            _this._page[key] = model[key];
-                    }
-                });
-            };
-        EditorComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'ws-editor',
-                        template: "<ng-container>\n\t<div class=\"page--editor\" [@openClose]=\"editing ? 'open' : 'closed'\" (clickOutside)=\"editing = false\">\n\t\t<ng-container *ngIf=\"editing && page\">\n\t\t\t<form class=\"form\" name=\"group\" [formGroup]=\"group\" (ngSubmit)=\"group.valid && onSubmit(group.value)\" #form=\"ngForm\" role=\"form\" novalidate autocomplete=\"off\">\n\t\t\t\t<div class=\"info\">\n\t\t\t\t\t<span class=\"id\">{{page.id}}</span>\n\t\t\t\t\t<span class=\"status\" [ngClass]=\"{ active: page.active }\">{{page.active ? 'active' : 'inactive'}}</span>\n\t\t\t\t\t<span class=\"component\">{{componentName}}</span>\n\t\t\t\t</div>\n\t\t\t\t<hr>\n\t\t\t\t<h2 class=\"h1\" [innerHTML]=\"page.title\"></h2>\n\t\t\t\t<!--\n\t\t\t\t<p [innerHTML]=\"page.description\"></p>\n\t\t\t\t-->\n\t\t\t\t<hr>\n\t\t\t\t<!--\n\t\t\t\t<div class=\"fieldset\">\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<label>Label</label>\n\t\t\t\t\t\t<input placeholder=\"placeholder\" type=\"text\" class=\"form-control\" required [(ngModel)]=\"model.title\" name=\"title\" #title=\"ngModel\" autocomplete=\"title\">\n\t\t\t\t\t\t<div *ngIf=\"title.invalid && (form.submitted || title.dirty || title.touched)\" class=\"alert alert-danger\">\n\t\t\t\t\t\t\t<div *ngIf=\"title.errors.required\">{{ 'errors.required' | translate }}</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t-->\n\t\t\t\t<div *ngFor=\"let control of controls\">\n\t\t\t\t\t<ws-control [control]=\"control\" [form]=\"group\"></ws-control>\n\t\t\t\t</div>\n\t\t\t\t<!-- <control-editable formControlName=\"email\"></control-editable> -->\n\t\t\t\t<div class=\"action-bar\">\n\t\t\t\t\t<button type=\"text\" class=\"btn btn--dimmed\" [disabled]=\"submitted || !group.valid\" (click)=\"onReset()\" title=\"Annulla\"><span>Annulla</span></button>\n\t\t\t\t\t<button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"submitted || !group.valid\" [ngClass]=\"{ 'btn--busy': busy }\" title=\"Salva\"><span>Salva</span></button>\n\t\t\t\t</div>\n\t\t\t</form>\n\t\t</ng-container>\n\t</div>\n</ng-container>\n",
-                        animations: [
-                            animations.trigger('openClose', [
-                                animations.state('open', animations.style({
-                                    opacity: 1,
-                                    transform: 'translateX(0)',
-                                })),
-                                animations.state('closed', animations.style({
-                                    opacity: 0.5,
-                                    transform: 'translateX(100%)',
-                                })),
-                                animations.transition('open => closed', [
-                                    animations.animate('250ms')
-                                ]),
-                                animations.transition('closed => open', [
-                                    animations.animate('150ms')
-                                ]),
-                            ]),
-                        ],
-                        encapsulation: i0.ViewEncapsulation.Emulated,
-                        styles: [":host form{margin:0}:host label{display:block;width:100%;color:#55555a;font-weight:700;font-size:12px}.page--editor{position:fixed;top:0;right:0;width:320px;height:100vh;padding:15px;overflow-x:hidden;overflow-y:auto;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.5;background:#fafafa;color:#55555a}.page--editor .h1{color:#55555a}@media (max-width:1024px){.page--editor{display:none}}.id{display:inline-block;padding:4px 6px;background:#0875c2;color:#fff;border-radius:3px;font-size:12px;line-height:1;margin-right:4px}.status{display:inline-block;padding:4px 6px;background:#fff;color:#000;border-radius:3px;font-size:12px;line-height:1;margin-right:4px}.status.active{background:green;color:#fff}.component{display:inline-block;font-size:14px;font-style:italic}::-webkit-scrollbar{width:0}::-webkit-scrollbar-track{background:0 0}::-webkit-scrollbar-thumb{background:0 0}::-webkit-scrollbar-thumb:hover{background:0 0}"]
-                    }] }
-        ];
-        /** @nocollapse */
-        EditorComponent.ctorParameters = function () {
-            return [
-                { type: String, decorators: [{ type: i0.Inject, args: [i0.PLATFORM_ID,] }] },
-                { type: ConfigService },
-                { type: ngxMarkdown.MarkdownService },
-                { type: FormService },
-                { type: PageResolverService }
-            ];
-        };
-        EditorComponent.propDecorators = {
-            onKeydown: [{ type: i0.HostListener, args: ['document:keydown', ['$event'],] }]
-        };
-        return EditorComponent;
-    }(DisposableComponent));
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var ControlComponent = /** @class */ (function () {
-        function ControlComponent(renderer) {
-            this.renderer = renderer;
-            this.reveal = { checked: false };
-            this.onChange = function (value) { };
-            this.onTouched = function () { };
-        }
-        Object.defineProperty(ControlComponent.prototype, "controlRef", {
-            get: /**
-             * @return {?}
-             */ function () {
-                // console.log('controlRef', this.control.key, this.form.controls);
-                return this.form.controls[this.control.key];
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(ControlComponent.prototype, "isValid", {
-            get: /**
-             * @return {?}
-             */ function () { return this.controlRef.valid; },
-            enumerable: true,
-            configurable: true
-        });
-        // ControlValueAccessor
-        // ControlValueAccessor
-        /**
-         * @return {?}
-         */
-        ControlComponent.prototype.getFormattedValue =
-            // ControlValueAccessor
-            /**
-             * @return {?}
-             */
-            function () {
-                // console.log('ControlComponent.getFormattedValue', this.controlRef.value);
-                return this.controlRef.value;
-            };
-        /**
-         * @param {?} $event
-         * @return {?}
-         */
-        ControlComponent.prototype.onInput = /**
-         * @param {?} $event
-         * @return {?}
-         */
-            function ($event) {
-                this.element = $event.target;
-                this.onChange(this.element.value);
-            };
-        /**
-         * @param {?} $event
-         * @return {?}
-         */
-        ControlComponent.prototype.onFocus = /**
-         * @param {?} $event
-         * @return {?}
-         */
-            function ($event) {
-                this.blurred = false;
-                this.element = $event.target;
-                // this.element.value = this.controlRef.value;
-                this.renderer.setProperty(this.element, 'value', this.controlRef.value);
-                // console.log('ControlComponent.onFocus', this.controlRef);
-            };
-        /**
-         * @param {?} $event
-         * @return {?}
-         */
-        ControlComponent.prototype.onBlur = /**
-         * @param {?} $event
-         * @return {?}
-         */
-            function ($event) {
-                this.blurred = true;
-                this.element = $event.target;
-                // this.element.value = this.controlRef.value;
-                this.renderer.setProperty(this.element, 'value', this.controlRef.value);
-                // console.log('ControlComponent.onBlur', this.controlRef);
-                /*
-                if (this.innervalue) {
-                    this.control.patchValue(this.innervalue + ' H', { emitEvent: false });
-                }
-                */
-            };
-        /**
-         * @private
-         * @param {?} value
-         * @return {?}
-         */
-        ControlComponent.prototype.formatValue = /**
-         * @private
-         * @param {?} value
-         * @return {?}
-         */
-            function (value) {
-                // console.log('ControlComponent.formatValue', value);
-                this.renderer.setProperty(this.element, 'value', value);
-                // console.log('ControlEditableComponent.writeValue', value);
-            };
-        /**
-         * @private
-         * @param {?} value
-         * @return {?}
-         */
-        ControlComponent.prototype.parseValue = /**
-         * @private
-         * @param {?} value
-         * @return {?}
-         */
-            function (value) {
-                // console.log('ControlComponent.parseValue', value);
-                /** @type {?} */
-                var parsed = this.innervalue;
-                this.onChange(parsed);
-            };
-        /**
-         * @param {?} value
-         * @return {?}
-         */
-        ControlComponent.prototype.writeValue = /**
-         * @param {?} value
-         * @return {?}
-         */
-            function (value) {
-                this.formatValue(value);
-            };
-        /**
-         * @param {?} fn
-         * @return {?}
-         */
-        ControlComponent.prototype.registerOnChange = /**
-         * @param {?} fn
-         * @return {?}
-         */
-            function (fn) {
-                this.onChange = fn;
-                // console.log('ControlEditableComponent.registerOnChange');
-            };
-        /**
-         * @param {?} fn
-         * @return {?}
-         */
-        ControlComponent.prototype.registerOnTouched = /**
-         * @param {?} fn
-         * @return {?}
-         */
-            function (fn) {
-                this.onTouched = fn;
-                // console.log('ControlEditableComponent.registerOnTouched');
-            };
-        /**
-         * @param {?} isDisabled
-         * @return {?}
-         */
-        ControlComponent.prototype.setDisabledState = /**
-         * @param {?} isDisabled
-         * @return {?}
-         */
-            function (isDisabled) {
-                // const node = this.textarea.nativeElement;
-                /*
-                if (isDisabled) {
-                    this.renderer.addClass(this.element, 'disabled');
-                } else {
-                    this.renderer.removeClass(this.element, 'disabled');
-                }
-                // console.log('ControlEditableComponent.setDisabledState', isDisabled);
-                */
-            };
-        ControlComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'ws-control',
-                        template: "<ng-container [ngSwitch]=\"control.schema\">\r\n\t<ng-container *ngSwitchCase=\"'checkbox'\">\r\n\t\t<b>Checkbox</b><br>\r\n\t</ng-container>\r\n\t<ng-container *ngSwitchCase=\"'email'\">\r\n\t\t<b>Email</b><br>\r\n\t</ng-container>\r\n\t<ng-container *ngSwitchCase=\"'number'\">\r\n\t\t<b>Number</b><br>\r\n\t</ng-container>\r\n\t<ng-container *ngSwitchCase=\"'password'\">\r\n\t\t<b>Password</b><br>\r\n\t</ng-container>\r\n</ng-container>\r\n<div class=\"form-group\" [formGroup]=\"form\">\r\n\t<div [ngSwitch]=\"control.schema\">\r\n\t\t<div *ngSwitchCase=\"'checkbox'\" class=\"form-group\">\r\n\t\t\t<!-- CHECKBOX -->\r\n\t\t\t<div class=\"checkbox\">\r\n\t\t\t\t<label>\r\n\t\t\t\t\t<input type=\"checkbox\" class=\"form-check-input\" [id]=\"control.key\" [formControlName]=\"control.key\">\r\n\t\t\t\t\t<span>{{ control.label | translate }}</span>\r\n\t\t\t\t</label>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div *ngSwitchCase=\"'email'\">\r\n\t\t\t<!-- EMAIL -->\r\n\t\t\t<label [attr.for]=\"control.key\">{{ control.label | translate }}</label>\r\n\t\t\t<input placeholder=\"{{ control.placeholder | translate }}\" class=\"form-control\" [id]=\"control.key\" [formControlName]=\"control.key\" [type]=\"control.type\">\r\n\t\t</div>\r\n\t\t<div *ngSwitchCase=\"'number'\">\r\n\t\t\t<!-- NUMBER -->\r\n\t\t\t<label [attr.for]=\"control.key\">{{ control.label | translate }}</label>\r\n\t\t\t<input placeholder=\"{{ control.placeholder | translate }}\" class=\"form-control\" [id]=\"control.key\" [type]=\"control.type\" [attr.step]=\"control.step\" (input)=\"onInput($event)\" (focus)=\"onFocus($event)\" (blur)=\"onBlur($event)\" [value]=\"getFormattedValue()\">\r\n\t\t</div>\r\n\t\t<div *ngSwitchCase=\"'password'\">\r\n\t\t\t<!-- PASSWORD -->\r\n\t\t\t<label [attr.for]=\"control.key\">{{ control.label | translate }}</label>\r\n\t\t\t<div class=\"input-group\">\r\n\t\t\t\t<input placeholder=\"{{ control.placeholder | translate }}\" class=\"form-control\" [id]=\"control.key\" [formControlName]=\"control.key\" [type]=\"control.type\" #password>\r\n\t\t\t\t<div class=\"input-group-append\" *ngIf=\"control.type === 'password'\">\r\n\t\t\t\t\t<div class=\"input-group-text\">\r\n\t\t\t\t\t\t<input type=\"checkbox\" [attr.aria-label]=\"control.label | translate\" (input)=\"password.type = reveal.checked ? 'text' : control.type\" #password>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div *ngSwitchCase=\"'radio'\" class=\"form-group\">\r\n\t\t\t<!-- RADIO -->\r\n\t\t\t<div class=\"radio\">\r\n\t\t\t\t<label>\r\n\t\t\t\t\t<input type=\"radio\" class=\"form-radio-input\" [id]=\"control.key\" [formControlName]=\"control.key\">\r\n\t\t\t\t\t<span>{{ control.label | translate }}</span>\r\n\t\t\t\t</label>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div *ngSwitchCase=\"'select'\">\r\n\t\t\t<!-- SELECT -->\r\n\t\t\t<label [attr.for]=\"control.key\">{{ control.label | translate }}</label>\r\n\t\t\t<select class=\"form-control\" [id]=\"control.key\" [formControlName]=\"control.key\">\r\n\t\t\t\t<option *ngFor=\"let opt of control.options\" [value]=\"opt.key\">{{opt.value}}</option>\r\n\t\t\t</select>\r\n\t\t</div>\r\n\t\t<div *ngSwitchCase=\"'markdown'\">\r\n\t\t\t<!-- MARKDOWN -->\r\n\t\t\t<label [attr.for]=\"control.key\">{{ control.label | translate }}</label>\r\n\t\t\t<textarea placeholder=\"{{ control.placeholder | translate }}\" class=\"form-control\" [id]=\"control.key\" [formControlName]=\"control.key\" rows=\"4\"></textarea>\r\n\t\t</div>\r\n\t\t<div *ngSwitchCase=\"'text'\">\r\n\t\t\t<!-- TEXT -->\r\n\t\t\t<label [attr.for]=\"control.key\">{{ control.label | translate }}</label>\r\n\t\t\t<input placeholder=\"{{ control.placeholder | translate }}\" class=\"form-control\" [id]=\"control.key\" [formControlName]=\"control.key\" [type]=\"control.type\">\r\n\t\t</div>\r\n\t</div>\r\n\t<div *ngIf=\"controlRef.invalid && (controlRef.dirty || controlRef.touched)\" class=\"alert alert-danger\">\r\n\t\t<div *ngIf=\"controlRef.errors.required\">{{ 'errors.required' | translate }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.requiredTrue\">{{ 'errors.required' | translate }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.min\">{{ 'errors.min' | translate : { value: control.min } }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.max\">{{ 'errors.max' | translate : { value: control.max } }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.email\">{{ 'errors.email' | translate }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.minLength\">{{ 'errors.minLength' | translate : { value: control.minLength } }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.maxLength\">{{ 'errors.maxLength' | translate : { value: control.maxLength } }}</div>\r\n\t\t<!-- <div *ngIf=\"controlRef.errors.pattern\">{{ 'errors.pattern' | translate }}</div> -->\r\n\t\t<div *ngIf=\"controlRef.errors.match\">{{ 'errors.match' | translate }}</div>\r\n\t</div>\r\n</div>\r\n",
-                        providers: [{
-                                provide: forms.NG_VALUE_ACCESSOR,
-                                useExisting: i0.forwardRef(function () { return ControlComponent; }),
-                                multi: true,
-                            }],
-                        styles: ["label{color:#55555a;font-weight:700;font-size:12px}.form-control{border-radius:0;background:#fff;color:#55555a;border:1px solid rgba(85,85,90,.1);font-size:16px;border-left:2px solid rgba(85,85,90,.2);display:block;width:100%;padding:8px;box-sizing:border-box;margin-bottom:10px}.form-control:hover{border-left-color:rgba(85,85,90,.8)}.form-control:active,.form-control:focus{background:rgba(0,0,0,.15);border-left-color:rgba(85,85,90,.8);outline:0;box-shadow:none}textarea.form-control{resize:none;overflow-x:hidden;overflow-y:auto}"]
-                    }] }
-        ];
-        /** @nocollapse */
-        ControlComponent.ctorParameters = function () {
-            return [
-                { type: i0.Renderer2 }
-            ];
-        };
-        ControlComponent.propDecorators = {
-            control: [{ type: i0.Input }],
-            form: [{ type: i0.Input }]
-        };
-        return ControlComponent;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
-    var DEBOUNCE_TIME = 250;
-    var ExistsValidator = /** @class */ (function () {
-        function ExistsValidator() {
-            var _this = this;
-            this.values = new rxjs.BehaviorSubject(null);
-            this.debounced$ = this.values.pipe(operators.debounceTime(DEBOUNCE_TIME), operators.switchMap(function (value) {
-                // console.log('ExistsValidator.debounced$', value);
-                return _this.exists$(value);
-            }), operators.catchError(function (response) {
-                console.log('ExistsValidator.debounced$.catchError', response);
-                return rxjs.of(null);
-            }), operators.take(1));
-        }
-        Object.defineProperty(ExistsValidator.prototype, "value", {
-            set: /**
-             * @param {?} value
-             * @return {?}
-             */ function (value) {
-                if (value && value.trim() !== '') {
-                    this.values.next(value);
-                }
-            },
-            enumerable: true,
-            configurable: true
-        });
-        /**
-         * @param {?} value
-         * @return {?}
-         */
-        ExistsValidator.prototype.exists$ = /**
-         * @param {?} value
-         * @return {?}
-         */
-            function (value) {
-                if (typeof this.exists === 'function') {
-                    // console.log('ExistsValidator.exists$', value);
-                    return this.exists(value).pipe(operators.switchMap(function (exists) {
-                        if (exists) {
-                            return rxjs.of({
-                                exists: true,
-                            });
-                        }
-                        else {
-                            return rxjs.of(null);
-                        }
-                    }));
-                }
-                else {
-                    return rxjs.of(null);
-                }
-            };
-        /**
-         * @param {?} control
-         * @return {?}
-         */
-        ExistsValidator.prototype.validate = /**
-         * @param {?} control
-         * @return {?}
-         */
-            function (control) {
-                this.value = control.value;
-                return this.debounced$;
-            };
-        ExistsValidator.decorators = [
-            { type: i0.Directive, args: [{
-                        selector: '[exists][formControlName],[exists][formControl],[exists][ngModel]',
-                        providers: [
-                            { provide: forms.NG_ASYNC_VALIDATORS, useExisting: i0.forwardRef(function () { return ExistsValidator; }), multi: true },
-                        ]
-                    },] }
-        ];
-        ExistsValidator.propDecorators = {
-            exists: [{ type: i0.Input }]
-        };
-        return ExistsValidator;
     }());
 
     /**
@@ -5189,7 +4982,7 @@
             };
         LoggerComponent.decorators = [
             { type: i0.Component, args: [{
-                        selector: 'ws-logger',
+                        selector: 'core-logger',
                         template: "<div class=\"error-http\" *ngIf=\"logger.httpError\">\n\t<span>error</span>&nbsp;\n\t<span class=\"status\">{{logger.httpError.status}}</span>&nbsp;\n\t<span class=\"url\">{{logger.httpError.url}}</span>&nbsp;\n\t<span class=\"message\">{{logger.httpError.body?.error}}</span>\n</div>\n<!--\n<div *ngIf=\"logger.logs.length\">\n\t<ul class=\"list-group \">\n\t\t<li class=\"list-group-item\">\n\t\t\t<button type=\"button\" class=\"btn btn-outline-primary btn-sm float-right\" (click)=\"logger.clear()\" title=\"Clear Logs\">{{ 'app.clear' | translate }}</button>\n\t\t</li>\n\t\t<li class=\"list-group-item\" *ngFor='let log of logger.logs'>\n\t\t\t<span>{{log}}</span>\n\t\t</li>\n\t</ul>\n\t<br>\n</div>\n-->\n",
                         encapsulation: i0.ViewEncapsulation.Emulated,
                         styles: [".error-http{padding:15px;max-width:1140px;margin:0 auto 10px;background:#faebd7;font-size:13px;font-family:monospace;color:#d2691e}"]
@@ -5496,1143 +5289,6 @@
         /** @nocollapse */ PublicPipe.ngInjectableDef = i0.defineInjectable({ factory: function PublicPipe_Factory() { return new PublicPipe(i0.inject(ConfigService), i0.inject(SegmentPipe)); }, token: PublicPipe, providedIn: "root" });
         return PublicPipe;
     }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var FacebookConfig = /** @class */ (function () {
-        function FacebookConfig() {
-            this.fields = 'id,name,first_name,last_name,email,gender,picture,cover,link';
-            this.scope = 'public_profile, email'; // publish_stream
-            this.version = 'v2.10';
-        }
-        return FacebookConfig;
-    }());
-    var FacebookService = /** @class */ (function () {
-        function FacebookService(platformId, configService, storageService, onceService, routeService) {
-            this.platformId = platformId;
-            this.configService = configService;
-            this.storageService = storageService;
-            this.onceService = onceService;
-            this.routeService = routeService;
-            this.init();
-        }
-        /**
-         * @return {?}
-         */
-        FacebookService.prototype.init = /**
-         * @return {?}
-         */
-            function () {
-                if (!this.configService.options.plugins && !this.configService.options.plugins.facebook) {
-                    throw new Error('FacebookService.error missing config object in environment.plugins.facebook');
-                }
-                this.options = Object.assign(new FacebookConfig(), this.configService.options.plugins.facebook);
-                this.storage = this.storageService.tryGet();
-                this.authResponse = this.storage.get('facebook');
-                // console.log('FacebookService.authResponse', this.authResponse);
-            };
-        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-        *  call FacebookService.facebook on component OnInit to avoid popup blockers via asyncronous loading *
-        * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-            *  call FacebookService.facebook on component OnInit to avoid popup blockers via asyncronous loading *
-            * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-        /**
-         * @return {?}
-         */
-        FacebookService.prototype.facebook = /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-            *  call FacebookService.facebook on component OnInit to avoid popup blockers via asyncronous loading *
-            * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-            /**
-             * @return {?}
-             */
-            function () {
-                var _this = this;
-                if (i1$1.isPlatformBrowser(this.platformId) && window.location.protocol.indexOf('https') !== -1) {
-                    if (this.FB) {
-                        return rxjs.of(this.FB);
-                    }
-                    else {
-                        return this.onceService.script('//connect.facebook.net/' + this.routeService.currentLang + '/sdk.js', 'fbAsyncInit').pipe(operators.concatMap(function (x) {
-                            // console.log(x);
-                            /** @type {?} */
-                            var FB = window['FB'];
-                            FB.init({
-                                appId: _this.options.appId,
-                                // status: true,
-                                cookie: true,
-                                xfbml: true,
-                                version: _this.options.version,
-                            });
-                            _this.FB = FB;
-                            return rxjs.of(FB);
-                        }));
-                    }
-                }
-                else {
-                    return rxjs.of(null);
-                }
-            };
-        /**
-         * @return {?}
-         */
-        FacebookService.prototype.status = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                return this.facebook().pipe(operators.filter(function (f) { return f !== null; }), operators.concatMap(function (f) {
-                    return rxjs.from(new Promise(function (resolve, reject) {
-                        f.getLoginStatus(function (r) {
-                            _this.authResponse = null;
-                            if (r.status === 'connected') {
-                                _this.authResponse = r.authResponse;
-                                _this.storage.set('facebook', r.authResponse);
-                                resolve(r);
-                            }
-                            else if (r.status === 'not_authorized') {
-                                _this.storage.delete('facebook');
-                                reject(r);
-                            }
-                            else {
-                                reject(r);
-                            }
-                        }, { scope: _this.options.scope });
-                    }));
-                }));
-                /*
-                return from(new Promise((resolve, reject) => {
-                    this.facebook().subscribe(x => {
-                        x.getLoginStatus((r) => {
-                            this.authResponse = null;
-                            if (r.status === 'connected') {
-                                this.authResponse = r.authResponse;
-                                this.storage.set('facebook', r.authResponse);
-                                resolve(r);
-                            } else if (r.status === 'not_authorized') {
-                                this.storage.delete('facebook');
-                                reject(r);
-                            } else {
-                                reject(r);
-                            }
-                        }, { scope: this.options.scope });
-                    });
-                }));
-                */
-            };
-        /**
-         * @return {?}
-         */
-        FacebookService.prototype.login = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                return this.facebook().pipe(operators.filter(function (f) { return f !== null; }), operators.concatMap(function (f) {
-                    return rxjs.from(new Promise(function (resolve, reject) {
-                        f.login(function (r) {
-                            _this.authResponse = null;
-                            if (r.status === 'connected') {
-                                _this.authResponse = r.authResponse;
-                                _this.storage.set('facebook', r.authResponse);
-                                resolve(r);
-                            }
-                            else if (r.status === 'not_authorized') {
-                                _this.storage.delete('facebook');
-                                reject(r);
-                            }
-                            else {
-                                reject(r);
-                            }
-                        }, { scope: _this.options.scope });
-                    }));
-                }));
-                /*
-                return from(new Promise((resolve, reject) => {
-                    this.facebook().subscribe(x => {
-                        x.login((r) => {
-                            this.authResponse = null;
-                            if (r.status === 'connected') {
-                                this.authResponse = r.authResponse;
-                                this.storage.set('facebook', r.authResponse);
-                                resolve(r);
-                            } else if (r.status === 'not_authorized') {
-                                this.storage.delete('facebook');
-                                reject(r);
-                            } else {
-                                reject(r);
-                            }
-                        }, { scope: this.options.scope });
-                    });
-                }));
-                */
-            };
-        /**
-         * @return {?}
-         */
-        FacebookService.prototype.logout = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                return this.facebook().pipe(operators.filter(function (f) { return f !== null; }), operators.concatMap(function (f) {
-                    return rxjs.from(new Promise(function (resolve, reject) {
-                        // console.log('f', f);
-                        f.logout(function (r) {
-                            resolve(r);
-                            _this.storage.delete('facebook');
-                        });
-                    }));
-                }));
-                /*
-                return from(new Promise((resolve, reject) => {
-                    this.facebook().subscribe(x => {
-                        x.logout(r => {
-                            resolve(r);
-                            this.storage.delete('facebook');
-                        });
-                    });
-                }));
-                */
-            };
-        /**
-         * @param {?=} fields
-         * @return {?}
-         */
-        FacebookService.prototype.getMe = /**
-         * @param {?=} fields
-         * @return {?}
-         */
-            function (fields) {
-                var _this = this;
-                return this.login().pipe(operators.concatMap(function (l) {
-                    return rxjs.from(new Promise(function (resolve, reject) {
-                        fields = fields || _this.options.fields;
-                        _this.FB.api('/me', {
-                            fields: fields,
-                            accessToken: _this.options.tokenClient,
-                        }, function (r) {
-                            if (!r || r.error) {
-                                /** @type {?} */
-                                var error = r ? r.error : 'error';
-                                console.log('FacebookService.getMe.error', error);
-                                reject(r.error);
-                            }
-                            else {
-                                /** @type {?} */
-                                var user = ( /** @type {?} */(r));
-                                user.authResponse = _this.authResponse;
-                                user.facebookToken = _this.authResponse.accessToken;
-                                // console.log('FacebookService.getMe.success', user);
-                                resolve(user);
-                            }
-                        });
-                    }));
-                }));
-            };
-        FacebookService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        FacebookService.ctorParameters = function () {
-            return [
-                { type: String, decorators: [{ type: i0.Inject, args: [i0.PLATFORM_ID,] }] },
-                { type: ConfigService },
-                { type: LocalStorageService },
-                { type: OnceService },
-                { type: RouteService }
-            ];
-        };
-        /** @nocollapse */ FacebookService.ngInjectableDef = i0.defineInjectable({ factory: function FacebookService_Factory() { return new FacebookService(i0.inject(i0.PLATFORM_ID), i0.inject(ConfigService), i0.inject(LocalStorageService), i0.inject(OnceService), i0.inject(RouteService)); }, token: FacebookService, providedIn: "root" });
-        return FacebookService;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var GoogleTagManagerPageViewEvent = /** @class */ (function () {
-        function GoogleTagManagerPageViewEvent() {
-        }
-        return GoogleTagManagerPageViewEvent;
-    }());
-    var GoogleTagManagerConfig = /** @class */ (function () {
-        function GoogleTagManagerConfig() {
-        }
-        return GoogleTagManagerConfig;
-    }());
-    var GoogleTagManagerService = /** @class */ (function () {
-        function GoogleTagManagerService(platformId, configService, zone, onceService, logger) {
-            this.platformId = platformId;
-            this.configService = configService;
-            this.zone = zone;
-            this.onceService = onceService;
-            this.logger = logger;
-            this.init();
-        }
-        /**
-         * @private
-         * @return {?}
-         */
-        GoogleTagManagerService.prototype.init = /**
-         * @private
-         * @return {?}
-         */
-            function () {
-                if (!this.configService.options.plugins && !this.configService.options.plugins.googleTagManager) {
-                    throw new Error('GoogleTagManagerService.error missing config object in environment.plugins.googleTagManager');
-                }
-                this.options = Object.assign(new GoogleTagManagerConfig(), this.configService.options.plugins.googleTagManager);
-            };
-        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-        *  call GoogleTagManagerConfig.once() on app component OnInit *
-        * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-            *  call GoogleTagManagerConfig.once() on app component OnInit *
-            * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-        /**
-         * @return {?}
-         */
-        GoogleTagManagerService.prototype.once = /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-            *  call GoogleTagManagerConfig.once() on app component OnInit *
-            * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-            /**
-             * @return {?}
-             */
-            function () {
-                var _this = this;
-                if (i1$1.isPlatformBrowser(this.platformId)) {
-                    if (this.dataLayer) {
-                        return rxjs.of(this.dataLayer);
-                    }
-                    else if (this.dataLayer$) {
-                        return this.dataLayer$;
-                    }
-                    else {
-                        window['dataLayer'] = window['dataLayer'] || [];
-                        /** @type {?} */
-                        var id = this.options.id;
-                        /** @type {?} */
-                        var src = "https://www.googletagmanager.com/gtm.js?id=" + id;
-                        /** @type {?} */
-                        var dataLayer_1 = window['dataLayer'];
-                        dataLayer_1.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-                        // console.log('GoogleTagManagerConfig.once', src, dataLayer);
-                        this.dataLayer$ = this.onceService.script(src).pipe(operators.map(function (x) {
-                            // console.log('dataLayer', dataLayer, x);
-                            _this.dataLayer = dataLayer_1;
-                            return dataLayer_1;
-                        }));
-                        return this.dataLayer$;
-                    }
-                }
-                else {
-                    return rxjs.of(null);
-                }
-            };
-        /**
-         * @param {?} payload
-         * @return {?}
-         */
-        GoogleTagManagerService.prototype.push = /**
-         * @param {?} payload
-         * @return {?}
-         */
-            function (payload) {
-                var _this = this;
-                this.zone.runOutsideAngular(function () {
-                    if (_this.dataLayer) {
-                        _this.dataLayer.push(payload);
-                        _this.logger.log('GoogleTagManagerConfig.push', payload);
-                    }
-                    else {
-                        _this.once().pipe(operators.first()).subscribe(function (dataLayer) {
-                            if (_this.dataLayer) {
-                                _this.dataLayer.push(payload);
-                                _this.logger.log('GoogleTagManagerConfig.push', payload);
-                            }
-                        });
-                    }
-                });
-            };
-        GoogleTagManagerService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        GoogleTagManagerService.ctorParameters = function () {
-            return [
-                { type: String, decorators: [{ type: i0.Inject, args: [i0.PLATFORM_ID,] }] },
-                { type: ConfigService },
-                { type: i0.NgZone },
-                { type: OnceService },
-                { type: Logger }
-            ];
-        };
-        /** @nocollapse */ GoogleTagManagerService.ngInjectableDef = i0.defineInjectable({ factory: function GoogleTagManagerService_Factory() { return new GoogleTagManagerService(i0.inject(i0.PLATFORM_ID), i0.inject(ConfigService), i0.inject(i0.NgZone), i0.inject(OnceService), i0.inject(Logger)); }, token: GoogleTagManagerService, providedIn: "root" });
-        return GoogleTagManagerService;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var GoogleTagManagerComponent = /** @class */ (function (_super) {
-        __extends(GoogleTagManagerComponent, _super);
-        function GoogleTagManagerComponent(platformId, configService, router, googleTagManager) {
-            var _this = _super.call(this) || this;
-            _this.platformId = platformId;
-            _this.configService = configService;
-            _this.router = router;
-            _this.googleTagManager = googleTagManager;
-            _this.useIframe = true;
-            _this.pageView = new i0.EventEmitter();
-            return _this;
-        }
-        /**
-         * @return {?}
-         */
-        GoogleTagManagerComponent.prototype.ngAfterViewInit = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                if (i1$1.isPlatformBrowser(this.platformId)) {
-                    this.router.events.pipe(operators.takeUntil(this.unsubscribe), operators.filter(function (e) { return e instanceof i4.NavigationEnd; })).subscribe(function (e) {
-                        /** @type {?} */
-                        var url = "" + _this.configService.options.origin + e.urlAfterRedirects;
-                        // console.log('GoogleTagManagerComponent.NavigationEnd', e.id, e.url, e.urlAfterRedirects, url);
-                        if (_this.dataLayer) {
-                            _this.pageView.emit({ dataLayer: _this.dataLayer, url: url });
-                        }
-                        else {
-                            _this.googleTagManager.once().pipe(operators.takeUntil(_this.unsubscribe)).subscribe(function (dataLayer) {
-                                // console.log('dataLayer', dataLayer);
-                                _this.id = _this.googleTagManager.options.id;
-                                _this.iframeUrl = "https://www.googletagmanager.com/ns.html?id=" + _this.id;
-                                _this.dataLayer = dataLayer;
-                                _this.pageView.emit({ dataLayer: _this.dataLayer, url: url });
-                            });
-                        }
-                    });
-                }
-            };
-        GoogleTagManagerComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'ws-google-tag-manager',
-                        template: "\n\t<!-- Google Tag Manager (noscript) -->\n\t\t<noscript *ngIf=\"useIframe && dataLayer\">\n\t\t\t<iframe [src]=\"iframeUrl | safeUrl\" height=\"0\" width=\"0\" style=\"display:none;visibility:hidden\"></iframe>\n\t\t</noscript>\n\t<!-- End Google Tag Manager (noscript) -->"
-                    }] }
-        ];
-        /** @nocollapse */
-        GoogleTagManagerComponent.ctorParameters = function () {
-            return [
-                { type: String, decorators: [{ type: i0.Inject, args: [i0.PLATFORM_ID,] }] },
-                { type: ConfigService },
-                { type: i4.Router },
-                { type: GoogleTagManagerService }
-            ];
-        };
-        GoogleTagManagerComponent.propDecorators = {
-            pageView: [{ type: i0.Output }]
-        };
-        return GoogleTagManagerComponent;
-    }(DisposableComponent));
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var GoogleConfig = /** @class */ (function () {
-        function GoogleConfig() {
-            this.cookiepolicy = 'single_host_origin';
-            this.scope = 'profile email';
-            this.fetch_basic_profile = true;
-            this.ux_mode = 'popup';
-        }
-        return GoogleConfig;
-    }());
-    var GoogleService = /** @class */ (function () {
-        function GoogleService(platformId, configService, storageService, onceService) {
-            this.platformId = platformId;
-            this.configService = configService;
-            this.storageService = storageService;
-            this.onceService = onceService;
-            this.init();
-        }
-        /**
-         * @return {?}
-         */
-        GoogleService.prototype.init = /**
-         * @return {?}
-         */
-            function () {
-                if (!this.configService.options.plugins && !this.configService.options.plugins.google) {
-                    throw new Error('GoogleService.error missing config object in environment.plugins.google');
-                }
-                this.options = Object.assign(new GoogleConfig(), this.configService.options.plugins.google);
-                this.storage = this.storageService.tryGet();
-                this.authResponse = this.storage.get('google');
-                // console.log('GoogleService.authResponse', this.authResponse);
-            };
-        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-        *  call GoogleService.google on component OnInit to avoid popup blockers via asyncronous loading *
-        * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-            *  call GoogleService.google on component OnInit to avoid popup blockers via asyncronous loading *
-            * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-        /**
-         * @private
-         * @return {?}
-         */
-        GoogleService.prototype.google = /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-            *  call GoogleService.google on component OnInit to avoid popup blockers via asyncronous loading *
-            * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-            /**
-             * @private
-             * @return {?}
-             */
-            function () {
-                var _this = this;
-                if (i1$1.isPlatformBrowser(this.platformId)) {
-                    return new rxjs.Observable().pipe(function (x) {
-                        if (_this.gapi) {
-                            return rxjs.of(_this.gapi);
-                        }
-                        else {
-                            return _this.once();
-                        }
-                    });
-                }
-                else {
-                    return rxjs.of(null);
-                }
-            };
-        /**
-         * @return {?}
-         */
-        GoogleService.prototype.getMe = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                return this.login().pipe(operators.concatMap(function (x) {
-                    /** @type {?} */
-                    var profile = _this.instance.currentUser.get().getBasicProfile();
-                    /** @type {?} */
-                    var user = ( /** @type {?} */({
-                        id: profile.getId(),
-                        name: profile.getName(),
-                        firstName: profile.getGivenName(),
-                        lastName: profile.getFamilyName(),
-                        picture: profile.getImageUrl(),
-                        email: profile.getEmail(),
-                        authResponse: _this.authResponse,
-                        googleToken: _this.authResponse.access_token,
-                    }));
-                    return rxjs.of(user);
-                }));
-            };
-        /**
-         * @return {?}
-         */
-        GoogleService.prototype.login = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                return this.auth2Instance().pipe(operators.concatMap(function (x) {
-                    return _this.signin();
-                }));
-            };
-        /**
-         * @return {?}
-         */
-        GoogleService.prototype.logout = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                return this.auth2Instance().pipe(operators.concatMap(function (x) {
-                    return rxjs.from(new Promise(function (resolve, reject) {
-                        if (_this.instance.isSignedIn && _this.instance.isSignedIn.get()) {
-                            _this.instance.signOut().then(function (signed) {
-                                resolve();
-                            }, reject);
-                        }
-                        else {
-                            resolve();
-                        }
-                    }));
-                }));
-            };
-        /**
-         * @private
-         * @return {?}
-         */
-        GoogleService.prototype.once = /**
-         * @private
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                return this.onceService.script('https://apis.google.com/js/api:client.js?onload={{callback}}', true).pipe(operators.concatMap(function (x) {
-                    _this.gapi = window['gapi'];
-                    return rxjs.of(_this.gapi);
-                }));
-            };
-        /**
-         * @private
-         * @return {?}
-         */
-        GoogleService.prototype.getAuth2 = /**
-         * @private
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                return new rxjs.Observable().pipe(function (x) {
-                    if (_this.auth2) {
-                        return rxjs.of(_this.auth2);
-                    }
-                    else {
-                        return _this.google().pipe(operators.concatMap(function (x) {
-                            if (_this.gapi.auth2) {
-                                return _this.auth2init();
-                            }
-                            else {
-                                return rxjs.from(new Promise(function (resolve, reject) {
-                                    _this.gapi.load('auth2', function () {
-                                        setTimeout(function () {
-                                            resolve();
-                                        }, 200);
-                                    }, reject);
-                                })).pipe(operators.concatMap(function (x) {
-                                    return _this.auth2init();
-                                }));
-                            }
-                        }));
-                    }
-                });
-            };
-        /**
-         * @private
-         * @return {?}
-         */
-        GoogleService.prototype.signin = /**
-         * @private
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                return rxjs.from(new Promise(function (resolve, reject) {
-                    /** @type {?} */
-                    var readAccessToken = function () {
-                        // console.log('GoogleLogin.readAccessToken');
-                        try {
-                            /** @type {?} */
-                            var user = _this.instance.currentUser.get().getAuthResponse(true);
-                            // console.log('GoogleLogin.readAccessToken.success', user);
-                            _this.authResponse = user;
-                            _this.storage.set('google', user);
-                            resolve({
-                                code: user.access_token,
-                            });
-                        }
-                        catch (error) {
-                            console.log('GoogleLogin.readAccessToken.error', error);
-                            _this.storage.delete('google');
-                            reject(error);
-                        }
-                    };
-                    if (_this.instance.isSignedIn && _this.instance.isSignedIn.get()) {
-                        readAccessToken();
-                    }
-                    else {
-                        _this.instance.signIn({
-                            scope: 'profile email',
-                        }).then(function (signed) {
-                            readAccessToken();
-                        }, function (error) {
-                            _this.storage.delete('google');
-                            reject(error);
-                        });
-                    }
-                }));
-            };
-        /**
-         * @private
-         * @return {?}
-         */
-        GoogleService.prototype.auth2init = /**
-         * @private
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                return rxjs.from(new Promise(function (resolve, reject) {
-                    _this.gapi.auth2.init({
-                        client_id: _this.options.clientId,
-                        cookiepolicy: 'single_host_origin',
-                        scope: 'profile email',
-                        fetch_basic_profile: true,
-                        ux_mode: 'popup',
-                    }).then(function () {
-                        _this.auth2 = _this.gapi.auth2;
-                        // console.log('Auth2Init.success', this.auth2);
-                        resolve(_this.auth2);
-                    }, reject);
-                }));
-            };
-        /**
-         * @return {?}
-         */
-        GoogleService.prototype.auth2Instance = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                if (this.instance) {
-                    return rxjs.of(this.instance);
-                }
-                else {
-                    return this.getAuth2().pipe(operators.concatMap(function (x) {
-                        _this.instance = _this.auth2.getAuthInstance();
-                        return rxjs.of(_this.instance);
-                    }));
-                }
-            };
-        GoogleService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        GoogleService.ctorParameters = function () {
-            return [
-                { type: String, decorators: [{ type: i0.Inject, args: [i0.PLATFORM_ID,] }] },
-                { type: ConfigService },
-                { type: LocalStorageService },
-                { type: OnceService }
-            ];
-        };
-        /** @nocollapse */ GoogleService.ngInjectableDef = i0.defineInjectable({ factory: function GoogleService_Factory() { return new GoogleService(i0.inject(i0.PLATFORM_ID), i0.inject(ConfigService), i0.inject(LocalStorageService), i0.inject(OnceService)); }, token: GoogleService, providedIn: "root" });
-        return GoogleService;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var MapboxService = /** @class */ (function () {
-        function MapboxService() {
-        }
-        MapboxService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */ MapboxService.ngInjectableDef = i0.defineInjectable({ factory: function MapboxService_Factory() { return new MapboxService(); }, token: MapboxService, providedIn: "root" });
-        return MapboxService;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var PayPalConfig = /** @class */ (function () {
-        function PayPalConfig() {
-        }
-        return PayPalConfig;
-    }());
-    var PayPalService = /** @class */ (function () {
-        function PayPalService(platformId, configService, onceService) {
-            this.platformId = platformId;
-            this.configService = configService;
-            this.onceService = onceService;
-            this.init();
-        }
-        /**
-         * @private
-         * @return {?}
-         */
-        PayPalService.prototype.init = /**
-         * @private
-         * @return {?}
-         */
-            function () {
-                if (!this.configService.options.plugins && !this.configService.options.plugins.paypal) {
-                    throw new Error('PayPalService.error missing config object in environment.plugins.paypal');
-                }
-                this.options = Object.assign(new PayPalConfig(), this.configService.options.plugins.paypal);
-            };
-        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-        *  call PayPalConfig.once() on app component OnInit *
-        * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-            *  call PayPalConfig.once() on app component OnInit *
-            * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-        /**
-         * @return {?}
-         */
-        PayPalService.prototype.once = /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-            *  call PayPalConfig.once() on app component OnInit *
-            * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-            /**
-             * @return {?}
-             */
-            function () {
-                var _this = this;
-                if (i1$1.isPlatformBrowser(this.platformId)) {
-                    if (this.paypal) {
-                        return rxjs.of(this.paypal);
-                    }
-                    else if (this.paypal$) {
-                        return this.paypal$;
-                    }
-                    else {
-                        /** @type {?} */
-                        var src = "https://www.paypalobjects.com/api/checkout.js";
-                        // console.log('PayPalConfig.once', src);
-                        this.paypal$ = this.onceService.script(src).pipe(operators.map(function (x) {
-                            _this.paypal = window['paypal'];
-                            return _this.paypal;
-                        }));
-                        return this.paypal$;
-                    }
-                }
-                else {
-                    return rxjs.of(null);
-                }
-            };
-        /**
-         * @param {?} options
-         * @param {?=} selector
-         * @return {?}
-         */
-        PayPalService.prototype.render = /**
-         * @param {?} options
-         * @param {?=} selector
-         * @return {?}
-         */
-            function (options, selector) {
-                var _this = this;
-                selector = selector || '#paypal-button';
-                return this.once().pipe(operators.mergeMap(function (paypal) {
-                    paypal.Button.render(_this.getOptions(paypal, options), selector);
-                    return rxjs.of(paypal);
-                }));
-            };
-        /**
-         * @private
-         * @param {?} paypal
-         * @param {?} options
-         * @return {?}
-         */
-        PayPalService.prototype.getOptions = /**
-         * @private
-         * @param {?} paypal
-         * @param {?} options
-         * @return {?}
-         */
-            function (paypal, options) {
-                /** @type {?} */
-                var payload = Object.assign(this.options, options);
-                payload.payment = function (data, actions) {
-                    return new paypal.Promise(function (resolve, reject) {
-                        if (options.payment) {
-                            options.payment().pipe(operators.first(), operators.mergeMap(function (payload) {
-                                return rxjs.from(actions.payment.create(payload));
-                            })).subscribe(function (success) { return resolve(success); }, // actions.payment.create(success)
-                            function (// actions.payment.create(success)
-                            error) { return reject(error); });
-                        }
-                        else {
-                            console.log('PayPalService.payment callback not setted');
-                            reject(null);
-                        }
-                        // Make an ajax call to get the Payment ID. This should call your back-end,
-                        // which should invoke the PayPal Payment Create api to retrieve the Payment ID.
-                        // When you have a Payment ID, you need to call the `resolve` method, e.g `resolve(data.paymentID)`
-                        // Or, if you have an error from your server side, you need to call `reject`, e.g. `reject(err)`
-                        // jQuery.post('/my-api/create-payment')
-                        // .done(function(data) { resolve(data.paymentID); })
-                        // .fail(function(err)  { reject(err); });
-                    });
-                };
-                payload.onAuthorize = function (data, actions) {
-                    if (options.onAuthorize) {
-                        return actions.payment.execute().then(function (payment) { return options.onAuthorize(payment, null); }, function (error) { return options.onAuthorize(null, error); });
-                    }
-                    else {
-                        console.log('PayPalService.onAuthorize callback not setted');
-                    }
-                };
-                return payload;
-            };
-        PayPalService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        PayPalService.ctorParameters = function () {
-            return [
-                { type: String, decorators: [{ type: i0.Inject, args: [i0.PLATFORM_ID,] }] },
-                { type: ConfigService },
-                { type: OnceService }
-            ];
-        };
-        /** @nocollapse */ PayPalService.ngInjectableDef = i0.defineInjectable({ factory: function PayPalService_Factory() { return new PayPalService(i0.inject(i0.PLATFORM_ID), i0.inject(ConfigService), i0.inject(OnceService)); }, token: PayPalService, providedIn: "root" });
-        return PayPalService;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var PayPalWidgetComponent = /** @class */ (function (_super) {
-        __extends(PayPalWidgetComponent, _super);
-        function PayPalWidgetComponent(platformId, paypalService) {
-            var _this = _super.call(this) || this;
-            _this.platformId = platformId;
-            _this.paypalService = paypalService;
-            return _this;
-        }
-        /**
-         * @return {?}
-         */
-        PayPalWidgetComponent.prototype.ngAfterViewInit = /**
-         * @return {?}
-         */
-            function () {
-                if (i1$1.isPlatformBrowser(this.platformId)) {
-                    this.paypalService.render(this.paypalOptions, '#paypal-widget-button').pipe(operators.takeUntil(this.unsubscribe)).subscribe(function (paypal) {
-                        // console.log('PayPalWidgetComponent.rendered', paypal)
-                    });
-                }
-            };
-        PayPalWidgetComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'ws-paypal-widget-component',
-                        template: "<div id=\"#paypal-widget-button\"></div>"
-                    }] }
-        ];
-        /** @nocollapse */
-        PayPalWidgetComponent.ctorParameters = function () {
-            return [
-                { type: String, decorators: [{ type: i0.Inject, args: [i0.PLATFORM_ID,] }] },
-                { type: PayPalService }
-            ];
-        };
-        PayPalWidgetComponent.propDecorators = {
-            paypalOptions: [{ type: i0.Input }]
-        };
-        return PayPalWidgetComponent;
-    }(DisposableComponent));
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var TrustPilotConfig = /** @class */ (function () {
-        function TrustPilotConfig() {
-            this.businessunitId = '58e253ab0000ff00059fc0fe';
-            this.businessunitName = 'www.eurospin-viaggi.it';
-        }
-        return TrustPilotConfig;
-    }());
-    var TrustPilotService = /** @class */ (function () {
-        function TrustPilotService(platformId, configService, onceService) {
-            this.platformId = platformId;
-            this.configService = configService;
-            this.onceService = onceService;
-            this.init();
-        }
-        /**
-         * @private
-         * @return {?}
-         */
-        TrustPilotService.prototype.init = /**
-         * @private
-         * @return {?}
-         */
-            function () {
-                if (!this.configService.options.plugins && !this.configService.options.plugins.trustPilot) {
-                    throw new Error('TrustPilotService.error missing config object in environment.plugins.trustPilot');
-                }
-                this.options = Object.assign(new TrustPilotConfig(), this.configService.options.plugins.trustPilot);
-            };
-        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-        *  call TrustPilotConfig.once() on app component OnInit *
-        * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-            *  call TrustPilotConfig.once() on app component OnInit *
-            * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-        /**
-         * @return {?}
-         */
-        TrustPilotService.prototype.once = /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-            *  call TrustPilotConfig.once() on app component OnInit *
-            * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-            /**
-             * @return {?}
-             */
-            function () {
-                var _this = this;
-                if (i1$1.isPlatformBrowser(this.platformId)) {
-                    if (this.Trustpilot) {
-                        return rxjs.of(this.Trustpilot);
-                    }
-                    else if (this.Trustpilot$) {
-                        return this.Trustpilot$;
-                    }
-                    else {
-                        /** @type {?} */
-                        var src = "https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js";
-                        // console.log('TrustPilotConfig.once', src);
-                        this.Trustpilot$ = this.onceService.script(src).pipe(operators.map(function (x) {
-                            _this.Trustpilot = window['Trustpilot'];
-                            return _this.Trustpilot;
-                        }));
-                        return this.Trustpilot$;
-                    }
-                }
-                else {
-                    return rxjs.of(null);
-                }
-            };
-        TrustPilotService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        TrustPilotService.ctorParameters = function () {
-            return [
-                { type: String, decorators: [{ type: i0.Inject, args: [i0.PLATFORM_ID,] }] },
-                { type: ConfigService },
-                { type: OnceService }
-            ];
-        };
-        /** @nocollapse */ TrustPilotService.ngInjectableDef = i0.defineInjectable({ factory: function TrustPilotService_Factory() { return new TrustPilotService(i0.inject(i0.PLATFORM_ID), i0.inject(ConfigService), i0.inject(OnceService)); }, token: TrustPilotService, providedIn: "root" });
-        return TrustPilotService;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var TrustPilotWidgetOptions = /** @class */ (function () {
-        function TrustPilotWidgetOptions(options) {
-            this.locale = 'it-IT';
-            this.styleHeight = '350px';
-            this.styleWidth = '100%';
-            this.theme = 'light';
-            this.group = 'on';
-            this.stars = '1,2,3,4,5';
-            if (options) {
-                Object.assign(this, options);
-            }
-        }
-        /**
-         * @param {?=} options
-         * @return {?}
-         */
-        TrustPilotWidgetOptions.newFromConfig = /**
-         * @param {?=} options
-         * @return {?}
-         */
-            function (options) {
-                return new TrustPilotWidgetOptions(options);
-            };
-        /**
-         * @param {?=} options
-         * @return {?}
-         */
-        TrustPilotWidgetOptions.prototype.set = /**
-         * @param {?=} options
-         * @return {?}
-         */
-            function (options) {
-                if (options) {
-                    Object.assign(this, options);
-                }
-                return this;
-            };
-        return TrustPilotWidgetOptions;
-    }());
-    var TrustPilotWidgetComponent = /** @class */ (function (_super) {
-        __extends(TrustPilotWidgetComponent, _super);
-        function TrustPilotWidgetComponent(platformId, configService, elementRef, trustPilot) {
-            var _this = _super.call(this) || this;
-            _this.platformId = platformId;
-            _this.configService = configService;
-            _this.elementRef = elementRef;
-            _this.trustPilot = trustPilot;
-            _this.init();
-            return _this;
-        }
-        /**
-         * @private
-         * @return {?}
-         */
-        TrustPilotWidgetComponent.prototype.init = /**
-         * @private
-         * @return {?}
-         */
-            function () {
-                if (!this.configService.options.plugins && !this.configService.options.plugins.trustPilot) {
-                    throw new Error('TrustPilotService.error missing config object in environment.plugins.trustPilot');
-                }
-                this.trustPilotOptions = this.configService.options.plugins.trustPilot;
-                this.options = new TrustPilotWidgetOptions(this.trustPilotOptions);
-            };
-        /**
-         * @return {?}
-         */
-        TrustPilotWidgetComponent.prototype.ngAfterViewInit = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                // console.log('TrustPilotWidgetComponent.ngOnInit', this.options, this.loaded);
-                if (i1$1.isPlatformBrowser(this.platformId) && this.elementRef.nativeElement.children.length) { // && environment.production
-                    if (!this.loaded) {
-                        this.trustPilot.once().pipe(operators.takeUntil(this.unsubscribe)).subscribe(function (Trustpilot) {
-                            Trustpilot.loadFromElement(_this.elementRef.nativeElement.firstElementChild);
-                            _this.loaded = true;
-                        });
-                    }
-                }
-            };
-        TrustPilotWidgetComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'ws-trustpilot-widget-component',
-                        template: "<ng-container>\n\t<ng-container [ngSwitch]=\"options.templateId\">\n\t\t<ng-container *ngSwitchCase=\"'544a426205dc0a09088833c6'\">\n\t\t\t<!-- PRODUCT REVIEWS -->\n\t\t\t<div class=\"trustpilot-comments\">\n\t\t\t\t<div class=\"trustpilot-widget\" [attr.data-template-id]=\"options.templateId\" [attr.data-businessunit-id]=\"options.businessunitId\" [attr.data-locale]=\"options.locale\" [attr.data-style-height]=\"options.styleHeight\" [attr.data-style-width]=\"options.styleWidth\" [attr.data-theme]=\"options.theme\" [attr.data-sku]=\"sku\" style=\"margin: 30px 0; max-width: 750px;\">\n\t\t\t\t\t<a href=\"https://it.trustpilot.com/review/{{options.businessunitName}}\" target=\"_blank\">Trustpilot</a>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</ng-container>\n\t\t<ng-container *ngSwitchCase=\"'530d0eaf748a510e2093cf9b'\">\n\t\t\t<!-- EVALUATE -->\n\t\t\t<div class=\"trustpilot-widget\" [attr.data-template-id]=\"options.templateId\" [attr.data-businessunit-id]=\"options.businessunitId\" [attr.data-locale]=\"options.locale\" [attr.data-style-height]=\"options.styleHeight\" [attr.data-style-width]=\"options.styleWidth\" [attr.data-theme]=\"options.theme\" [attr.data-group]=\"options.group\" style=\"margin: 30px 0; max-width: 750px;\">\n\t\t\t\t<a href=\"https://it.trustpilot.com/review/{{options.businessunitName}}\" target=\"_blank\">Trustpilot</a>\n\t\t\t</div>\n\t\t</ng-container>\n\t\t<ng-container *ngSwitchCase=\"'53aa8807dec7e10d38f59f32'\">\n\t\t\t<!-- MINI -->\n\t\t\t<div class=\"trustpilot-widget\" [attr.data-template-id]=\"options.templateId\" [attr.data-businessunit-id]=\"options.businessunitId\" [attr.data-locale]=\"options.locale\" [attr.data-style-height]=\"options.styleHeight\" [attr.data-style-width]=\"options.styleWidth\" [attr.data-theme]=\"options.theme\" style=\"margin: 15px auto; max-width: 750px;\">\n\t\t\t\t<a href=\"https://it.trustpilot.com/review/{{options.businessunitName}}\" target=\"_blank\">Trustpilot</a>\n\t\t\t</div>\n\t\t</ng-container>\n\t\t<ng-container *ngSwitchCase=\"'5613c9cde69ddc09340c6beb'\">\n\t\t\t<!-- STARTER -->\n\t\t\t<div class=\"trustpilot-widget\" [attr.data-template-id]=\"options.templateId\" [attr.data-businessunit-id]=\"options.businessunitId\" [attr.data-locale]=\"options.locale\" [attr.data-style-height]=\"options.styleHeight\" [attr.data-style-width]=\"options.styleWidth\" [attr.data-theme]=\"options.theme\" style=\"margin: 15px auto; max-width: 750px;\">\n\t\t\t\t<a href=\"https://it.trustpilot.com/review/{{options.businessunitName}}\" target=\"_blank\">Trustpilot</a>\n\t\t\t</div>\n\t\t</ng-container>\n\t\t<ng-container *ngSwitchCase=\"'53aa8912dec7e10d38f59f36'\">\n\t\t\t<!-- CAROUSEL -->\n\t\t\t<div class=\"trustpilot-widget\" [attr.data-template-id]=\"options.templateId\" [attr.data-businessunit-id]=\"options.businessunitId\" [attr.data-locale]=\"options.locale\" [attr.data-style-height]=\"options.styleHeight\" [attr.data-style-width]=\"options.styleWidth\" [attr.data-theme]=\"options.theme\" [attr.data-stars]=\"options.stars\" style=\"margin: 15px auto;\">\n\t\t\t\t<a href=\"https://it.trustpilot.com/review/{{options.businessunitName}}\" target=\"_blank\">Trustpilot</a>\n\t\t\t</div>\n\t\t</ng-container>\n\t</ng-container>\n</ng-container>\n",
-                        encapsulation: i0.ViewEncapsulation.Emulated,
-                        styles: [":host{width:100%}.trustpilot-widget{margin:15px auto!important}@media print{.trustpilot-comments{display:none!important}}"]
-                    }] }
-        ];
-        /** @nocollapse */
-        TrustPilotWidgetComponent.ctorParameters = function () {
-            return [
-                { type: String, decorators: [{ type: i0.Inject, args: [i0.PLATFORM_ID,] }] },
-                { type: ConfigService },
-                { type: i0.ElementRef },
-                { type: TrustPilotService }
-            ];
-        };
-        TrustPilotWidgetComponent.propDecorators = {
-            options: [{ type: i0.Input }],
-            sku: [{ type: i0.Input }]
-        };
-        return TrustPilotWidgetComponent;
-    }(DisposableComponent));
 
     /**
      * @fileoverview added by tsickle
@@ -7649,8 +6305,8 @@
             };
         ModalContainerComponent.decorators = [
             { type: i0.Component, args: [{
-                        selector: 'ws-modal-container-component',
-                        template: "<div class=\"modal\" [ngClass]=\"{ active: modalCount > 0 }\">\r\n\t<div class=\"modal-bg\" (click)=\"doClose()\"></div>\r\n\t<div class=\"modal-page\" [ngClass]=\"className\">\r\n\t\t<div class=\"modal-header\">\r\n\t\t\t<button type=\"button\" class=\"modal-prev\" (click)=\"doPrev()\" title=\"Indietro\" *ngIf=\"modalCount > 1\">\r\n\t\t\t\t<svg class=\"ico\">\r\n\t\t\t\t\t<use xlink:href=\"#ico-prev\"></use>\r\n\t\t\t\t</svg>\r\n\t\t\t\tindietro\r\n\t\t\t</button>\r\n\t\t\t<button type=\"button\" class=\"modal-close\" (click)=\"doClose()\" title=\"Chiudi finestra\">\r\n\t\t\t\t<svg class=\"ico\">\r\n\t\t\t\t\t<use xlink:href=\"#ico-close\"></use>\r\n\t\t\t\t</svg>\r\n\t\t\t</button>\r\n\t\t</div>\r\n\t\t<div class=\"modal-content\">\r\n\t\t\t<ng-container *ngFor=\"let modal of (modalService.modals$ | async); let last = last;\">\r\n\t\t\t\t<ws-modal-view-component [modal]=\"modal\" [hidden]=\"!last\"></ws-modal-view-component>\r\n\t\t\t</ng-container>\r\n\t\t</div>\r\n\t</div>\r\n</div>\r\n",
+                        selector: 'core-modal-container-component',
+                        template: "<div class=\"modal\" [ngClass]=\"{ active: modalCount > 0 }\">\r\n\t<div class=\"modal-bg\" (click)=\"doClose()\"></div>\r\n\t<div class=\"modal-page\" [ngClass]=\"className\">\r\n\t\t<div class=\"modal-header\">\r\n\t\t\t<button type=\"button\" class=\"modal-prev\" (click)=\"doPrev()\" title=\"Indietro\" *ngIf=\"modalCount > 1\">\r\n\t\t\t\t<svg class=\"ico\">\r\n\t\t\t\t\t<use xlink:href=\"#ico-prev\"></use>\r\n\t\t\t\t</svg>\r\n\t\t\t\tindietro\r\n\t\t\t</button>\r\n\t\t\t<button type=\"button\" class=\"modal-close\" (click)=\"doClose()\" title=\"Chiudi finestra\">\r\n\t\t\t\t<svg class=\"ico\">\r\n\t\t\t\t\t<use xlink:href=\"#ico-close\"></use>\r\n\t\t\t\t</svg>\r\n\t\t\t</button>\r\n\t\t</div>\r\n\t\t<div class=\"modal-content\">\r\n\t\t\t<ng-container *ngFor=\"let modal of (modalService.modals$ | async); let last = last;\">\r\n\t\t\t\t<core-modal-view-component [modal]=\"modal\" [hidden]=\"!last\"></core-modal-view-component>\r\n\t\t\t</ng-container>\r\n\t\t</div>\r\n\t</div>\r\n</div>\r\n",
                         encapsulation: i0.ViewEncapsulation.Emulated,
                         styles: [".modal{position:fixed;display:flex;justify-content:center;align-items:center;top:0;left:0;width:100%;height:100%;z-index:10000;margin:0;padding:0;overflow:hidden;pointer-events:none;opacity:0;transition:opacity 250ms ease-in-out}.modal.active{opacity:1;pointer-events:all}.modal-bg{position:fixed;z-index:0;background:#1e1e1e;opacity:.87;top:0;left:0;bottom:0;right:0}.modal-page{position:relative;z-index:1;background:#fff;max-height:90vh;max-width:90vw;box-shadow:0 10px 40px -5px rgba(0,0,0,.5);overflow-y:auto}@media (max-width:500px){.modal-page{max-height:calc(100% - 80px);margin-top:40px;width:90%;max-width:none}}.modal-page .modal-header .modal-prev{padding:10px;z-index:1;color:#5f5d63;display:flex;font-size:11px;align-items:center;text-transform:uppercase;margin-left:4px}.modal-page .modal-header .modal-prev .ico{width:12px;height:12px;fill:#5f5d63;margin-right:4px}.modal-page .modal-header .modal-close{position:fixed;z-index:1;right:10px;top:10px}.modal-page .modal-header .modal-close .ico{fill:#fff;width:32px;height:32px}"]
                     }] }
@@ -7720,7 +6376,7 @@
             };
         ModalViewComponent.decorators = [
             { type: i0.Component, args: [{
-                        selector: 'ws-modal-view-component',
+                        selector: 'core-modal-view-component',
                         template: "<ng-container #modalContainer></ng-container>\r\n",
                         encapsulation: i0.ViewEncapsulation.Emulated,
                         styles: [""]
@@ -7743,15 +6399,6 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    var ɵ0 = {
-    // gfm: true,
-    // tables: true,
-    // breaks: true,
-    // pedantic: true,
-    // sanitize: true,
-    // smartLists: true,
-    // smartypants: true,
-    };
     var CoreModule = /** @class */ (function () {
         function CoreModule(parentModule) {
             if (parentModule) {
@@ -7782,25 +6429,17 @@
                             forms.FormsModule,
                             forms.ReactiveFormsModule,
                             CoreRouting,
-                            ngxMarkdown.MarkdownModule.forRoot({
-                                markedOptions: {
-                                    provide: ngxMarkdown.MarkedOptions,
-                                    useValue: ɵ0,
-                                },
-                            }),
                         ],
                         declarations: [
                             AssetPipe,
                             ClickOutsideDirective,
                             ControlComponent,
-                            CoreComponent,
+                            CoreModuleComponent,
                             CustomAsyncPipe,
                             DefaultContentDirective,
                             DisposableComponent,
-                            EditorComponent,
                             ExistsValidator,
                             FancyboxDirective,
-                            GoogleTagManagerComponent,
                             HighlightPipe,
                             ImagePipe,
                             JsonFormatterComponent,
@@ -7815,7 +6454,6 @@
                             PageComponent,
                             PageNotFoundComponent,
                             PageOutletComponent,
-                            PayPalWidgetComponent,
                             PublicPipe,
                             RoutePipe,
                             SafeStylePipe,
@@ -7824,7 +6462,6 @@
                             SlugAsyncPipe,
                             SlugPipe,
                             TranslatePipe,
-                            TrustPilotWidgetComponent,
                             TrustPipe,
                             UppercaseDirective,
                         ],
@@ -7832,13 +6469,11 @@
                             AssetPipe,
                             ClickOutsideDirective,
                             ControlComponent,
-                            CoreComponent,
+                            CoreModuleComponent,
                             CustomAsyncPipe,
                             DefaultContentDirective,
-                            EditorComponent,
                             ExistsValidator,
                             FancyboxDirective,
-                            GoogleTagManagerComponent,
                             HighlightPipe,
                             ImagePipe,
                             JsonFormatterComponent,
@@ -7851,7 +6486,6 @@
                             ModalContainerComponent,
                             ModalViewComponent,
                             PageComponent,
-                            PayPalWidgetComponent,
                             PublicPipe,
                             RoutePipe,
                             SafeStylePipe,
@@ -7860,7 +6494,6 @@
                             SlugAsyncPipe,
                             SlugPipe,
                             TranslatePipe,
-                            TrustPilotWidgetComponent,
                             TrustPipe,
                             UppercaseDirective,
                         ],
@@ -7874,10 +6507,7 @@
                             CustomAsyncPipe,
                             EventDispatcherService,
                             ExistsValidator,
-                            FacebookService,
                             FormService,
-                            GoogleService,
-                            GoogleTagManagerService,
                             HighlightPipe,
                             HttpStatusCodeService,
                             ImagePipe,
@@ -7885,14 +6515,12 @@
                             LabelService,
                             LocalStorageService,
                             Logger,
-                            MapboxService,
                             MatchValidator,
                             MenuService,
                             ModalService,
                             OnceService,
                             PageGuard, StaticGuard,
                             PageService,
-                            PayPalService,
                             PublicPipe,
                             RoutePipe,
                             SafeUrlPipe,
@@ -7902,7 +6530,6 @@
                             SlugPipe,
                             StorageService,
                             TranslatePipe,
-                            TrustPilotService,
                             TrustPipe,
                         ],
                     },] }
@@ -8000,12 +6627,13 @@
     exports.CoreConfig = CoreConfig;
     exports.CORE_CONFIG = CORE_CONFIG;
     exports.DefaultContentDirective = DefaultContentDirective;
-    exports.CoreComponent = CoreComponent;
+    exports.CoreModuleComponent = CoreModuleComponent;
     exports.CoreModule = CoreModule;
     exports.CoreRouting = CoreRouting;
     exports.CoreService = CoreService;
     exports.DisposableComponent = DisposableComponent;
-    exports.EditorComponent = EditorComponent;
+    exports.ControlBase = ControlBase;
+    exports.ControlBaseOptions = ControlBaseOptions;
     exports.ControlComponent = ControlComponent;
     exports.ControlService = ControlService;
     exports.ExistsValidator = ExistsValidator;
@@ -8034,6 +6662,8 @@
     exports.PageRelation = PageRelation;
     exports.PageNotFoundComponent = PageNotFoundComponent;
     exports.PageOutletComponent = PageOutletComponent;
+    exports.PageResolver = PageResolver;
+    exports.PageResolverService = PageResolverService;
     exports.PageComponent = PageComponent;
     exports.PageGuard = PageGuard;
     exports.PageService = PageService;
@@ -8043,16 +6673,6 @@
     exports.ImagePipe = ImagePipe;
     exports.PublicPipe = PublicPipe;
     exports.SegmentPipe = SegmentPipe;
-    exports.FacebookService = FacebookService;
-    exports.GoogleTagManagerComponent = GoogleTagManagerComponent;
-    exports.GoogleTagManagerPageViewEvent = GoogleTagManagerPageViewEvent;
-    exports.GoogleTagManagerService = GoogleTagManagerService;
-    exports.GoogleService = GoogleService;
-    exports.MapboxService = MapboxService;
-    exports.PayPalWidgetComponent = PayPalWidgetComponent;
-    exports.PayPalService = PayPalService;
-    exports.TrustPilotWidgetComponent = TrustPilotWidgetComponent;
-    exports.TrustPilotService = TrustPilotService;
     exports.RoutePipe = RoutePipe;
     exports.RouteService = RouteService;
     exports.SlugAsyncPipe = SlugAsyncPipe;
@@ -8077,7 +6697,6 @@
     exports.ɵc = EntityService;
     exports.ɵd = IdentityService;
     exports.ɵe = LinkService;
-    exports.ɵg = PageResolverService;
     exports.ɵa = TranslateService;
 
     Object.defineProperty(exports, '__esModule', { value: true });

@@ -15,7 +15,11 @@
 		"lib": ["es2018", "dom"],
 		"paths": {
 			"@artisan/core": ["dist/artisan/core"],
-			"@artisan/core/*": ["dist/artisan/core/*"]
+			"@artisan/core/*": ["dist/artisan/core/*"],
+			"@artisan/editor": ["dist/artisan/editor"],
+			"@artisan/editor/*": ["dist/artisan/editor/*"],
+			"@artisan/plugins": ["dist/artisan/plugins"],
+			"@artisan/plugins/*": ["dist/artisan/plugins/*"]
 		}
 	},
 	"exclude": ["node_modules"],

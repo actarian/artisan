@@ -77,13 +77,14 @@ export class PageService extends EntityService<Page> {
 		if (!page) {
 			return;
 		}
-		const fbAppId: string = this.config.plugins && this.config.plugins.facebook ? this.config.plugins.facebook.appId.toString() : '';
+		// !!!
+		// const fbAppId: string = this.config.plugins && this.config.plugins.facebook ? this.config.plugins.facebook.appId.toString() : '';
 		this.titleService.setTitle(page.title);
 		this.addOrUpdateMeta({ property: 'og:title', content: page.title });
 		this.addOrUpdateMeta({ property: 'og:image', content: this.getSocialImage(page).url });
 		this.addOrUpdateMeta({ property: 'og:image:width', content: '1200' });
 		this.addOrUpdateMeta({ property: 'og:image:height', content: '630' });
-		this.addOrUpdateMeta({ property: 'fb:app_id', content: fbAppId });
+		// this.addOrUpdateMeta({ property: 'fb:app_id', content: fbAppId });
 		this.addOrUpdateMeta({ property: 'og:url', content: page.url || this.origin });
 		const meta = page.meta;
 		if (meta) {

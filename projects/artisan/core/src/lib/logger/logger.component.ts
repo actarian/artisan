@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Logger } from './logger';
 
 @Component({
-	selector: 'ws-logger',
+	selector: 'core-logger',
 	templateUrl: './logger.component.html',
 	styleUrls: ['./logger.component.scss'],
 	encapsulation: ViewEncapsulation.Emulated,

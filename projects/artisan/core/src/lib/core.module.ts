@@ -2,15 +2,13 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { AuthService } from './auth/auth.service';
 import { ConfigService } from './config/config.service';
 import { CoreConfig, CORE_CONFIG } from './config/core.config';
 import { DefaultContentDirective } from './content/default-content.directive';
-import { CoreComponent } from './core.component';
+import { CoreModuleComponent } from './core-module.component';
 import { CoreRouting } from './core.routing';
 import { DisposableComponent } from './disposable/disposable.component';
-import { EditorComponent } from './editor/editor.component';
 import { ControlComponent } from './forms/controls/control.component';
 import { ControlService } from './forms/controls/control.service';
 import { ExistsValidator } from './forms/exists.validator';
@@ -41,15 +39,6 @@ import { CustomAsyncPipe } from './pipes/custom-async.pipe';
 import { ImagePipe } from './pipes/image.pipe';
 import { PublicPipe } from './pipes/public.pipe';
 import { SegmentPipe } from './pipes/segment.pipe';
-import { FacebookService } from './plugins/facebook/facebook.service';
-import { GoogleTagManagerComponent } from './plugins/google/google-tag-manager.component';
-import { GoogleTagManagerService } from './plugins/google/google-tag-manager.service';
-import { GoogleService } from './plugins/google/google.service';
-import { MapboxService } from './plugins/mapbox/mapbox.service';
-import { PayPalWidgetComponent } from './plugins/paypal/paypal-widget.component';
-import { PayPalService } from './plugins/paypal/paypal.service';
-import { TrustPilotWidgetComponent } from './plugins/trustpilot/trustpilot-widget.component';
-import { TrustPilotService } from './plugins/trustpilot/trustpilot.service';
 import { RoutePipe } from './routes/route.pipe';
 import { SlugAsyncPipe } from './slugs/slug-async.pipe';
 import { SlugPipe } from './slugs/slug.pipe';
@@ -72,33 +61,17 @@ import { ModalService } from './ui/modal/modal.service';
 		FormsModule,
 		ReactiveFormsModule,
 		CoreRouting,
-		MarkdownModule.forRoot({
-			markedOptions: {
-				provide: MarkedOptions,
-				useValue: {
-					// gfm: true,
-					// tables: true,
-					// breaks: true,
-					// pedantic: true,
-					// sanitize: true,
-					// smartLists: true,
-					// smartypants: true,
-				},
-			},
-		}),
 	],
 	declarations: [
 		AssetPipe,
 		ClickOutsideDirective,
 		ControlComponent,
-		CoreComponent,
+		CoreModuleComponent,
 		CustomAsyncPipe,
 		DefaultContentDirective,
 		DisposableComponent,
-		EditorComponent,
 		ExistsValidator,
 		FancyboxDirective,
-		GoogleTagManagerComponent,
 		HighlightPipe,
 		ImagePipe,
 		JsonFormatterComponent,
@@ -113,7 +86,6 @@ import { ModalService } from './ui/modal/modal.service';
 		PageComponent,
 		PageNotFoundComponent,
 		PageOutletComponent,
-		PayPalWidgetComponent,
 		PublicPipe,
 		RoutePipe,
 		SafeStylePipe,
@@ -122,7 +94,6 @@ import { ModalService } from './ui/modal/modal.service';
 		SlugAsyncPipe,
 		SlugPipe,
 		TranslatePipe,
-		TrustPilotWidgetComponent,
 		TrustPipe,
 		UppercaseDirective,
 	],
@@ -130,13 +101,11 @@ import { ModalService } from './ui/modal/modal.service';
 		AssetPipe,
 		ClickOutsideDirective,
 		ControlComponent,
-		CoreComponent,
+		CoreModuleComponent,
 		CustomAsyncPipe,
 		DefaultContentDirective,
-		EditorComponent,
 		ExistsValidator,
 		FancyboxDirective,
-		GoogleTagManagerComponent,
 		HighlightPipe,
 		ImagePipe,
 		JsonFormatterComponent,
@@ -149,7 +118,6 @@ import { ModalService } from './ui/modal/modal.service';
 		ModalContainerComponent,
 		ModalViewComponent,
 		PageComponent,
-		PayPalWidgetComponent,
 		PublicPipe,
 		RoutePipe,
 		SafeStylePipe,
@@ -158,7 +126,6 @@ import { ModalService } from './ui/modal/modal.service';
 		SlugAsyncPipe,
 		SlugPipe,
 		TranslatePipe,
-		TrustPilotWidgetComponent,
 		TrustPipe,
 		UppercaseDirective,
 	],
@@ -172,10 +139,7 @@ import { ModalService } from './ui/modal/modal.service';
 		CustomAsyncPipe,
 		EventDispatcherService,
 		ExistsValidator,
-		FacebookService,
 		FormService,
-		GoogleService,
-		GoogleTagManagerService,
 		HighlightPipe,
 		HttpStatusCodeService,
 		ImagePipe,
@@ -183,14 +147,12 @@ import { ModalService } from './ui/modal/modal.service';
 		LabelService,
 		LocalStorageService,
 		Logger,
-		MapboxService,
 		MatchValidator,
 		MenuService,
 		ModalService,
 		OnceService,
 		PageGuard, StaticGuard,
 		PageService,
-		PayPalService,
 		PublicPipe,
 		RoutePipe,
 		SafeUrlPipe,
@@ -200,7 +162,6 @@ import { ModalService } from './ui/modal/modal.service';
 		SlugPipe,
 		StorageService,
 		TranslatePipe,
-		TrustPilotService,
 		TrustPipe,
 	],
 })

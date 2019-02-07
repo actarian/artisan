@@ -1,17 +1,15 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { MarkdownService, MarkdownModule, MarkedOptions } from 'ngx-markdown';
 export { MarkdownModule, MarkedOptions } from 'ngx-markdown';
-import { FormControl, FormGroup, Validators, NG_VALUE_ACCESSOR, NG_ASYNC_VALIDATORS, NG_VALIDATORS, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, NG_VALUE_ACCESSOR, FormControl, Validators, NG_ASYNC_VALIDATORS, NG_VALIDATORS, FormsModule, ReactiveFormsModule } from '@angular/forms';
 export { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpErrorResponse, HttpClient, HttpHeaders, HttpParams, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 export { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { isArray, isObject } from 'util';
 import { ActivatedRoute, ActivationEnd, NavigationStart, Router, RouterModule, NavigationEnd } from '@angular/router';
+import { isArray, isObject } from 'util';
 import { makeStateKey, TransferState, Meta, Title, DomSanitizer } from '@angular/platform-browser';
 import { isPlatformBrowser, Location, DOCUMENT, isPlatformServer, CommonModule } from '@angular/common';
 export { CommonModule } from '@angular/common';
-import { of, Subject, BehaviorSubject, Observable, throwError, from, fromEvent } from 'rxjs';
-import { tap, concatMap, distinctUntilChanged, filter, map, switchMap, catchError, takeUntil, debounceTime, take, first, mergeMap } from 'rxjs/operators';
+import { of, Subject, BehaviorSubject, throwError, from, fromEvent } from 'rxjs';
+import { tap, concatMap, distinctUntilChanged, filter, map, switchMap, catchError, debounceTime, take, first, takeUntil } from 'rxjs/operators';
 import { Inject, Injectable, PLATFORM_ID, Injector, Component, NgModule, EventEmitter, ViewEncapsulation, ChangeDetectorRef, Pipe, Directive, ElementRef, Input, Renderer2, ViewContainerRef, forwardRef, Attribute, HostListener, Output, ComponentFactoryResolver, InjectionToken, WrappedValue, ReflectiveInjector, ViewChild, defineInjectable, inject, INJECTOR, NgZone, Optional, SkipSelf } from '@angular/core';
 export { NgModule, Optional, SkipSelf, Type } from '@angular/core';
 
@@ -644,17 +642,6 @@ const AuthStrategy = {
 };
 AuthStrategy[AuthStrategy.Bearer] = 'Bearer';
 AuthStrategy[AuthStrategy.Cookie] = 'Cookie';
-class CoreConfigPlugins {
-    /**
-     * @param {?=} options
-     */
-    constructor(options) {
-        console.log('CoreConfigPlugins', options);
-        if (options) {
-            Object.assign(this, options);
-        }
-    }
-}
 class CoreTransitionConfig {
     /**
      * @param {?=} options
@@ -698,14 +685,12 @@ class CoreConfig {
         console.log('CoreConfig', options);
         if (options) {
             this.pages = options.pages || {};
-            this.plugins = new CoreConfigPlugins(options.plugins);
             this.preboot = new CorePrebootConfig(options.preboot);
             this.transition = new CoreTransitionConfig(options.transition);
             this.defaultPage = options.defaultPage;
             this.notFoundPage = options.notFoundPage;
         }
         else {
-            this.plugins = new CoreConfigPlugins();
             this.preboot = new CorePrebootConfig();
             this.transition = new CoreTransitionConfig();
         }
@@ -804,24 +789,24 @@ DefaultContentDirective.propDecorators = {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class CoreComponent {
-    constructor() { }
+class CoreModuleComponent {
+    constructor() {
+        this.version = '0.0.1';
+    }
     /**
      * @return {?}
      */
     ngOnInit() {
     }
 }
-CoreComponent.decorators = [
+CoreModuleComponent.decorators = [
     { type: Component, args: [{
-                selector: 'ws-core',
-                template: `
-    <span class="core__version">core version 0.1.0</span>
-  `
+                selector: 'core-module',
+                template: `<span class="core-module">core {{version}}</span>`
             }] }
 ];
 /** @nocollapse */
-CoreComponent.ctorParameters = () => [];
+CoreModuleComponent.ctorParameters = () => [];
 
 /**
  * @fileoverview added by tsickle
@@ -1961,7 +1946,7 @@ class PageComponent extends DisposableComponent {
 }
 PageComponent.decorators = [
     { type: Component, args: [{
-                selector: 'ws-page',
+                selector: 'core-page',
                 template: `<h1>I'm a default view!</h1>`
             }] }
 ];
@@ -2320,14 +2305,14 @@ class PageService extends EntityService {
         if (!page) {
             return;
         }
-        /** @type {?} */
-        const fbAppId = this.config.plugins && this.config.plugins.facebook ? this.config.plugins.facebook.appId.toString() : '';
+        // !!!
+        // const fbAppId: string = this.config.plugins && this.config.plugins.facebook ? this.config.plugins.facebook.appId.toString() : '';
         this.titleService.setTitle(page.title);
         this.addOrUpdateMeta({ property: 'og:title', content: page.title });
         this.addOrUpdateMeta({ property: 'og:image', content: this.getSocialImage(page).url });
         this.addOrUpdateMeta({ property: 'og:image:width', content: '1200' });
         this.addOrUpdateMeta({ property: 'og:image:height', content: '630' });
-        this.addOrUpdateMeta({ property: 'fb:app_id', content: fbAppId });
+        // this.addOrUpdateMeta({ property: 'fb:app_id', content: fbAppId });
         this.addOrUpdateMeta({ property: 'og:url', content: page.url || this.origin });
         /** @type {?} */
         const meta = page.meta;
@@ -2558,7 +2543,7 @@ class PageResolverService {
      * @param {?} state
      * @return {?}
      */
-    resolve(route, state$$1) {
+    resolve(route, state) {
         if (route.params && route.params.id) {
             return this.getPageById(route.params.id);
         }
@@ -2633,7 +2618,7 @@ class PageGuard {
      * @param {?} state
      * @return {?}
      */
-    canActivate(route, state$$1) {
+    canActivate(route, state) {
         return this.match(route);
     }
     /**
@@ -2681,7 +2666,7 @@ class StaticGuard {
      * @param {?} state
      * @return {?}
      */
-    canActivate(route, state$$1) {
+    canActivate(route, state) {
         return this.match(route);
     }
     /**
@@ -2729,6 +2714,11 @@ CoreRouting.decorators = [
 /**
  * @template T
  */
+class ControlBaseOptions {
+}
+/**
+ * @template T
+ */
 class ControlBase {
     /**
      * @param {?=} options
@@ -2768,501 +2758,6 @@ class ControlBase {
 }
 // export class ControlBase<T> implements ControlValueAccessor {
 ControlBase.uid = 0;
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class ControlCheckbox extends ControlBase {
-    /**
-     * @param {?=} options
-     */
-    constructor(options = {}) {
-        super(options);
-        this.schema = 'checkbox';
-        this.type = options.type || this.type;
-    }
-}
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class ControlEmail extends ControlBase {
-    /**
-     * @param {?=} options
-     */
-    constructor(options = {}) {
-        super(options);
-        this.schema = 'email';
-        this.type = options.type || this.type;
-        this.email = true;
-        this.pattern = options.pattern || '[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}';
-    }
-}
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class ControlMarkdown extends ControlBase {
-    /**
-     * @param {?=} options
-     */
-    constructor(options = {}) {
-        super(options);
-        this.schema = 'markdown';
-        this.type = options.type || this.type;
-    }
-}
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class ControlNumber extends ControlBase {
-    /**
-     * @param {?=} options
-     */
-    constructor(options = {}) {
-        super(options);
-        this.schema = 'number';
-        this.type = options.type || this.type;
-    }
-}
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class ControlPassword extends ControlBase {
-    /**
-     * @param {?=} options
-     */
-    constructor(options = {}) {
-        super(options);
-        this.schema = 'password';
-        this.type = options.type || this.type;
-    }
-}
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class ControlRadio extends ControlBase {
-    /**
-     * @param {?=} options
-     */
-    constructor(options = {}) {
-        super(options);
-        this.schema = 'radio';
-        this.type = options.type || this.type;
-    }
-}
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class ControlSelect extends ControlBase {
-    /**
-     * @param {?=} options
-     */
-    constructor(options = {}) {
-        super(options);
-        this.schema = 'select';
-        this.options = [];
-        this.options = options.options || [];
-    }
-}
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class ControlText extends ControlBase {
-    /**
-     * @param {?=} options
-     */
-    constructor(options = {}) {
-        super(options);
-        this.schema = 'text';
-        this.type = options.type || this.type;
-    }
-}
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @param {?} otherKey
- * @param {?=} reverse
- * @param {?=} group
- * @return {?}
- */
-function matchValidator(otherKey, reverse = false, group) {
-    return (control) => {
-        /** @type {?} */
-        const otherControl = group.controls[otherKey];
-        /** @type {?} */
-        const value = control.value;
-        // value not equal
-        if (otherControl && value !== otherControl.value && !reverse) {
-            return {
-                match: true,
-            };
-        }
-        // value equal and reverse
-        if (otherControl && value === otherControl.value && reverse) {
-            if (otherControl.errors) {
-                delete otherControl.errors['match'];
-                if (!Object.keys(otherControl.errors).length) {
-                    otherControl.setErrors(null);
-                }
-            }
-        }
-        // value not equal and reverse
-        if (otherControl && value !== otherControl.value && reverse) {
-            otherControl.setErrors({
-                match: true,
-            });
-        }
-        return null;
-    };
-}
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class ControlService {
-    /**
-     * @param {?} control
-     * @param {?} group
-     * @return {?}
-     */
-    getValidators(control, group) {
-        /** @type {?} */
-        const validators = [];
-        if (control.min) {
-            validators.push(Validators.min(control.min));
-        }
-        if (control.max) {
-            validators.push(Validators.max(control.max));
-        }
-        if (control.required) {
-            validators.push(Validators.required);
-        }
-        if (control.requiredTrue) {
-            validators.push(Validators.requiredTrue);
-        }
-        if (control.email) {
-            validators.push(Validators.email);
-        }
-        if (control.minLength) {
-            validators.push(Validators.minLength(control.minLength));
-        }
-        if (control.maxLength) {
-            validators.push(Validators.maxLength(control.maxLength));
-        }
-        if (control.pattern) {
-            validators.push(Validators.pattern(control.pattern));
-        }
-        if (control.match) {
-            validators.push(matchValidator(control.match, control.reverse, group));
-        }
-        // console.log(control.key, validators);
-        return validators;
-    }
-    /**
-     * @param {?} controls
-     * @return {?}
-     */
-    toFormGroup(controls) {
-        /** @type {?} */
-        const options = {};
-        controls.forEach(x => {
-            // group[x.key] = new FormControl(x.value, this.getValidators(x, group));
-            /** @type {?} */
-            const formControl = new FormControl(x.value);
-            if (x.disabled) {
-                formControl.disable();
-            }
-            options[x.key] = formControl;
-            // x.setControl(formControl); // !!!
-        });
-        /** @type {?} */
-        const group = new FormGroup(options);
-        // console.log(group);
-        controls.forEach(x => {
-            /** @type {?} */
-            const validators = this.getValidators(x, group);
-            // console.log(validators);
-            group.controls[x.key].setValidators(validators);
-        });
-        return group;
-    }
-}
-ControlService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */ ControlService.ngInjectableDef = defineInjectable({ factory: function ControlService_Factory() { return new ControlService(); }, token: ControlService, providedIn: "root" });
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class FormService {
-    /**
-     * @param {?} controlService
-     */
-    constructor(controlService) {
-        this.controlService = controlService;
-    }
-    /**
-     * @param {?} options
-     * @return {?}
-     */
-    getControlsFromOptions(options) {
-        /** @type {?} */
-        const controls = options.map(o => {
-            switch (o.schema) {
-                case 'checkbox':
-                    return new ControlCheckbox(o);
-                case 'email':
-                    return new ControlEmail(o);
-                case 'number':
-                    return new ControlNumber(o);
-                case 'password':
-                    return new ControlPassword(o);
-                case 'radio':
-                    return new ControlRadio(o);
-                case 'select':
-                    return new ControlSelect(o);
-                case 'markdown':
-                    return new ControlMarkdown(o);
-                case 'text':
-                    return new ControlText(o);
-                default:
-                    return new ControlText(o);
-            }
-        });
-        controls.sort((a, b) => a.order - b.order);
-        return controls;
-    }
-    /**
-     * @param {?} options
-     * @return {?}
-     */
-    getGroupFromOptions(options) {
-        /** @type {?} */
-        const controls = this.getControlsFromOptions(options);
-        /** @type {?} */
-        const group = this.controlService.toFormGroup(controls);
-        return group;
-    }
-    /**
-     * @param {?} controls
-     * @return {?}
-     */
-    getGroupFromControls(controls) {
-        /** @type {?} */
-        const group = this.controlService.toFormGroup(controls);
-        return group;
-    }
-}
-FormService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-FormService.ctorParameters = () => [
-    { type: ControlService }
-];
-/** @nocollapse */ FormService.ngInjectableDef = defineInjectable({ factory: function FormService_Factory() { return new FormService(inject(ControlService)); }, token: FormService, providedIn: "root" });
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class EditorComponent extends DisposableComponent {
-    /**
-     * @param {?} platformId
-     * @param {?} configService
-     * @param {?} markdownService
-     * @param {?} formService
-     * @param {?} pageResolverService
-     */
-    constructor(platformId, configService, markdownService, formService, pageResolverService) {
-        super();
-        this.platformId = platformId;
-        this.configService = configService;
-        this.markdownService = markdownService;
-        this.formService = formService;
-        this.pageResolverService = pageResolverService;
-        this.editing = false;
-        this.busy = false;
-        this.submitted = false;
-    }
-    /**
-     * @return {?}
-     */
-    get page() {
-        return this._page;
-    }
-    /**
-     * @param {?} page
-     * @return {?}
-     */
-    set page(page) {
-        this._pageCopy = Object.assign({}, page);
-        this._page = page;
-        if (this._page) {
-            this.controls = this.formService.getControlsFromOptions(this.getControlsByPage(page));
-            this.group = this.formService.getGroupFromControls(this.controls);
-            this.group.valueChanges.subscribe(x => {
-                this.onAssign(x); // Object.assign(this._page, x);
-            });
-        }
-        else {
-            this.controls = [];
-            this.group = null;
-        }
-    }
-    /**
-     * @return {?}
-     */
-    get componentName() {
-        if (this._page) {
-            /** @type {?} */
-            const component = this.configService.options.pages[this._page.component];
-            if (component) {
-                return component.name;
-            }
-        }
-    }
-    /**
-     * @param {?} page
-     * @return {?}
-     */
-    getControlsByPage(page) {
-        return page ? Object.keys(page).filter(key => typeof page[key] !== 'object').map((key, i) => {
-            return {
-                key: key,
-                value: page[key],
-                schema: key === 'description' ? 'markdown' : 'text',
-                label: key,
-                placeholder: key,
-                required: false,
-                order: i + 1
-            };
-        }) : [];
-    }
-    /**
-     * @return {?}
-     */
-    ngAfterViewInit() {
-        if (isPlatformBrowser(this.platformId)) {
-            this.pageResolverService.events$.pipe(takeUntil(this.unsubscribe)).subscribe((resolver) => {
-                // console.log('EditorComponent.resolver', resolver);
-                this.page = resolver ? resolver.page : null;
-            });
-        }
-    }
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    onKeydown(e) {
-        if (e.key === 'e' && e.ctrlKey) {
-            // this.editing = this.configService.options.editor && !this.editing;
-            this.editing = !this.editing;
-            // console.log('AppComponent.document:keydown', e.key, e.ctrlKey, e.altKey, e.code);
-        }
-    }
-    /**
-     * @return {?}
-     */
-    onReset() {
-        // console.log('EditorComponent.onReset');
-        Object.keys(this.group.controls).forEach(key => {
-            this.group.get(key).setValue(this._pageCopy[key]);
-        });
-        /*
-        const keys = this.controls.map(x => x.key);
-        keys.forEach(k => {
-            // console.log(k, this._page[k], this._pageCopy[k]);
-            this._page[k] = this._pageCopy[k];
-        });
-        */
-    }
-    /**
-     * @param {?} model
-     * @return {?}
-     */
-    onSubmit(model) {
-        // console.log('EditorComponent.onSubmit', model);
-        this.onAssign(model);
-        // Object.assign(this._page, model);
-    }
-    /**
-     * @param {?} model
-     * @return {?}
-     */
-    onAssign(model) {
-        Object.keys(this.group.controls).forEach(key => {
-            switch (key) {
-                case 'description':
-                    this._page[key] = this.markdownService.compile(model[key]);
-                    break;
-                default:
-                    this._page[key] = model[key];
-            }
-        });
-    }
-}
-EditorComponent.decorators = [
-    { type: Component, args: [{
-                selector: 'ws-editor',
-                template: "<ng-container>\n\t<div class=\"page--editor\" [@openClose]=\"editing ? 'open' : 'closed'\" (clickOutside)=\"editing = false\">\n\t\t<ng-container *ngIf=\"editing && page\">\n\t\t\t<form class=\"form\" name=\"group\" [formGroup]=\"group\" (ngSubmit)=\"group.valid && onSubmit(group.value)\" #form=\"ngForm\" role=\"form\" novalidate autocomplete=\"off\">\n\t\t\t\t<div class=\"info\">\n\t\t\t\t\t<span class=\"id\">{{page.id}}</span>\n\t\t\t\t\t<span class=\"status\" [ngClass]=\"{ active: page.active }\">{{page.active ? 'active' : 'inactive'}}</span>\n\t\t\t\t\t<span class=\"component\">{{componentName}}</span>\n\t\t\t\t</div>\n\t\t\t\t<hr>\n\t\t\t\t<h2 class=\"h1\" [innerHTML]=\"page.title\"></h2>\n\t\t\t\t<!--\n\t\t\t\t<p [innerHTML]=\"page.description\"></p>\n\t\t\t\t-->\n\t\t\t\t<hr>\n\t\t\t\t<!--\n\t\t\t\t<div class=\"fieldset\">\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<label>Label</label>\n\t\t\t\t\t\t<input placeholder=\"placeholder\" type=\"text\" class=\"form-control\" required [(ngModel)]=\"model.title\" name=\"title\" #title=\"ngModel\" autocomplete=\"title\">\n\t\t\t\t\t\t<div *ngIf=\"title.invalid && (form.submitted || title.dirty || title.touched)\" class=\"alert alert-danger\">\n\t\t\t\t\t\t\t<div *ngIf=\"title.errors.required\">{{ 'errors.required' | translate }}</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t-->\n\t\t\t\t<div *ngFor=\"let control of controls\">\n\t\t\t\t\t<ws-control [control]=\"control\" [form]=\"group\"></ws-control>\n\t\t\t\t</div>\n\t\t\t\t<!-- <control-editable formControlName=\"email\"></control-editable> -->\n\t\t\t\t<div class=\"action-bar\">\n\t\t\t\t\t<button type=\"text\" class=\"btn btn--dimmed\" [disabled]=\"submitted || !group.valid\" (click)=\"onReset()\" title=\"Annulla\"><span>Annulla</span></button>\n\t\t\t\t\t<button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"submitted || !group.valid\" [ngClass]=\"{ 'btn--busy': busy }\" title=\"Salva\"><span>Salva</span></button>\n\t\t\t\t</div>\n\t\t\t</form>\n\t\t</ng-container>\n\t</div>\n</ng-container>\n",
-                animations: [
-                    trigger('openClose', [
-                        state('open', style({
-                            opacity: 1,
-                            transform: 'translateX(0)',
-                        })),
-                        state('closed', style({
-                            opacity: 0.5,
-                            transform: 'translateX(100%)',
-                        })),
-                        transition('open => closed', [
-                            animate('250ms')
-                        ]),
-                        transition('closed => open', [
-                            animate('150ms')
-                        ]),
-                    ]),
-                ],
-                encapsulation: ViewEncapsulation.Emulated,
-                styles: [":host form{margin:0}:host label{display:block;width:100%;color:#55555a;font-weight:700;font-size:12px}.page--editor{position:fixed;top:0;right:0;width:320px;height:100vh;padding:15px;overflow-x:hidden;overflow-y:auto;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.5;background:#fafafa;color:#55555a}.page--editor .h1{color:#55555a}@media (max-width:1024px){.page--editor{display:none}}.id{display:inline-block;padding:4px 6px;background:#0875c2;color:#fff;border-radius:3px;font-size:12px;line-height:1;margin-right:4px}.status{display:inline-block;padding:4px 6px;background:#fff;color:#000;border-radius:3px;font-size:12px;line-height:1;margin-right:4px}.status.active{background:green;color:#fff}.component{display:inline-block;font-size:14px;font-style:italic}::-webkit-scrollbar{width:0}::-webkit-scrollbar-track{background:0 0}::-webkit-scrollbar-thumb{background:0 0}::-webkit-scrollbar-thumb:hover{background:0 0}"]
-            }] }
-];
-/** @nocollapse */
-EditorComponent.ctorParameters = () => [
-    { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
-    { type: ConfigService },
-    { type: MarkdownService },
-    { type: FormService },
-    { type: PageResolverService }
-];
-EditorComponent.propDecorators = {
-    onKeydown: [{ type: HostListener, args: ['document:keydown', ['$event'],] }]
-};
 
 /**
  * @fileoverview added by tsickle
@@ -3394,7 +2889,7 @@ class ControlComponent {
 }
 ControlComponent.decorators = [
     { type: Component, args: [{
-                selector: 'ws-control',
+                selector: 'core-control',
                 template: "<ng-container [ngSwitch]=\"control.schema\">\r\n\t<ng-container *ngSwitchCase=\"'checkbox'\">\r\n\t\t<b>Checkbox</b><br>\r\n\t</ng-container>\r\n\t<ng-container *ngSwitchCase=\"'email'\">\r\n\t\t<b>Email</b><br>\r\n\t</ng-container>\r\n\t<ng-container *ngSwitchCase=\"'number'\">\r\n\t\t<b>Number</b><br>\r\n\t</ng-container>\r\n\t<ng-container *ngSwitchCase=\"'password'\">\r\n\t\t<b>Password</b><br>\r\n\t</ng-container>\r\n</ng-container>\r\n<div class=\"form-group\" [formGroup]=\"form\">\r\n\t<div [ngSwitch]=\"control.schema\">\r\n\t\t<div *ngSwitchCase=\"'checkbox'\" class=\"form-group\">\r\n\t\t\t<!-- CHECKBOX -->\r\n\t\t\t<div class=\"checkbox\">\r\n\t\t\t\t<label>\r\n\t\t\t\t\t<input type=\"checkbox\" class=\"form-check-input\" [id]=\"control.key\" [formControlName]=\"control.key\">\r\n\t\t\t\t\t<span>{{ control.label | translate }}</span>\r\n\t\t\t\t</label>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div *ngSwitchCase=\"'email'\">\r\n\t\t\t<!-- EMAIL -->\r\n\t\t\t<label [attr.for]=\"control.key\">{{ control.label | translate }}</label>\r\n\t\t\t<input placeholder=\"{{ control.placeholder | translate }}\" class=\"form-control\" [id]=\"control.key\" [formControlName]=\"control.key\" [type]=\"control.type\">\r\n\t\t</div>\r\n\t\t<div *ngSwitchCase=\"'number'\">\r\n\t\t\t<!-- NUMBER -->\r\n\t\t\t<label [attr.for]=\"control.key\">{{ control.label | translate }}</label>\r\n\t\t\t<input placeholder=\"{{ control.placeholder | translate }}\" class=\"form-control\" [id]=\"control.key\" [type]=\"control.type\" [attr.step]=\"control.step\" (input)=\"onInput($event)\" (focus)=\"onFocus($event)\" (blur)=\"onBlur($event)\" [value]=\"getFormattedValue()\">\r\n\t\t</div>\r\n\t\t<div *ngSwitchCase=\"'password'\">\r\n\t\t\t<!-- PASSWORD -->\r\n\t\t\t<label [attr.for]=\"control.key\">{{ control.label | translate }}</label>\r\n\t\t\t<div class=\"input-group\">\r\n\t\t\t\t<input placeholder=\"{{ control.placeholder | translate }}\" class=\"form-control\" [id]=\"control.key\" [formControlName]=\"control.key\" [type]=\"control.type\" #password>\r\n\t\t\t\t<div class=\"input-group-append\" *ngIf=\"control.type === 'password'\">\r\n\t\t\t\t\t<div class=\"input-group-text\">\r\n\t\t\t\t\t\t<input type=\"checkbox\" [attr.aria-label]=\"control.label | translate\" (input)=\"password.type = reveal.checked ? 'text' : control.type\" #password>\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div *ngSwitchCase=\"'radio'\" class=\"form-group\">\r\n\t\t\t<!-- RADIO -->\r\n\t\t\t<div class=\"radio\">\r\n\t\t\t\t<label>\r\n\t\t\t\t\t<input type=\"radio\" class=\"form-radio-input\" [id]=\"control.key\" [formControlName]=\"control.key\">\r\n\t\t\t\t\t<span>{{ control.label | translate }}</span>\r\n\t\t\t\t</label>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div *ngSwitchCase=\"'select'\">\r\n\t\t\t<!-- SELECT -->\r\n\t\t\t<label [attr.for]=\"control.key\">{{ control.label | translate }}</label>\r\n\t\t\t<select class=\"form-control\" [id]=\"control.key\" [formControlName]=\"control.key\">\r\n\t\t\t\t<option *ngFor=\"let opt of control.options\" [value]=\"opt.key\">{{opt.value}}</option>\r\n\t\t\t</select>\r\n\t\t</div>\r\n\t\t<div *ngSwitchCase=\"'markdown'\">\r\n\t\t\t<!-- MARKDOWN -->\r\n\t\t\t<label [attr.for]=\"control.key\">{{ control.label | translate }}</label>\r\n\t\t\t<textarea placeholder=\"{{ control.placeholder | translate }}\" class=\"form-control\" [id]=\"control.key\" [formControlName]=\"control.key\" rows=\"4\"></textarea>\r\n\t\t</div>\r\n\t\t<div *ngSwitchCase=\"'text'\">\r\n\t\t\t<!-- TEXT -->\r\n\t\t\t<label [attr.for]=\"control.key\">{{ control.label | translate }}</label>\r\n\t\t\t<input placeholder=\"{{ control.placeholder | translate }}\" class=\"form-control\" [id]=\"control.key\" [formControlName]=\"control.key\" [type]=\"control.type\">\r\n\t\t</div>\r\n\t</div>\r\n\t<div *ngIf=\"controlRef.invalid && (controlRef.dirty || controlRef.touched)\" class=\"alert alert-danger\">\r\n\t\t<div *ngIf=\"controlRef.errors.required\">{{ 'errors.required' | translate }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.requiredTrue\">{{ 'errors.required' | translate }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.min\">{{ 'errors.min' | translate : { value: control.min } }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.max\">{{ 'errors.max' | translate : { value: control.max } }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.email\">{{ 'errors.email' | translate }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.minLength\">{{ 'errors.minLength' | translate : { value: control.minLength } }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.maxLength\">{{ 'errors.maxLength' | translate : { value: control.maxLength } }}</div>\r\n\t\t<!-- <div *ngIf=\"controlRef.errors.pattern\">{{ 'errors.pattern' | translate }}</div> -->\r\n\t\t<div *ngIf=\"controlRef.errors.match\">{{ 'errors.match' | translate }}</div>\r\n\t</div>\r\n</div>\r\n",
                 providers: [{
                         provide: NG_VALUE_ACCESSOR,
@@ -3412,6 +2907,126 @@ ControlComponent.propDecorators = {
     control: [{ type: Input }],
     form: [{ type: Input }]
 };
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @param {?} otherKey
+ * @param {?=} reverse
+ * @param {?=} group
+ * @return {?}
+ */
+function matchValidator(otherKey, reverse = false, group) {
+    return (control) => {
+        /** @type {?} */
+        const otherControl = group.controls[otherKey];
+        /** @type {?} */
+        const value = control.value;
+        // value not equal
+        if (otherControl && value !== otherControl.value && !reverse) {
+            return {
+                match: true,
+            };
+        }
+        // value equal and reverse
+        if (otherControl && value === otherControl.value && reverse) {
+            if (otherControl.errors) {
+                delete otherControl.errors['match'];
+                if (!Object.keys(otherControl.errors).length) {
+                    otherControl.setErrors(null);
+                }
+            }
+        }
+        // value not equal and reverse
+        if (otherControl && value !== otherControl.value && reverse) {
+            otherControl.setErrors({
+                match: true,
+            });
+        }
+        return null;
+    };
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class ControlService {
+    /**
+     * @param {?} control
+     * @param {?} group
+     * @return {?}
+     */
+    getValidators(control, group) {
+        /** @type {?} */
+        const validators = [];
+        if (control.min) {
+            validators.push(Validators.min(control.min));
+        }
+        if (control.max) {
+            validators.push(Validators.max(control.max));
+        }
+        if (control.required) {
+            validators.push(Validators.required);
+        }
+        if (control.requiredTrue) {
+            validators.push(Validators.requiredTrue);
+        }
+        if (control.email) {
+            validators.push(Validators.email);
+        }
+        if (control.minLength) {
+            validators.push(Validators.minLength(control.minLength));
+        }
+        if (control.maxLength) {
+            validators.push(Validators.maxLength(control.maxLength));
+        }
+        if (control.pattern) {
+            validators.push(Validators.pattern(control.pattern));
+        }
+        if (control.match) {
+            validators.push(matchValidator(control.match, control.reverse, group));
+        }
+        // console.log(control.key, validators);
+        return validators;
+    }
+    /**
+     * @param {?} controls
+     * @return {?}
+     */
+    toFormGroup(controls) {
+        /** @type {?} */
+        const options = {};
+        controls.forEach(x => {
+            // group[x.key] = new FormControl(x.value, this.getValidators(x, group));
+            /** @type {?} */
+            const formControl = new FormControl(x.value);
+            if (x.disabled) {
+                formControl.disable();
+            }
+            options[x.key] = formControl;
+            // x.setControl(formControl); // !!!
+        });
+        /** @type {?} */
+        const group = new FormGroup(options);
+        // console.log(group);
+        controls.forEach(x => {
+            /** @type {?} */
+            const validators = this.getValidators(x, group);
+            // console.log(validators);
+            group.controls[x.key].setValidators(validators);
+        });
+        return group;
+    }
+}
+ControlService.decorators = [
+    { type: Injectable, args: [{
+                providedIn: 'root'
+            },] }
+];
+/** @nocollapse */ ControlService.ngInjectableDef = defineInjectable({ factory: function ControlService_Factory() { return new ControlService(); }, token: ControlService, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
@@ -3481,6 +3096,203 @@ ExistsValidator.decorators = [
 ExistsValidator.propDecorators = {
     exists: [{ type: Input }]
 };
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class ControlCheckbox extends ControlBase {
+    /**
+     * @param {?=} options
+     */
+    constructor(options = {}) {
+        super(options);
+        this.schema = 'checkbox';
+        this.type = options.type || this.type;
+    }
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class ControlEmail extends ControlBase {
+    /**
+     * @param {?=} options
+     */
+    constructor(options = {}) {
+        super(options);
+        this.schema = 'email';
+        this.type = options.type || this.type;
+        this.email = true;
+        this.pattern = options.pattern || '[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}';
+    }
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class ControlMarkdown extends ControlBase {
+    /**
+     * @param {?=} options
+     */
+    constructor(options = {}) {
+        super(options);
+        this.schema = 'markdown';
+        this.type = options.type || this.type;
+    }
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class ControlNumber extends ControlBase {
+    /**
+     * @param {?=} options
+     */
+    constructor(options = {}) {
+        super(options);
+        this.schema = 'number';
+        this.type = options.type || this.type;
+    }
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class ControlPassword extends ControlBase {
+    /**
+     * @param {?=} options
+     */
+    constructor(options = {}) {
+        super(options);
+        this.schema = 'password';
+        this.type = options.type || this.type;
+    }
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class ControlRadio extends ControlBase {
+    /**
+     * @param {?=} options
+     */
+    constructor(options = {}) {
+        super(options);
+        this.schema = 'radio';
+        this.type = options.type || this.type;
+    }
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class ControlSelect extends ControlBase {
+    /**
+     * @param {?=} options
+     */
+    constructor(options = {}) {
+        super(options);
+        this.schema = 'select';
+        this.options = [];
+        this.options = options.options || [];
+    }
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class ControlText extends ControlBase {
+    /**
+     * @param {?=} options
+     */
+    constructor(options = {}) {
+        super(options);
+        this.schema = 'text';
+        this.type = options.type || this.type;
+    }
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class FormService {
+    /**
+     * @param {?} controlService
+     */
+    constructor(controlService) {
+        this.controlService = controlService;
+    }
+    /**
+     * @param {?} options
+     * @return {?}
+     */
+    getControlsFromOptions(options) {
+        /** @type {?} */
+        const controls = options.map(o => {
+            switch (o.schema) {
+                case 'checkbox':
+                    return new ControlCheckbox(o);
+                case 'email':
+                    return new ControlEmail(o);
+                case 'number':
+                    return new ControlNumber(o);
+                case 'password':
+                    return new ControlPassword(o);
+                case 'radio':
+                    return new ControlRadio(o);
+                case 'select':
+                    return new ControlSelect(o);
+                case 'markdown':
+                    return new ControlMarkdown(o);
+                case 'text':
+                    return new ControlText(o);
+                default:
+                    return new ControlText(o);
+            }
+        });
+        controls.sort((a, b) => a.order - b.order);
+        return controls;
+    }
+    /**
+     * @param {?} options
+     * @return {?}
+     */
+    getGroupFromOptions(options) {
+        /** @type {?} */
+        const controls = this.getControlsFromOptions(options);
+        /** @type {?} */
+        const group = this.controlService.toFormGroup(controls);
+        return group;
+    }
+    /**
+     * @param {?} controls
+     * @return {?}
+     */
+    getGroupFromControls(controls) {
+        /** @type {?} */
+        const group = this.controlService.toFormGroup(controls);
+        return group;
+    }
+}
+FormService.decorators = [
+    { type: Injectable, args: [{
+                providedIn: 'root'
+            },] }
+];
+/** @nocollapse */
+FormService.ctorParameters = () => [
+    { type: ControlService }
+];
+/** @nocollapse */ FormService.ngInjectableDef = defineInjectable({ factory: function FormService_Factory() { return new FormService(inject(ControlService)); }, token: FormService, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
@@ -4291,7 +4103,7 @@ class LoggerComponent {
 }
 LoggerComponent.decorators = [
     { type: Component, args: [{
-                selector: 'ws-logger',
+                selector: 'core-logger',
                 template: "<div class=\"error-http\" *ngIf=\"logger.httpError\">\n\t<span>error</span>&nbsp;\n\t<span class=\"status\">{{logger.httpError.status}}</span>&nbsp;\n\t<span class=\"url\">{{logger.httpError.url}}</span>&nbsp;\n\t<span class=\"message\">{{logger.httpError.body?.error}}</span>\n</div>\n<!--\n<div *ngIf=\"logger.logs.length\">\n\t<ul class=\"list-group \">\n\t\t<li class=\"list-group-item\">\n\t\t\t<button type=\"button\" class=\"btn btn-outline-primary btn-sm float-right\" (click)=\"logger.clear()\" title=\"Clear Logs\">{{ 'app.clear' | translate }}</button>\n\t\t</li>\n\t\t<li class=\"list-group-item\" *ngFor='let log of logger.logs'>\n\t\t\t<span>{{log}}</span>\n\t\t</li>\n\t</ul>\n\t<br>\n</div>\n-->\n",
                 encapsulation: ViewEncapsulation.Emulated,
                 styles: [".error-http{padding:15px;max-width:1140px;margin:0 auto 10px;background:#faebd7;font-size:13px;font-family:monospace;color:#d2691e}"]
@@ -4562,989 +4374,6 @@ PublicPipe.ctorParameters = () => [
     { type: SegmentPipe }
 ];
 /** @nocollapse */ PublicPipe.ngInjectableDef = defineInjectable({ factory: function PublicPipe_Factory() { return new PublicPipe(inject(ConfigService), inject(SegmentPipe)); }, token: PublicPipe, providedIn: "root" });
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class FacebookConfig {
-    constructor() {
-        this.fields = 'id,name,first_name,last_name,email,gender,picture,cover,link';
-        this.scope = 'public_profile, email'; // publish_stream
-        this.version = 'v2.10';
-    }
-}
-class FacebookService {
-    /**
-     * @param {?} platformId
-     * @param {?} configService
-     * @param {?} storageService
-     * @param {?} onceService
-     * @param {?} routeService
-     */
-    constructor(platformId, configService, storageService, onceService, routeService) {
-        this.platformId = platformId;
-        this.configService = configService;
-        this.storageService = storageService;
-        this.onceService = onceService;
-        this.routeService = routeService;
-        this.init();
-    }
-    /**
-     * @return {?}
-     */
-    init() {
-        if (!this.configService.options.plugins && !this.configService.options.plugins.facebook) {
-            throw new Error('FacebookService.error missing config object in environment.plugins.facebook');
-        }
-        this.options = Object.assign(new FacebookConfig(), this.configService.options.plugins.facebook);
-        this.storage = this.storageService.tryGet();
-        this.authResponse = this.storage.get('facebook');
-        // console.log('FacebookService.authResponse', this.authResponse);
-    }
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-        *  call FacebookService.facebook on component OnInit to avoid popup blockers via asyncronous loading *
-        * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-    /**
-     * @return {?}
-     */
-    facebook() {
-        if (isPlatformBrowser(this.platformId) && window.location.protocol.indexOf('https') !== -1) {
-            if (this.FB) {
-                return of(this.FB);
-            }
-            else {
-                return this.onceService.script('//connect.facebook.net/' + this.routeService.currentLang + '/sdk.js', 'fbAsyncInit').pipe(concatMap(x => {
-                    // console.log(x);
-                    /** @type {?} */
-                    const FB = window['FB'];
-                    FB.init({
-                        appId: this.options.appId,
-                        // status: true,
-                        cookie: true,
-                        xfbml: true,
-                        version: this.options.version,
-                    });
-                    this.FB = FB;
-                    return of(FB);
-                }));
-            }
-        }
-        else {
-            return of(null);
-        }
-    }
-    /**
-     * @return {?}
-     */
-    status() {
-        return this.facebook().pipe(filter(f => f !== null), concatMap(f => {
-            return from(new Promise((resolve, reject) => {
-                f.getLoginStatus((r) => {
-                    this.authResponse = null;
-                    if (r.status === 'connected') {
-                        this.authResponse = r.authResponse;
-                        this.storage.set('facebook', r.authResponse);
-                        resolve(r);
-                    }
-                    else if (r.status === 'not_authorized') {
-                        this.storage.delete('facebook');
-                        reject(r);
-                    }
-                    else {
-                        reject(r);
-                    }
-                }, { scope: this.options.scope });
-            }));
-        }));
-        /*
-        return from(new Promise((resolve, reject) => {
-            this.facebook().subscribe(x => {
-                x.getLoginStatus((r) => {
-                    this.authResponse = null;
-                    if (r.status === 'connected') {
-                        this.authResponse = r.authResponse;
-                        this.storage.set('facebook', r.authResponse);
-                        resolve(r);
-                    } else if (r.status === 'not_authorized') {
-                        this.storage.delete('facebook');
-                        reject(r);
-                    } else {
-                        reject(r);
-                    }
-                }, { scope: this.options.scope });
-            });
-        }));
-        */
-    }
-    /**
-     * @return {?}
-     */
-    login() {
-        return this.facebook().pipe(filter(f => f !== null), concatMap(f => {
-            return from(new Promise((resolve, reject) => {
-                f.login((r) => {
-                    this.authResponse = null;
-                    if (r.status === 'connected') {
-                        this.authResponse = r.authResponse;
-                        this.storage.set('facebook', r.authResponse);
-                        resolve(r);
-                    }
-                    else if (r.status === 'not_authorized') {
-                        this.storage.delete('facebook');
-                        reject(r);
-                    }
-                    else {
-                        reject(r);
-                    }
-                }, { scope: this.options.scope });
-            }));
-        }));
-        /*
-        return from(new Promise((resolve, reject) => {
-            this.facebook().subscribe(x => {
-                x.login((r) => {
-                    this.authResponse = null;
-                    if (r.status === 'connected') {
-                        this.authResponse = r.authResponse;
-                        this.storage.set('facebook', r.authResponse);
-                        resolve(r);
-                    } else if (r.status === 'not_authorized') {
-                        this.storage.delete('facebook');
-                        reject(r);
-                    } else {
-                        reject(r);
-                    }
-                }, { scope: this.options.scope });
-            });
-        }));
-        */
-    }
-    /**
-     * @return {?}
-     */
-    logout() {
-        return this.facebook().pipe(filter(f => f !== null), concatMap(f => {
-            return from(new Promise((resolve, reject) => {
-                // console.log('f', f);
-                f.logout(r => {
-                    resolve(r);
-                    this.storage.delete('facebook');
-                });
-            }));
-        }));
-        /*
-        return from(new Promise((resolve, reject) => {
-            this.facebook().subscribe(x => {
-                x.logout(r => {
-                    resolve(r);
-                    this.storage.delete('facebook');
-                });
-            });
-        }));
-        */
-    }
-    /**
-     * @param {?=} fields
-     * @return {?}
-     */
-    getMe(fields) {
-        return this.login().pipe(concatMap(l => {
-            return from(new Promise((resolve, reject) => {
-                fields = fields || this.options.fields;
-                this.FB.api('/me', {
-                    fields: fields,
-                    accessToken: this.options.tokenClient,
-                }, (r) => {
-                    if (!r || r.error) {
-                        /** @type {?} */
-                        const error = r ? r.error : 'error';
-                        console.log('FacebookService.getMe.error', error);
-                        reject(r.error);
-                    }
-                    else {
-                        /** @type {?} */
-                        const user = (/** @type {?} */ (r));
-                        user.authResponse = this.authResponse;
-                        user.facebookToken = this.authResponse.accessToken;
-                        // console.log('FacebookService.getMe.success', user);
-                        resolve(user);
-                    }
-                });
-            }));
-        }));
-    }
-}
-FacebookService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-FacebookService.ctorParameters = () => [
-    { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
-    { type: ConfigService },
-    { type: LocalStorageService },
-    { type: OnceService },
-    { type: RouteService }
-];
-/** @nocollapse */ FacebookService.ngInjectableDef = defineInjectable({ factory: function FacebookService_Factory() { return new FacebookService(inject(PLATFORM_ID), inject(ConfigService), inject(LocalStorageService), inject(OnceService), inject(RouteService)); }, token: FacebookService, providedIn: "root" });
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class GoogleTagManagerPageViewEvent {
-}
-class GoogleTagManagerConfig {
-}
-class GoogleTagManagerService {
-    /**
-     * @param {?} platformId
-     * @param {?} configService
-     * @param {?} zone
-     * @param {?} onceService
-     * @param {?} logger
-     */
-    constructor(platformId, configService, zone, onceService, logger) {
-        this.platformId = platformId;
-        this.configService = configService;
-        this.zone = zone;
-        this.onceService = onceService;
-        this.logger = logger;
-        this.init();
-    }
-    /**
-     * @private
-     * @return {?}
-     */
-    init() {
-        if (!this.configService.options.plugins && !this.configService.options.plugins.googleTagManager) {
-            throw new Error('GoogleTagManagerService.error missing config object in environment.plugins.googleTagManager');
-        }
-        this.options = Object.assign(new GoogleTagManagerConfig(), this.configService.options.plugins.googleTagManager);
-    }
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-        *  call GoogleTagManagerConfig.once() on app component OnInit *
-        * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-    /**
-     * @return {?}
-     */
-    once() {
-        if (isPlatformBrowser(this.platformId)) {
-            if (this.dataLayer) {
-                return of(this.dataLayer);
-            }
-            else if (this.dataLayer$) {
-                return this.dataLayer$;
-            }
-            else {
-                window['dataLayer'] = window['dataLayer'] || [];
-                /** @type {?} */
-                const id = this.options.id;
-                /** @type {?} */
-                const src = `https://www.googletagmanager.com/gtm.js?id=${id}`;
-                /** @type {?} */
-                const dataLayer = window['dataLayer'];
-                dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-                // console.log('GoogleTagManagerConfig.once', src, dataLayer);
-                this.dataLayer$ = this.onceService.script(src).pipe(map(x => {
-                    // console.log('dataLayer', dataLayer, x);
-                    this.dataLayer = dataLayer;
-                    return dataLayer;
-                }));
-                return this.dataLayer$;
-            }
-        }
-        else {
-            return of(null);
-        }
-    }
-    /**
-     * @param {?} payload
-     * @return {?}
-     */
-    push(payload) {
-        this.zone.runOutsideAngular(() => {
-            if (this.dataLayer) {
-                this.dataLayer.push(payload);
-                this.logger.log('GoogleTagManagerConfig.push', payload);
-            }
-            else {
-                this.once().pipe(first()).subscribe(dataLayer => {
-                    if (this.dataLayer) {
-                        this.dataLayer.push(payload);
-                        this.logger.log('GoogleTagManagerConfig.push', payload);
-                    }
-                });
-            }
-        });
-    }
-}
-GoogleTagManagerService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-GoogleTagManagerService.ctorParameters = () => [
-    { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
-    { type: ConfigService },
-    { type: NgZone },
-    { type: OnceService },
-    { type: Logger }
-];
-/** @nocollapse */ GoogleTagManagerService.ngInjectableDef = defineInjectable({ factory: function GoogleTagManagerService_Factory() { return new GoogleTagManagerService(inject(PLATFORM_ID), inject(ConfigService), inject(NgZone), inject(OnceService), inject(Logger)); }, token: GoogleTagManagerService, providedIn: "root" });
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class GoogleTagManagerComponent extends DisposableComponent {
-    /**
-     * @param {?} platformId
-     * @param {?} configService
-     * @param {?} router
-     * @param {?} googleTagManager
-     */
-    constructor(platformId, configService, router, googleTagManager) {
-        super();
-        this.platformId = platformId;
-        this.configService = configService;
-        this.router = router;
-        this.googleTagManager = googleTagManager;
-        this.useIframe = true;
-        this.pageView = new EventEmitter();
-    }
-    /**
-     * @return {?}
-     */
-    ngAfterViewInit() {
-        if (isPlatformBrowser(this.platformId)) {
-            this.router.events.pipe(takeUntil(this.unsubscribe), filter(e => e instanceof NavigationEnd)).subscribe((e) => {
-                /** @type {?} */
-                const url = `${this.configService.options.origin}${e.urlAfterRedirects}`;
-                // console.log('GoogleTagManagerComponent.NavigationEnd', e.id, e.url, e.urlAfterRedirects, url);
-                if (this.dataLayer) {
-                    this.pageView.emit({ dataLayer: this.dataLayer, url });
-                }
-                else {
-                    this.googleTagManager.once().pipe(takeUntil(this.unsubscribe)).subscribe(dataLayer => {
-                        // console.log('dataLayer', dataLayer);
-                        this.id = this.googleTagManager.options.id;
-                        this.iframeUrl = `https://www.googletagmanager.com/ns.html?id=${this.id}`;
-                        this.dataLayer = dataLayer;
-                        this.pageView.emit({ dataLayer: this.dataLayer, url });
-                    });
-                }
-            });
-        }
-    }
-}
-GoogleTagManagerComponent.decorators = [
-    { type: Component, args: [{
-                selector: 'ws-google-tag-manager',
-                template: `
-	<!-- Google Tag Manager (noscript) -->
-		<noscript *ngIf="useIframe && dataLayer">
-			<iframe [src]="iframeUrl | safeUrl" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-		</noscript>
-	<!-- End Google Tag Manager (noscript) -->`
-            }] }
-];
-/** @nocollapse */
-GoogleTagManagerComponent.ctorParameters = () => [
-    { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
-    { type: ConfigService },
-    { type: Router },
-    { type: GoogleTagManagerService }
-];
-GoogleTagManagerComponent.propDecorators = {
-    pageView: [{ type: Output }]
-};
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class GoogleConfig {
-    constructor() {
-        this.cookiepolicy = 'single_host_origin';
-        this.scope = 'profile email';
-        this.fetch_basic_profile = true;
-        this.ux_mode = 'popup';
-    }
-}
-class GoogleService {
-    /**
-     * @param {?} platformId
-     * @param {?} configService
-     * @param {?} storageService
-     * @param {?} onceService
-     */
-    constructor(platformId, configService, storageService, onceService) {
-        this.platformId = platformId;
-        this.configService = configService;
-        this.storageService = storageService;
-        this.onceService = onceService;
-        this.init();
-    }
-    /**
-     * @return {?}
-     */
-    init() {
-        if (!this.configService.options.plugins && !this.configService.options.plugins.google) {
-            throw new Error('GoogleService.error missing config object in environment.plugins.google');
-        }
-        this.options = Object.assign(new GoogleConfig(), this.configService.options.plugins.google);
-        this.storage = this.storageService.tryGet();
-        this.authResponse = this.storage.get('google');
-        // console.log('GoogleService.authResponse', this.authResponse);
-    }
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-        *  call GoogleService.google on component OnInit to avoid popup blockers via asyncronous loading *
-        * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-    /**
-     * @private
-     * @return {?}
-     */
-    google() {
-        if (isPlatformBrowser(this.platformId)) {
-            return new Observable().pipe(x => {
-                if (this.gapi) {
-                    return of(this.gapi);
-                }
-                else {
-                    return this.once();
-                }
-            });
-        }
-        else {
-            return of(null);
-        }
-    }
-    /**
-     * @return {?}
-     */
-    getMe() {
-        return this.login().pipe(concatMap(x => {
-            /** @type {?} */
-            const profile = this.instance.currentUser.get().getBasicProfile();
-            /** @type {?} */
-            const user = (/** @type {?} */ ({
-                id: profile.getId(),
-                name: profile.getName(),
-                firstName: profile.getGivenName(),
-                lastName: profile.getFamilyName(),
-                picture: profile.getImageUrl(),
-                email: profile.getEmail(),
-                authResponse: this.authResponse,
-                googleToken: this.authResponse.access_token,
-            }));
-            return of(user);
-        }));
-    }
-    /**
-     * @return {?}
-     */
-    login() {
-        return this.auth2Instance().pipe(concatMap(x => {
-            return this.signin();
-        }));
-    }
-    /**
-     * @return {?}
-     */
-    logout() {
-        return this.auth2Instance().pipe(concatMap(x => {
-            return from(new Promise((resolve, reject) => {
-                if (this.instance.isSignedIn && this.instance.isSignedIn.get()) {
-                    this.instance.signOut().then((signed) => {
-                        resolve();
-                    }, reject);
-                }
-                else {
-                    resolve();
-                }
-            }));
-        }));
-    }
-    /**
-     * @private
-     * @return {?}
-     */
-    once() {
-        return this.onceService.script('https://apis.google.com/js/api:client.js?onload={{callback}}', true).pipe(concatMap(x => {
-            this.gapi = window['gapi'];
-            return of(this.gapi);
-        }));
-    }
-    /**
-     * @private
-     * @return {?}
-     */
-    getAuth2() {
-        return new Observable().pipe(x => {
-            if (this.auth2) {
-                return of(this.auth2);
-            }
-            else {
-                return this.google().pipe(concatMap(x => {
-                    if (this.gapi.auth2) {
-                        return this.auth2init();
-                    }
-                    else {
-                        return from(new Promise((resolve, reject) => {
-                            this.gapi.load('auth2', () => {
-                                setTimeout(() => {
-                                    resolve();
-                                }, 200);
-                            }, reject);
-                        })).pipe(concatMap(x => {
-                            return this.auth2init();
-                        }));
-                    }
-                }));
-            }
-        });
-    }
-    /**
-     * @private
-     * @return {?}
-     */
-    signin() {
-        return from(new Promise((resolve, reject) => {
-            /** @type {?} */
-            const readAccessToken = () => {
-                // console.log('GoogleLogin.readAccessToken');
-                try {
-                    /** @type {?} */
-                    const user = this.instance.currentUser.get().getAuthResponse(true);
-                    // console.log('GoogleLogin.readAccessToken.success', user);
-                    this.authResponse = user;
-                    this.storage.set('google', user);
-                    resolve({
-                        code: user.access_token,
-                    });
-                }
-                catch (error) {
-                    console.log('GoogleLogin.readAccessToken.error', error);
-                    this.storage.delete('google');
-                    reject(error);
-                }
-            };
-            if (this.instance.isSignedIn && this.instance.isSignedIn.get()) {
-                readAccessToken();
-            }
-            else {
-                this.instance.signIn({
-                    scope: 'profile email',
-                }).then((signed) => {
-                    readAccessToken();
-                }, (error) => {
-                    this.storage.delete('google');
-                    reject(error);
-                });
-            }
-        }));
-    }
-    /**
-     * @private
-     * @return {?}
-     */
-    auth2init() {
-        return from(new Promise((resolve, reject) => {
-            this.gapi.auth2.init({
-                client_id: this.options.clientId,
-                cookiepolicy: 'single_host_origin',
-                scope: 'profile email',
-                fetch_basic_profile: true,
-                ux_mode: 'popup',
-            }).then(() => {
-                this.auth2 = this.gapi.auth2;
-                // console.log('Auth2Init.success', this.auth2);
-                resolve(this.auth2);
-            }, reject);
-        }));
-    }
-    /**
-     * @return {?}
-     */
-    auth2Instance() {
-        if (this.instance) {
-            return of(this.instance);
-        }
-        else {
-            return this.getAuth2().pipe(concatMap(x => {
-                this.instance = this.auth2.getAuthInstance();
-                return of(this.instance);
-            }));
-        }
-    }
-}
-GoogleService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-GoogleService.ctorParameters = () => [
-    { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
-    { type: ConfigService },
-    { type: LocalStorageService },
-    { type: OnceService }
-];
-/** @nocollapse */ GoogleService.ngInjectableDef = defineInjectable({ factory: function GoogleService_Factory() { return new GoogleService(inject(PLATFORM_ID), inject(ConfigService), inject(LocalStorageService), inject(OnceService)); }, token: GoogleService, providedIn: "root" });
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class MapboxService {
-}
-MapboxService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */ MapboxService.ngInjectableDef = defineInjectable({ factory: function MapboxService_Factory() { return new MapboxService(); }, token: MapboxService, providedIn: "root" });
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class PayPalConfig {
-}
-class PayPalService {
-    /**
-     * @param {?} platformId
-     * @param {?} configService
-     * @param {?} onceService
-     */
-    constructor(platformId, configService, onceService) {
-        this.platformId = platformId;
-        this.configService = configService;
-        this.onceService = onceService;
-        this.init();
-    }
-    /**
-     * @private
-     * @return {?}
-     */
-    init() {
-        if (!this.configService.options.plugins && !this.configService.options.plugins.paypal) {
-            throw new Error('PayPalService.error missing config object in environment.plugins.paypal');
-        }
-        this.options = Object.assign(new PayPalConfig(), this.configService.options.plugins.paypal);
-    }
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-        *  call PayPalConfig.once() on app component OnInit *
-        * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-    /**
-     * @return {?}
-     */
-    once() {
-        if (isPlatformBrowser(this.platformId)) {
-            if (this.paypal) {
-                return of(this.paypal);
-            }
-            else if (this.paypal$) {
-                return this.paypal$;
-            }
-            else {
-                /** @type {?} */
-                const src = `https://www.paypalobjects.com/api/checkout.js`;
-                // console.log('PayPalConfig.once', src);
-                this.paypal$ = this.onceService.script(src).pipe(map(x => {
-                    this.paypal = window['paypal'];
-                    return this.paypal;
-                }));
-                return this.paypal$;
-            }
-        }
-        else {
-            return of(null);
-        }
-    }
-    /**
-     * @param {?} options
-     * @param {?=} selector
-     * @return {?}
-     */
-    render(options, selector) {
-        selector = selector || '#paypal-button';
-        return this.once().pipe(mergeMap(paypal => {
-            paypal.Button.render(this.getOptions(paypal, options), selector);
-            return of(paypal);
-        }));
-    }
-    /**
-     * @private
-     * @param {?} paypal
-     * @param {?} options
-     * @return {?}
-     */
-    getOptions(paypal, options) {
-        /** @type {?} */
-        const payload = Object.assign(this.options, options);
-        payload.payment = (data, actions) => {
-            return new paypal.Promise((resolve, reject) => {
-                if (options.payment) {
-                    options.payment().pipe(first(), mergeMap(payload => {
-                        return from(actions.payment.create(payload));
-                    })).subscribe(success => resolve(success), // actions.payment.create(success)
-                    // actions.payment.create(success)
-                    error => reject(error));
-                }
-                else {
-                    console.log('PayPalService.payment callback not setted');
-                    reject(null);
-                }
-                // Make an ajax call to get the Payment ID. This should call your back-end,
-                // which should invoke the PayPal Payment Create api to retrieve the Payment ID.
-                // When you have a Payment ID, you need to call the `resolve` method, e.g `resolve(data.paymentID)`
-                // Or, if you have an error from your server side, you need to call `reject`, e.g. `reject(err)`
-                // jQuery.post('/my-api/create-payment')
-                // .done(function(data) { resolve(data.paymentID); })
-                // .fail(function(err)  { reject(err); });
-            });
-        };
-        payload.onAuthorize = (data, actions) => {
-            if (options.onAuthorize) {
-                return actions.payment.execute().then(payment => options.onAuthorize(payment, null), error => options.onAuthorize(null, error));
-            }
-            else {
-                console.log('PayPalService.onAuthorize callback not setted');
-            }
-        };
-        return payload;
-    }
-}
-PayPalService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-PayPalService.ctorParameters = () => [
-    { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
-    { type: ConfigService },
-    { type: OnceService }
-];
-/** @nocollapse */ PayPalService.ngInjectableDef = defineInjectable({ factory: function PayPalService_Factory() { return new PayPalService(inject(PLATFORM_ID), inject(ConfigService), inject(OnceService)); }, token: PayPalService, providedIn: "root" });
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class PayPalWidgetComponent extends DisposableComponent {
-    /**
-     * @param {?} platformId
-     * @param {?} paypalService
-     */
-    constructor(platformId, paypalService) {
-        super();
-        this.platformId = platformId;
-        this.paypalService = paypalService;
-    }
-    /**
-     * @return {?}
-     */
-    ngAfterViewInit() {
-        if (isPlatformBrowser(this.platformId)) {
-            this.paypalService.render(this.paypalOptions, '#paypal-widget-button').pipe(takeUntil(this.unsubscribe)).subscribe(paypal => {
-                // console.log('PayPalWidgetComponent.rendered', paypal)
-            });
-        }
-    }
-}
-PayPalWidgetComponent.decorators = [
-    { type: Component, args: [{
-                selector: 'ws-paypal-widget-component',
-                template: `<div id="#paypal-widget-button"></div>`
-            }] }
-];
-/** @nocollapse */
-PayPalWidgetComponent.ctorParameters = () => [
-    { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
-    { type: PayPalService }
-];
-PayPalWidgetComponent.propDecorators = {
-    paypalOptions: [{ type: Input }]
-};
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class TrustPilotConfig {
-    constructor() {
-        this.businessunitId = '58e253ab0000ff00059fc0fe';
-        this.businessunitName = 'www.eurospin-viaggi.it';
-    }
-}
-class TrustPilotService {
-    /**
-     * @param {?} platformId
-     * @param {?} configService
-     * @param {?} onceService
-     */
-    constructor(platformId, configService, onceService) {
-        this.platformId = platformId;
-        this.configService = configService;
-        this.onceService = onceService;
-        this.init();
-    }
-    /**
-     * @private
-     * @return {?}
-     */
-    init() {
-        if (!this.configService.options.plugins && !this.configService.options.plugins.trustPilot) {
-            throw new Error('TrustPilotService.error missing config object in environment.plugins.trustPilot');
-        }
-        this.options = Object.assign(new TrustPilotConfig(), this.configService.options.plugins.trustPilot);
-    }
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-        *  call TrustPilotConfig.once() on app component OnInit *
-        * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-    /**
-     * @return {?}
-     */
-    once() {
-        if (isPlatformBrowser(this.platformId)) {
-            if (this.Trustpilot) {
-                return of(this.Trustpilot);
-            }
-            else if (this.Trustpilot$) {
-                return this.Trustpilot$;
-            }
-            else {
-                /** @type {?} */
-                const src = `https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js`;
-                // console.log('TrustPilotConfig.once', src);
-                this.Trustpilot$ = this.onceService.script(src).pipe(map(x => {
-                    this.Trustpilot = window['Trustpilot'];
-                    return this.Trustpilot;
-                }));
-                return this.Trustpilot$;
-            }
-        }
-        else {
-            return of(null);
-        }
-    }
-}
-TrustPilotService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-TrustPilotService.ctorParameters = () => [
-    { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
-    { type: ConfigService },
-    { type: OnceService }
-];
-/** @nocollapse */ TrustPilotService.ngInjectableDef = defineInjectable({ factory: function TrustPilotService_Factory() { return new TrustPilotService(inject(PLATFORM_ID), inject(ConfigService), inject(OnceService)); }, token: TrustPilotService, providedIn: "root" });
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class TrustPilotWidgetOptions {
-    /**
-     * @param {?=} options
-     */
-    constructor(options) {
-        this.locale = 'it-IT';
-        this.styleHeight = '350px';
-        this.styleWidth = '100%';
-        this.theme = 'light';
-        this.group = 'on';
-        this.stars = '1,2,3,4,5';
-        if (options) {
-            Object.assign(this, options);
-        }
-    }
-    /**
-     * @param {?=} options
-     * @return {?}
-     */
-    static newFromConfig(options) {
-        return new TrustPilotWidgetOptions(options);
-    }
-    /**
-     * @param {?=} options
-     * @return {?}
-     */
-    set(options) {
-        if (options) {
-            Object.assign(this, options);
-        }
-        return this;
-    }
-}
-class TrustPilotWidgetComponent extends DisposableComponent {
-    /**
-     * @param {?} platformId
-     * @param {?} configService
-     * @param {?} elementRef
-     * @param {?} trustPilot
-     */
-    constructor(platformId, configService, elementRef, trustPilot) {
-        super();
-        this.platformId = platformId;
-        this.configService = configService;
-        this.elementRef = elementRef;
-        this.trustPilot = trustPilot;
-        this.init();
-    }
-    /**
-     * @private
-     * @return {?}
-     */
-    init() {
-        if (!this.configService.options.plugins && !this.configService.options.plugins.trustPilot) {
-            throw new Error('TrustPilotService.error missing config object in environment.plugins.trustPilot');
-        }
-        this.trustPilotOptions = this.configService.options.plugins.trustPilot;
-        this.options = new TrustPilotWidgetOptions(this.trustPilotOptions);
-    }
-    /**
-     * @return {?}
-     */
-    ngAfterViewInit() {
-        // console.log('TrustPilotWidgetComponent.ngOnInit', this.options, this.loaded);
-        if (isPlatformBrowser(this.platformId) && this.elementRef.nativeElement.children.length) { // && environment.production
-            if (!this.loaded) {
-                this.trustPilot.once().pipe(takeUntil(this.unsubscribe)).subscribe(Trustpilot => {
-                    Trustpilot.loadFromElement(this.elementRef.nativeElement.firstElementChild);
-                    this.loaded = true;
-                });
-            }
-        }
-    }
-}
-TrustPilotWidgetComponent.decorators = [
-    { type: Component, args: [{
-                selector: 'ws-trustpilot-widget-component',
-                template: "<ng-container>\n\t<ng-container [ngSwitch]=\"options.templateId\">\n\t\t<ng-container *ngSwitchCase=\"'544a426205dc0a09088833c6'\">\n\t\t\t<!-- PRODUCT REVIEWS -->\n\t\t\t<div class=\"trustpilot-comments\">\n\t\t\t\t<div class=\"trustpilot-widget\" [attr.data-template-id]=\"options.templateId\" [attr.data-businessunit-id]=\"options.businessunitId\" [attr.data-locale]=\"options.locale\" [attr.data-style-height]=\"options.styleHeight\" [attr.data-style-width]=\"options.styleWidth\" [attr.data-theme]=\"options.theme\" [attr.data-sku]=\"sku\" style=\"margin: 30px 0; max-width: 750px;\">\n\t\t\t\t\t<a href=\"https://it.trustpilot.com/review/{{options.businessunitName}}\" target=\"_blank\">Trustpilot</a>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</ng-container>\n\t\t<ng-container *ngSwitchCase=\"'530d0eaf748a510e2093cf9b'\">\n\t\t\t<!-- EVALUATE -->\n\t\t\t<div class=\"trustpilot-widget\" [attr.data-template-id]=\"options.templateId\" [attr.data-businessunit-id]=\"options.businessunitId\" [attr.data-locale]=\"options.locale\" [attr.data-style-height]=\"options.styleHeight\" [attr.data-style-width]=\"options.styleWidth\" [attr.data-theme]=\"options.theme\" [attr.data-group]=\"options.group\" style=\"margin: 30px 0; max-width: 750px;\">\n\t\t\t\t<a href=\"https://it.trustpilot.com/review/{{options.businessunitName}}\" target=\"_blank\">Trustpilot</a>\n\t\t\t</div>\n\t\t</ng-container>\n\t\t<ng-container *ngSwitchCase=\"'53aa8807dec7e10d38f59f32'\">\n\t\t\t<!-- MINI -->\n\t\t\t<div class=\"trustpilot-widget\" [attr.data-template-id]=\"options.templateId\" [attr.data-businessunit-id]=\"options.businessunitId\" [attr.data-locale]=\"options.locale\" [attr.data-style-height]=\"options.styleHeight\" [attr.data-style-width]=\"options.styleWidth\" [attr.data-theme]=\"options.theme\" style=\"margin: 15px auto; max-width: 750px;\">\n\t\t\t\t<a href=\"https://it.trustpilot.com/review/{{options.businessunitName}}\" target=\"_blank\">Trustpilot</a>\n\t\t\t</div>\n\t\t</ng-container>\n\t\t<ng-container *ngSwitchCase=\"'5613c9cde69ddc09340c6beb'\">\n\t\t\t<!-- STARTER -->\n\t\t\t<div class=\"trustpilot-widget\" [attr.data-template-id]=\"options.templateId\" [attr.data-businessunit-id]=\"options.businessunitId\" [attr.data-locale]=\"options.locale\" [attr.data-style-height]=\"options.styleHeight\" [attr.data-style-width]=\"options.styleWidth\" [attr.data-theme]=\"options.theme\" style=\"margin: 15px auto; max-width: 750px;\">\n\t\t\t\t<a href=\"https://it.trustpilot.com/review/{{options.businessunitName}}\" target=\"_blank\">Trustpilot</a>\n\t\t\t</div>\n\t\t</ng-container>\n\t\t<ng-container *ngSwitchCase=\"'53aa8912dec7e10d38f59f36'\">\n\t\t\t<!-- CAROUSEL -->\n\t\t\t<div class=\"trustpilot-widget\" [attr.data-template-id]=\"options.templateId\" [attr.data-businessunit-id]=\"options.businessunitId\" [attr.data-locale]=\"options.locale\" [attr.data-style-height]=\"options.styleHeight\" [attr.data-style-width]=\"options.styleWidth\" [attr.data-theme]=\"options.theme\" [attr.data-stars]=\"options.stars\" style=\"margin: 15px auto;\">\n\t\t\t\t<a href=\"https://it.trustpilot.com/review/{{options.businessunitName}}\" target=\"_blank\">Trustpilot</a>\n\t\t\t</div>\n\t\t</ng-container>\n\t</ng-container>\n</ng-container>\n",
-                encapsulation: ViewEncapsulation.Emulated,
-                styles: [":host{width:100%}.trustpilot-widget{margin:15px auto!important}@media print{.trustpilot-comments{display:none!important}}"]
-            }] }
-];
-/** @nocollapse */
-TrustPilotWidgetComponent.ctorParameters = () => [
-    { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
-    { type: ConfigService },
-    { type: ElementRef },
-    { type: TrustPilotService }
-];
-TrustPilotWidgetComponent.propDecorators = {
-    options: [{ type: Input }],
-    sku: [{ type: Input }]
-};
 
 /**
  * @fileoverview added by tsickle
@@ -5823,8 +4652,8 @@ class SafeStylePipe {
      * @param {?} style
      * @return {?}
      */
-    transform(style$$1) {
-        return this.sanitizer.bypassSecurityTrustStyle(style$$1);
+    transform(style) {
+        return this.sanitizer.bypassSecurityTrustStyle(style);
     }
 }
 SafeStylePipe.decorators = [
@@ -6411,8 +5240,8 @@ class ModalContainerComponent extends DisposableComponent {
 }
 ModalContainerComponent.decorators = [
     { type: Component, args: [{
-                selector: 'ws-modal-container-component',
-                template: "<div class=\"modal\" [ngClass]=\"{ active: modalCount > 0 }\">\r\n\t<div class=\"modal-bg\" (click)=\"doClose()\"></div>\r\n\t<div class=\"modal-page\" [ngClass]=\"className\">\r\n\t\t<div class=\"modal-header\">\r\n\t\t\t<button type=\"button\" class=\"modal-prev\" (click)=\"doPrev()\" title=\"Indietro\" *ngIf=\"modalCount > 1\">\r\n\t\t\t\t<svg class=\"ico\">\r\n\t\t\t\t\t<use xlink:href=\"#ico-prev\"></use>\r\n\t\t\t\t</svg>\r\n\t\t\t\tindietro\r\n\t\t\t</button>\r\n\t\t\t<button type=\"button\" class=\"modal-close\" (click)=\"doClose()\" title=\"Chiudi finestra\">\r\n\t\t\t\t<svg class=\"ico\">\r\n\t\t\t\t\t<use xlink:href=\"#ico-close\"></use>\r\n\t\t\t\t</svg>\r\n\t\t\t</button>\r\n\t\t</div>\r\n\t\t<div class=\"modal-content\">\r\n\t\t\t<ng-container *ngFor=\"let modal of (modalService.modals$ | async); let last = last;\">\r\n\t\t\t\t<ws-modal-view-component [modal]=\"modal\" [hidden]=\"!last\"></ws-modal-view-component>\r\n\t\t\t</ng-container>\r\n\t\t</div>\r\n\t</div>\r\n</div>\r\n",
+                selector: 'core-modal-container-component',
+                template: "<div class=\"modal\" [ngClass]=\"{ active: modalCount > 0 }\">\r\n\t<div class=\"modal-bg\" (click)=\"doClose()\"></div>\r\n\t<div class=\"modal-page\" [ngClass]=\"className\">\r\n\t\t<div class=\"modal-header\">\r\n\t\t\t<button type=\"button\" class=\"modal-prev\" (click)=\"doPrev()\" title=\"Indietro\" *ngIf=\"modalCount > 1\">\r\n\t\t\t\t<svg class=\"ico\">\r\n\t\t\t\t\t<use xlink:href=\"#ico-prev\"></use>\r\n\t\t\t\t</svg>\r\n\t\t\t\tindietro\r\n\t\t\t</button>\r\n\t\t\t<button type=\"button\" class=\"modal-close\" (click)=\"doClose()\" title=\"Chiudi finestra\">\r\n\t\t\t\t<svg class=\"ico\">\r\n\t\t\t\t\t<use xlink:href=\"#ico-close\"></use>\r\n\t\t\t\t</svg>\r\n\t\t\t</button>\r\n\t\t</div>\r\n\t\t<div class=\"modal-content\">\r\n\t\t\t<ng-container *ngFor=\"let modal of (modalService.modals$ | async); let last = last;\">\r\n\t\t\t\t<core-modal-view-component [modal]=\"modal\" [hidden]=\"!last\"></core-modal-view-component>\r\n\t\t\t</ng-container>\r\n\t\t</div>\r\n\t</div>\r\n</div>\r\n",
                 encapsulation: ViewEncapsulation.Emulated,
                 styles: [".modal{position:fixed;display:flex;justify-content:center;align-items:center;top:0;left:0;width:100%;height:100%;z-index:10000;margin:0;padding:0;overflow:hidden;pointer-events:none;opacity:0;transition:opacity 250ms ease-in-out}.modal.active{opacity:1;pointer-events:all}.modal-bg{position:fixed;z-index:0;background:#1e1e1e;opacity:.87;top:0;left:0;bottom:0;right:0}.modal-page{position:relative;z-index:1;background:#fff;max-height:90vh;max-width:90vw;box-shadow:0 10px 40px -5px rgba(0,0,0,.5);overflow-y:auto}@media (max-width:500px){.modal-page{max-height:calc(100% - 80px);margin-top:40px;width:90%;max-width:none}}.modal-page .modal-header .modal-prev{padding:10px;z-index:1;color:#5f5d63;display:flex;font-size:11px;align-items:center;text-transform:uppercase;margin-left:4px}.modal-page .modal-header .modal-prev .ico{width:12px;height:12px;fill:#5f5d63;margin-right:4px}.modal-page .modal-header .modal-close{position:fixed;z-index:1;right:10px;top:10px}.modal-page .modal-header .modal-close .ico{fill:#fff;width:32px;height:32px}"]
             }] }
@@ -6474,7 +5303,7 @@ class ModalViewComponent extends DisposableComponent {
 }
 ModalViewComponent.decorators = [
     { type: Component, args: [{
-                selector: 'ws-modal-view-component',
+                selector: 'core-modal-view-component',
                 template: "<ng-container #modalContainer></ng-container>\r\n",
                 encapsulation: ViewEncapsulation.Emulated,
                 styles: [""]
@@ -6493,15 +5322,6 @@ ModalViewComponent.propDecorators = {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-const ɵ0 = {
-// gfm: true,
-// tables: true,
-// breaks: true,
-// pedantic: true,
-// sanitize: true,
-// smartLists: true,
-// smartypants: true,
-};
 class CoreModule {
     /**
      * @param {?} parentModule
@@ -6532,25 +5352,17 @@ CoreModule.decorators = [
                     FormsModule,
                     ReactiveFormsModule,
                     CoreRouting,
-                    MarkdownModule.forRoot({
-                        markedOptions: {
-                            provide: MarkedOptions,
-                            useValue: ɵ0,
-                        },
-                    }),
                 ],
                 declarations: [
                     AssetPipe,
                     ClickOutsideDirective,
                     ControlComponent,
-                    CoreComponent,
+                    CoreModuleComponent,
                     CustomAsyncPipe,
                     DefaultContentDirective,
                     DisposableComponent,
-                    EditorComponent,
                     ExistsValidator,
                     FancyboxDirective,
-                    GoogleTagManagerComponent,
                     HighlightPipe,
                     ImagePipe,
                     JsonFormatterComponent,
@@ -6565,7 +5377,6 @@ CoreModule.decorators = [
                     PageComponent,
                     PageNotFoundComponent,
                     PageOutletComponent,
-                    PayPalWidgetComponent,
                     PublicPipe,
                     RoutePipe,
                     SafeStylePipe,
@@ -6574,7 +5385,6 @@ CoreModule.decorators = [
                     SlugAsyncPipe,
                     SlugPipe,
                     TranslatePipe,
-                    TrustPilotWidgetComponent,
                     TrustPipe,
                     UppercaseDirective,
                 ],
@@ -6582,13 +5392,11 @@ CoreModule.decorators = [
                     AssetPipe,
                     ClickOutsideDirective,
                     ControlComponent,
-                    CoreComponent,
+                    CoreModuleComponent,
                     CustomAsyncPipe,
                     DefaultContentDirective,
-                    EditorComponent,
                     ExistsValidator,
                     FancyboxDirective,
-                    GoogleTagManagerComponent,
                     HighlightPipe,
                     ImagePipe,
                     JsonFormatterComponent,
@@ -6601,7 +5409,6 @@ CoreModule.decorators = [
                     ModalContainerComponent,
                     ModalViewComponent,
                     PageComponent,
-                    PayPalWidgetComponent,
                     PublicPipe,
                     RoutePipe,
                     SafeStylePipe,
@@ -6610,7 +5417,6 @@ CoreModule.decorators = [
                     SlugAsyncPipe,
                     SlugPipe,
                     TranslatePipe,
-                    TrustPilotWidgetComponent,
                     TrustPipe,
                     UppercaseDirective,
                 ],
@@ -6624,10 +5430,7 @@ CoreModule.decorators = [
                     CustomAsyncPipe,
                     EventDispatcherService,
                     ExistsValidator,
-                    FacebookService,
                     FormService,
-                    GoogleService,
-                    GoogleTagManagerService,
                     HighlightPipe,
                     HttpStatusCodeService,
                     ImagePipe,
@@ -6635,14 +5438,12 @@ CoreModule.decorators = [
                     LabelService,
                     LocalStorageService,
                     Logger,
-                    MapboxService,
                     MatchValidator,
                     MenuService,
                     ModalService,
                     OnceService,
                     PageGuard, StaticGuard,
                     PageService,
-                    PayPalService,
                     PublicPipe,
                     RoutePipe,
                     SafeUrlPipe,
@@ -6652,7 +5453,6 @@ CoreModule.decorators = [
                     SlugPipe,
                     StorageService,
                     TranslatePipe,
-                    TrustPilotService,
                     TrustPipe,
                 ],
             },] }
@@ -6722,6 +5522,6 @@ class MenuItem {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { AuthService, ConfigService, CoreConfig, CORE_CONFIG, DefaultContentDirective, CoreComponent, CoreModule, CoreRouting, CoreService, DisposableComponent, EditorComponent, ControlComponent, ControlService, ExistsValidator, FormService, MatchValidator, UppercaseDirective, HighlightPipe, HttpResponseInterceptor, JsonFormatterComponent, Label, LabelAsyncPipe, LabelDirective, LabelPipe, LabelService, Logger, LoggerComponent, Document, DocumentIndex, EventDispatcherService, MenuItem, MenuService, OnceService, Page, PageIndex, PageMeta, PageRelation, PageNotFoundComponent, PageOutletComponent, PageComponent, PageGuard, PageService, StaticGuard, AssetPipe, CustomAsyncPipe, ImagePipe, PublicPipe, SegmentPipe, FacebookService, GoogleTagManagerComponent, GoogleTagManagerPageViewEvent, GoogleTagManagerService, GoogleService, MapboxService, PayPalWidgetComponent, PayPalService, TrustPilotWidgetComponent, TrustPilotService, RoutePipe, RouteService, SlugAsyncPipe, SlugPipe, SlugService, CookieStorageService, LocalStorageService, SessionStorageService, StorageService, TranslatePipe, SafeStylePipe, SafeUrlPipe, TrustPipe, ClickOutsideDirective, FancyboxDirective, LazyImagesDirective, ModalContainerComponent, ModalViewComponent, ModalService, ApiService as ɵb, HttpStatusCodeService as ɵf, EntityService as ɵc, IdentityService as ɵd, LinkService as ɵe, PageResolverService as ɵg, TranslateService as ɵa };
+export { AuthService, ConfigService, CoreConfig, CORE_CONFIG, DefaultContentDirective, CoreModuleComponent, CoreModule, CoreRouting, CoreService, DisposableComponent, ControlBase, ControlBaseOptions, ControlComponent, ControlService, ExistsValidator, FormService, MatchValidator, UppercaseDirective, HighlightPipe, HttpResponseInterceptor, JsonFormatterComponent, Label, LabelAsyncPipe, LabelDirective, LabelPipe, LabelService, Logger, LoggerComponent, Document, DocumentIndex, EventDispatcherService, MenuItem, MenuService, OnceService, Page, PageIndex, PageMeta, PageRelation, PageNotFoundComponent, PageOutletComponent, PageResolver, PageResolverService, PageComponent, PageGuard, PageService, StaticGuard, AssetPipe, CustomAsyncPipe, ImagePipe, PublicPipe, SegmentPipe, RoutePipe, RouteService, SlugAsyncPipe, SlugPipe, SlugService, CookieStorageService, LocalStorageService, SessionStorageService, StorageService, TranslatePipe, SafeStylePipe, SafeUrlPipe, TrustPipe, ClickOutsideDirective, FancyboxDirective, LazyImagesDirective, ModalContainerComponent, ModalViewComponent, ModalService, ApiService as ɵb, HttpStatusCodeService as ɵf, EntityService as ɵc, IdentityService as ɵd, LinkService as ɵe, TranslateService as ɵa };
 
 //# sourceMappingURL=artisan-core.js.map

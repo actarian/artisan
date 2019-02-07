@@ -16,7 +16,7 @@
 		</div>
 		<div class="modal-content">
 			<ng-container *ngFor="let modal of (modalService.modals$ | async); let last = last;">
-				<ws-modal-view-component [modal]="modal" [hidden]="!last"></ws-modal-view-component>
+				<core-modal-view-component [modal]="modal" [hidden]="!last"></core-modal-view-component>
 			</ng-container>
 		</div>
 	</div>

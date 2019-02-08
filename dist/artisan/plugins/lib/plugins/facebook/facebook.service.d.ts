@@ -46,8 +46,8 @@ export declare class FacebookService {
     constructor(platformId: string, pluginsService: PluginsService, storageService: LocalStorageService, onceService: OnceService, routeService: RouteService);
     init(): void;
     facebook(): Observable<any>;
-    status(): Observable<never>;
-    login(): Observable<never>;
+    status(): Observable<{}>;
+    login(): Observable<{}>;
     logout(): Observable<any>;
     getMe(fields?: string): Observable<FacebookUser>;
 }

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EditorModule } from '@artisan/editor';
 import { PluginsModule } from '@artisan/plugins';
+import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AppDatas } from './app.datas';
 import { AppPages } from './app.pages';
@@ -16,11 +16,8 @@ import { HeaderComponent } from './sections/header/header.component';
 
 @NgModule({
 	imports: [
-		BrowserModule.withServerTransition({
-			appId: 'my-app'
-		}),
+		BrowserModule.withServerTransition(environment.transition),
 		BrowserTransferStateModule,
-		BrowserAnimationsModule,
 		AppDatas,
 		AppRouting,
 		AppPages,

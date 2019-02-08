@@ -108,7 +108,7 @@
 				}
 			}
 		},
-		"client": {
+		"browser": {
 			"root": "projects/client/",
 			"sourceRoot": "projects/client/src",
 			"projectType": "application",
@@ -118,23 +118,42 @@
 				"build": {
 					"builder": "@angular-devkit/build-angular:browser",
 					"options": {
-						"outputPath": "docs",
+						"outputPath": "dist/development/browser",
 						"index": "projects/client/src/index.html",
-						"main": "projects/client/src/main.ts",
+						"main": "projects/client/src/main.browser.ts",
 						"polyfills": "projects/client/src/polyfills.ts",
-						"tsConfig": "projects/client/tsconfig.app.json",
+						"tsConfig": "projects/client/tsconfig.browser.json",
 						"assets": ["projects/client/src/favicon.ico", "projects/client/src/assets"],
 						"styles": ["projects/client/src/styles.scss"],
-						"scripts": []
+						"extractCss": true,
+						"scripts": [
+							{ "input": "./node_modules/marked/lib/marked.js", "lazy": false },
+							{ "input": "./node_modules/jquery/dist/jquery.js", "lazy": false },
+							{ "input": "./node_modules/@fancyapps/fancybox/dist/jquery.fancybox.js", "lazy": false },
+							{ "input": "./node_modules/mapbox-gl/dist/mapbox-gl.js", "lazy": false },
+							{ "input": "./node_modules/json-formatter-js/dist/json-formatter.js", "lazy": true }
+						]
 					},
 					"configurations": {
-						"production": {
-							"baseHref": "/artisan/",
-							"deployUrl": "/artisan/",
+						"development": {
+							"outputPath": "dist/development/browser",
+							"optimization": false,
+							"outputHashing": "all",
+							"sourceMap": true,
+							"extractCss": true,
+							"namedChunks": false,
+							"aot": false,
+							"extractLicenses": false,
+							"vendorChunk": false,
+							"buildOptimizer": false,
 							"fileReplacements": [{
 								"replace": "projects/client/src/environments/environment.ts",
-								"with": "projects/client/src/environments/environment.prod.ts"
-                			}],
+								"with": "projects/client/src/environments/environment.development.ts"
+							}],
+							"serviceWorker": true
+						},
+						"staging": {
+							"outputPath": "dist/staging/browser",
 							"optimization": true,
 							"outputHashing": "all",
 							"sourceMap": false,
@@ -144,6 +163,47 @@
 							"extractLicenses": true,
 							"vendorChunk": false,
 							"buildOptimizer": true,
+							"fileReplacements": [{
+								"replace": "projects/client/src/environments/environment.ts",
+								"with": "projects/client/src/environments/environment.staging.ts"
+							}],
+							"serviceWorker": true
+						},
+						"production": {
+							"outputPath": "dist/production/browser",
+							"optimization": true,
+							"outputHashing": "all",
+							"sourceMap": false,
+							"extractCss": true,
+							"namedChunks": false,
+							"aot": true,
+							"extractLicenses": true,
+							"vendorChunk": false,
+							"buildOptimizer": true,
+							"fileReplacements": [{
+								"replace": "projects/client/src/environments/environment.ts",
+								"with": "projects/client/src/environments/environment.production.ts"
+							}],
+							"serviceWorker": true
+						},
+						"docs": {
+							"baseHref": "/artisan/",
+							"deployUrl": "/artisan/",
+							"fileReplacements": [{
+								"replace": "projects/client/src/environments/environment.ts",
+								"with": "projects/client/src/environments/environment.docs.ts"
+                			}],
+							"optimization": true,
+							"outputPath": "docs",
+							"outputHashing": "all",
+							"sourceMap": false,
+							"extractCss": true,
+							"namedChunks": false,
+							"aot": true,
+							"extractLicenses": true,
+							"vendorChunk": false,
+							"buildOptimizer": true,
+							"serviceWorker": false,
 							"budgets": [{
 								"type": "initial",
 								"maximumWarning": "2mb",
@@ -155,18 +215,20 @@
 				"serve": {
 					"builder": "@angular-devkit/build-angular:dev-server",
 					"options": {
-						"browserTarget": "client:build"
+						"browserTarget": "browser:build",
+						"port": 40000,
+						"proxyConfig": "proxy.conf.json"
 					},
 					"configurations": {
 						"production": {
-							"browserTarget": "client:build:production"
+							"browserTarget": "browser:build:production"
 						}
 					}
 				},
 				"extract-i18n": {
 					"builder": "@angular-devkit/build-angular:extract-i18n",
 					"options": {
-						"browserTarget": "client:build"
+						"browserTarget": "browser:build"
 					}
 				},
 				"test": {
@@ -184,13 +246,83 @@
 				"lint": {
 					"builder": "@angular-devkit/build-angular:tslint",
 					"options": {
-						"tsConfig": ["projects/client/tsconfig.app.json", "projects/client/tsconfig.spec.json"],
+						"tsConfig": ["projects/client/tsconfig.browser.json", "projects/client/tsconfig.server.json", "projects/client/tsconfig.spec.json"],
 						"exclude": ["**/node_modules/**"]
 					}
 				}
 			}
 		},
-		"client-e2e": {
+		"server": {
+			"root": "",
+			"sourceRoot": "src",
+			"projectType": "application",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:server",
+					"options": {
+						"outputPath": "dist/development/server",
+						"main": "projects/client/src/main.server.ts",
+						"tsConfig": "projects/client/tsconfig.server.json",
+						"bundleDependencies": "none"
+					},
+					"configurations": {
+						"development": {
+							"outputPath": "dist/development/server",
+							"optimization": true,
+							"outputHashing": "media",
+							"sourceMap": false,
+							"namedChunks": false,
+							"extractLicenses": true,
+							"vendorChunk": false,
+							"fileReplacements": [{
+								"replace": "projects/client/src/environments/environment.ts",
+								"with": "projects/client/src/environments/environment.development.ts"
+							}]
+						},
+						"staging": {
+							"outputPath": "dist/staging/server",
+							"optimization": true,
+							"outputHashing": "media",
+							"sourceMap": false,
+							"namedChunks": false,
+							"extractLicenses": true,
+							"vendorChunk": false,
+							"fileReplacements": [{
+								"replace": "projects/client/src/environments/environment.ts",
+								"with": "projects/client/src/environments/environment.staging.ts"
+							}]
+						},
+						"production": {
+							"outputPath": "dist/production/server",
+							"optimization": true,
+							"outputHashing": "media",
+							"sourceMap": false,
+							"namedChunks": false,
+							"extractLicenses": true,
+							"vendorChunk": false,
+							"fileReplacements": [{
+								"replace": "projects/client/src/environments/environment.ts",
+								"with": "projects/client/src/environments/environment.production.ts"
+							}]
+						}
+					}
+				},
+				"lint": {
+					"builder": "@angular-devkit/build-angular:tslint",
+					"options": {
+						"tsConfig": [
+							"projects/client/src/tsconfig.browser.json",
+							"projects/client/src/tsconfig.server.json",
+							"projects/client/src/tsconfig.spec.json"
+						],
+						"exclude": [
+							"**/node_modules/**"
+						]
+					}
+				}
+			}
+		},
+		"e2e": {
 			"root": "projects/client-e2e/",
 			"projectType": "application",
 			"prefix": "",
@@ -217,7 +349,7 @@
 			}
 		}
 	},
-	"defaultProject": "@artisan/core",
+	"defaultProject": "browser",
 	"schematics": {
 		"@schematics/angular:component": {
 			"styleext": "scss"

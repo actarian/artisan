@@ -1,7 +1,3 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-
 export enum AuthStrategy {
 	Bearer = 0,
 	Cookie = 1,
@@ -24,28 +20,29 @@ export const environment = {
 			'/user/destinations': '/destinations',
 		}
 	},
-	assets: '/assets',
+	assets: '/angular-spin/assets',
 	enableTracing: false,
-	public: '/',
+	public: '/angular-spin',
 	useHash: false,
 	useLang: false,
 	useMarket: false,
-	urlStrategy: '',
+	urlStrategy: '', // '/:lang/', // '/:lang/:market/',
 	defaultLanguage: 'it',
 	defaultMarket: 'it',
 	languages: [
-		{ id: 1, name: 'Italiano', lang: 'it' }
+		{ id: 1, name: 'Italiano', lang: 'it' },
+		{ id: 2, name: 'English', lang: 'en' },
 	],
 	authStrategy: AuthStrategy.Cookie,
 	production: false,
 	useServiceWorker: false,
-	editor: true,
+	editor: false,
 	plugins: {
 		facebook: {
-			appId: 2034439646874649,
+			appId: 2044894462438447,
 			fields: 'id,name,first_name,last_name,email,gender,picture,cover,link',
-			scope: 'public_profile, email', // publish_stream
-			tokenClient: '643f8b0780f14625b35a450c83b715dc',
+			scope: 'public_profile, email',
+			tokenClient: 'f8cfcad4c81572987d21ecd4d115918f',
 			version: 'v3.0',
 		},
 		google: {
@@ -57,8 +54,8 @@ export const environment = {
 			uaIdOperator: 'UA-12054755-6',
 		},
 		mapbox: {
-			accessToken: 'pk.eyJ1IjoiZXVyb3NwaW4iLCJhIjoiY2pxczl3MWZtMDRzaDQ5cWNvNjZ0c3hpeiJ9.QUOwRLovvgYNbTLIolvnuw',
-			style: 'mapbox://styles/mapbox/streets-v10',
+			accessToken: 'pk.eyJ1IjoiYWN0YXJpYW4iLCJhIjoiY2lqNWU3MnBzMDAyZndnbTM1cjMyd2N2MiJ9.CbuEGSvOAfIYggQv854pRQ', // Actarian Basic Style
+			style: 'mapbox://styles/actarian/cjosga2ir4hmg2sphrq0wil9n', // Actarian Basic Style
 		},
 		paypal: {
 			env: 'sandbox', // Set your environment: sandbox | production
@@ -78,9 +75,9 @@ export const environment = {
 			sandboxFacilitator: 'lzampetti-facilitator@gmail.com' // facilitator account
 		},
 		trustPilot: {
-			businessunitId: '58e253ab0000ff00059fc0fe',
-			businessunitName: 'www.eurospin-viaggi.it',
-			minimumReviews: 1,
+			businessunitId: '59ef1f7e0000ff0005ae8138',
+			businessunitName: 'eurospin-viaggi.wslabs.it',
+			minimumReviews: 1000,
 		},
 		swiper: {
 			direction: 'horizontal',
@@ -99,12 +96,3 @@ export const environment = {
 		},
 	}
 };
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.

@@ -12,7 +12,8 @@ const ROUTES: Routes = [{
 			initialNavigation: 'enabled',
 			enableTracing: false,
 			useHash: true,
-		})
+		} // environment.routing
+		)
 	],
 	exports: [RouterModule]
 })

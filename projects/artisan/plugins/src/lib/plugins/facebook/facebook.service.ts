@@ -217,7 +217,7 @@ export class FacebookService {
 	getMe(fields?: string): Observable<FacebookUser> {
 		return this.login().pipe(
 			concatMap(l => {
-				return from(new Promise((resolve, reject) => {
+				return from(new Promise<FacebookUser>((resolve, reject) => {
 					fields = fields || this.options.fields;
 					this.FB.api('/me', {
 						fields: fields,

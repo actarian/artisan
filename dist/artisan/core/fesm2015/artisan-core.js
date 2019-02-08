@@ -2272,8 +2272,20 @@ class PageService extends EntityService {
      * @param {?} id
      * @return {?}
      */
-    getPageById(id) {
+    getStatePageById(id) {
         return this.stateGet(`/${id}`).pipe(
+        // tap(x => console.log('PageService.getPageById', id, x)),
+        map(x => new Page(x)), catchError(error => {
+            this.statusCodeService.setStatusCode(error.status, error.error ? error.error.redirectUrl : null);
+            return of(null);
+        }));
+    }
+    /**
+     * @param {?} id
+     * @return {?}
+     */
+    getPageById(id) {
+        return this.get(`/${id}`).pipe(
         // tap(x => console.log('PageService.getPageById', id, x)),
         map(x => new Page(x)), catchError(error => {
             this.statusCodeService.setStatusCode(error.status, error.error ? error.error.redirectUrl : null);
@@ -5338,9 +5350,9 @@ class CoreModule {
     static forRoot(config) {
         return {
             ngModule: CoreModule,
-            providers: [
-                { provide: CORE_CONFIG, useValue: config },
-            ]
+            providers: [{
+                    provide: CORE_CONFIG, useValue: config
+                }]
         };
     }
 }
@@ -5522,6 +5534,6 @@ class MenuItem {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { AuthService, ConfigService, CoreConfig, CORE_CONFIG, DefaultContentDirective, CoreModuleComponent, CoreModule, CoreRouting, CoreService, DisposableComponent, ControlBase, ControlBaseOptions, ControlComponent, ControlService, ExistsValidator, FormService, MatchValidator, UppercaseDirective, HighlightPipe, HttpResponseInterceptor, JsonFormatterComponent, Label, LabelAsyncPipe, LabelDirective, LabelPipe, LabelService, Logger, LoggerComponent, Document, DocumentIndex, EventDispatcherService, MenuItem, MenuService, OnceService, Page, PageIndex, PageMeta, PageRelation, PageNotFoundComponent, PageOutletComponent, PageResolver, PageResolverService, PageComponent, PageGuard, PageService, StaticGuard, AssetPipe, CustomAsyncPipe, ImagePipe, PublicPipe, SegmentPipe, RoutePipe, RouteService, SlugAsyncPipe, SlugPipe, SlugService, CookieStorageService, LocalStorageService, SessionStorageService, StorageService, TranslatePipe, SafeStylePipe, SafeUrlPipe, TrustPipe, ClickOutsideDirective, FancyboxDirective, LazyImagesDirective, ModalContainerComponent, ModalViewComponent, ModalService, ApiService as ɵb, HttpStatusCodeService as ɵf, EntityService as ɵc, IdentityService as ɵd, LinkService as ɵe, TranslateService as ɵa };
+export { AuthService, ConfigService, CoreConfig, CORE_CONFIG, DefaultContentDirective, CoreModuleComponent, CoreModule, CoreRouting, CoreService, DisposableComponent, ControlBase, ControlBaseOptions, ControlComponent, ControlService, ExistsValidator, FormService, MatchValidator, UppercaseDirective, HighlightPipe, HttpResponseInterceptor, HttpStatusCodeService, JsonFormatterComponent, Label, LabelAsyncPipe, LabelDirective, LabelPipe, LabelService, Logger, LoggerComponent, Document, DocumentIndex, EventDispatcherService, MenuItem, MenuService, OnceService, Page, PageIndex, PageMeta, PageRelation, PageNotFoundComponent, PageOutletComponent, PageResolver, PageResolverService, PageComponent, PageGuard, PageService, StaticGuard, AssetPipe, CustomAsyncPipe, ImagePipe, PublicPipe, SegmentPipe, RoutePipe, RouteService, SlugAsyncPipe, SlugPipe, SlugService, CookieStorageService, LocalStorageService, SessionStorageService, StorageService, TranslatePipe, SafeStylePipe, SafeUrlPipe, TrustPipe, ClickOutsideDirective, FancyboxDirective, LazyImagesDirective, ModalContainerComponent, ModalViewComponent, ModalService, ApiService as ɵb, EntityService as ɵc, IdentityService as ɵd, LinkService as ɵe, TranslateService as ɵa };
 
 //# sourceMappingURL=artisan-core.js.map

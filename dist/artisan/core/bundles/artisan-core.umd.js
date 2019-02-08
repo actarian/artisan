@@ -2793,13 +2793,30 @@
          * @param {?} id
          * @return {?}
          */
-        PageService.prototype.getPageById = /**
+        PageService.prototype.getStatePageById = /**
          * @param {?} id
          * @return {?}
          */
             function (id) {
                 var _this = this;
                 return this.stateGet("/" + id).pipe(
+                // tap(x => console.log('PageService.getPageById', id, x)),
+                operators.map(function (x) { return new Page(x); }), operators.catchError(function (error) {
+                    _this.statusCodeService.setStatusCode(error.status, error.error ? error.error.redirectUrl : null);
+                    return rxjs.of(null);
+                }));
+            };
+        /**
+         * @param {?} id
+         * @return {?}
+         */
+        PageService.prototype.getPageById = /**
+         * @param {?} id
+         * @return {?}
+         */
+            function (id) {
+                var _this = this;
+                return this.get("/" + id).pipe(
                 // tap(x => console.log('PageService.getPageById', id, x)),
                 operators.map(function (x) { return new Page(x); }), operators.catchError(function (error) {
                     _this.statusCodeService.setStatusCode(error.status, error.error ? error.error.redirectUrl : null);
@@ -6416,9 +6433,9 @@
             function (config) {
                 return {
                     ngModule: CoreModule,
-                    providers: [
-                        { provide: CORE_CONFIG, useValue: config },
-                    ]
+                    providers: [{
+                            provide: CORE_CONFIG, useValue: config
+                        }]
                 };
             };
         CoreModule.decorators = [
@@ -6642,6 +6659,7 @@
     exports.UppercaseDirective = UppercaseDirective;
     exports.HighlightPipe = HighlightPipe;
     exports.HttpResponseInterceptor = HttpResponseInterceptor;
+    exports.HttpStatusCodeService = HttpStatusCodeService;
     exports.JsonFormatterComponent = JsonFormatterComponent;
     exports.Label = Label;
     exports.LabelAsyncPipe = LabelAsyncPipe;
@@ -6693,7 +6711,6 @@
     exports.ModalViewComponent = ModalViewComponent;
     exports.ModalService = ModalService;
     exports.ɵb = ApiService;
-    exports.ɵf = HttpStatusCodeService;
     exports.ɵc = EntityService;
     exports.ɵd = IdentityService;
     exports.ɵe = LinkService;

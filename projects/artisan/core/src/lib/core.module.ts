@@ -181,9 +181,9 @@ export class CoreModule {
 	): ModuleWithProviders {
 		return {
 			ngModule: CoreModule,
-			providers: [
-				{ provide: CORE_CONFIG, useValue: config },
-			]
+			providers: [{
+				provide: CORE_CONFIG, useValue: config
+			}]
 		};
 	}
 

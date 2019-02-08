@@ -1,7 +1,3 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-
 export enum AuthStrategy {
 	Bearer = 0,
 	Cookie = 1,
@@ -30,21 +26,21 @@ export const environment = {
 	useHash: false,
 	useLang: false,
 	useMarket: false,
-	urlStrategy: '',
+	urlStrategy: '', // '/:lang/', // '/:lang/:market/',
 	defaultLanguage: 'it',
 	defaultMarket: 'it',
 	languages: [
 		{ id: 1, name: 'Italiano', lang: 'it' }
 	],
 	authStrategy: AuthStrategy.Cookie,
-	production: false,
+	production: true,
 	useServiceWorker: false,
-	editor: true,
+	editor: false,
 	plugins: {
 		facebook: {
 			appId: 2034439646874649,
 			fields: 'id,name,first_name,last_name,email,gender,picture,cover,link',
-			scope: 'public_profile, email', // publish_stream
+			scope: 'public_profile, email',
 			tokenClient: '643f8b0780f14625b35a450c83b715dc',
 			version: 'v3.0',
 		},
@@ -99,12 +95,3 @@ export const environment = {
 		},
 	}
 };
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.

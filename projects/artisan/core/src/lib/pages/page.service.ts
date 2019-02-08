@@ -46,8 +46,19 @@ export class PageService extends EntityService<Page> {
 		);
 	}
 
-	getPageById(id: number | string): Observable<Page> {
+	getStatePageById(id: number | string): Observable<Page> {
 		return this.stateGet(`/${id}`).pipe(
+			// tap(x => console.log('PageService.getPageById', id, x)),
+			map(x => new Page(x)),
+			catchError(error => {
+				this.statusCodeService.setStatusCode(error.status, error.error ? error.error.redirectUrl : null);
+				return of(null);
+			})
+		);
+	}
+
+	getPageById(id: number | string): Observable<Page> {
+		return this.get(`/${id}`).pipe(
 			// tap(x => console.log('PageService.getPageById', id, x)),
 			map(x => new Page(x)),
 			catchError(error => {

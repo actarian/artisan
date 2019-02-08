@@ -47,7 +47,7 @@ export declare class GoogleService {
     private google;
     getMe(): Observable<GoogleUser>;
     login(): Observable<{}>;
-    logout(): Observable<never>;
+    logout(): Observable<{}>;
     private once;
     private getAuth2;
     private signin;

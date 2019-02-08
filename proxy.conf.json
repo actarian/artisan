@@ -1,0 +1,38 @@
+{
+	"/www": {
+		"changeOrigin": true,
+		"logLevel": "debug",
+		"pathRewrite": {
+			"^/www": ""
+		},
+		"secure": true,
+		"target": "https://www.eurospin-viaggi.it"
+	},
+	"/wslabs": {
+		"changeOrigin": true,
+		"logLevel": "debug",
+		"pathRewrite": {
+			"^/www": ""
+		},
+		"secure": true,
+		"target": "https://eurospin-viaggi2.wslabs.it"
+	},
+	"/api": {
+		"changeOrigin": true,
+		"logLevel": "debug",
+		"pathRewrite": {
+			"^/api": "/api"
+		},
+		"secure": true,
+		"target": "https://eurospin-viaggi2.wslabs.it"
+	},
+	"/media": {
+		"changeOrigin": true,
+		"logLevel": "debug",
+		"pathRewrite": {
+			"^/media": "/media"
+		},
+		"secure": true,
+		"target": "https://eurospin-viaggi2.wslabs.it"
+	}
+}

@@ -1,6 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@artisan/core';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { environment } from '../environments/environment';
 import { label } from './data/label';
 import { MemoryService, MEMORY_DATA } from './data/memory.service';
 import { menu } from './data/menu';
@@ -18,12 +19,7 @@ export const DATA: { [key: string]: any[] } = {
 	imports: [
 		HttpClientModule,
 		HttpClientInMemoryWebApiModule.forRoot(
-			MemoryService, {
-				apiBase: 'api/',
-				passThruUnknownUrl: true,
-				dataEncapsulation: false,
-				delay: 0,
-			}
+			MemoryService, environment.memoryApi
 		),
 	],
 	providers: [{

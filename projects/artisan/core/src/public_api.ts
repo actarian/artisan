@@ -25,6 +25,7 @@ export { MatchValidator } from './lib/forms/match.validator';
 export { UppercaseDirective } from './lib/forms/uppercase.directive';
 export { HighlightPipe } from './lib/highlight/highlight.pipe';
 export { HttpResponseInterceptor } from './lib/http/http-response.interceptor';
+export { HttpStatusCodeService } from './lib/http/http-status-code.service';
 export { JsonFormatterComponent } from './lib/json-formatter/json-formatter.component';
 export { Label } from './lib/labels/label';
 export { LabelAsyncPipe } from './lib/labels/label-async.pipe';

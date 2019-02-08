@@ -1,7 +1,3 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-
 export enum AuthStrategy {
 	Bearer = 0,
 	Cookie = 1,
@@ -30,31 +26,31 @@ export const environment = {
 	useHash: false,
 	useLang: false,
 	useMarket: false,
-	urlStrategy: '',
+	urlStrategy: '', // '/:lang/', // '/:lang/:market/',
 	defaultLanguage: 'it',
 	defaultMarket: 'it',
 	languages: [
 		{ id: 1, name: 'Italiano', lang: 'it' }
 	],
 	authStrategy: AuthStrategy.Cookie,
-	production: false,
+	production: true,
 	useServiceWorker: false,
-	editor: true,
+	editor: false,
 	plugins: {
 		facebook: {
-			appId: 2034439646874649,
+			appId: 248961952353135, // www.eurospin-viaggi.it
 			fields: 'id,name,first_name,last_name,email,gender,picture,cover,link',
-			scope: 'public_profile, email', // publish_stream
-			tokenClient: '643f8b0780f14625b35a450c83b715dc',
+			scope: 'public_profile, email',
+			tokenClient: 'ca1a154cc8892614004d4d8ad28515c9', // www.eurospin-viaggi.it
 			version: 'v3.0',
 		},
 		google: {
-			clientId: '635556948154-k7fm0pvn6va39tap1ge4iq23ntd4hu37.apps.googleusercontent.com',
+			clientId: '635556948154-k7fm0pvn6va39tap1ge4iq23ntd4hu37.apps.googleusercontent.com', // AngularSpin
 		},
 		googleTagManager: {
 			id: 'GTM-5L6HMD',
-			uaId: 'UA-12054755-5',
-			uaIdOperator: 'UA-12054755-6',
+			uaId: 'UA-12054755-1',
+			uaIdOperator: 'UA-12054755-9',
 		},
 		mapbox: {
 			accessToken: 'pk.eyJ1IjoiZXVyb3NwaW4iLCJhIjoiY2pxczl3MWZtMDRzaDQ5cWNvNjZ0c3hpeiJ9.QUOwRLovvgYNbTLIolvnuw',
@@ -80,7 +76,7 @@ export const environment = {
 		trustPilot: {
 			businessunitId: '58e253ab0000ff00059fc0fe',
 			businessunitName: 'www.eurospin-viaggi.it',
-			minimumReviews: 1,
+			minimumReviews: 1000,
 		},
 		swiper: {
 			direction: 'horizontal',
@@ -99,12 +95,3 @@ export const environment = {
 		},
 	}
 };
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.

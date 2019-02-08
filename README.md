@@ -1,28 +1,73 @@
-# @artisan/core
+# @artisan
 
 ## Requirements
 
-* `node.js -v`  10.x.x
-* `npm install -g @angular/cli`  7.x.x
+#### [NodeJs](https://nodejs.org/it/) version 10.15.1
+* `node.js -v`  
 
-## Install
+#### [NPM]() version 6.4.1
+* `npm -v`
 
-Run `npm install`
+Upgrading Npm on mac
+* `npm install npm@latest -g`
 
-## Build & Watch
+Upgrading Npm on windows
+* [npm-windows-upgrade](https://www.npmjs.com/package/npm-windows-upgrade) 
 
-Run `ng build @artisan/core --watch`
+___
+
+#### [Angular CLI](https://github.com/angular/angular-cli) version 7.2.4
+* `npm install -g @angular/cli`  
+
+___
+
+## Install packages
+
+* `npm install`
+
+___
+
+## Build & Watch Libraries
+
+| | |
+|------------------|-|
+| @artisan/core    | `ng build @artisan/core --watch` |
+| @artisan/editor  | `ng build @artisan/editor --watch` |  
+| @artisan/plugins | `ng build @artisan/plugins --watch` |
+
+___
 
 ## Development & Serve
 
-Run `ng serve client --open`
+* `ng serve --open`
+
+___
 
 ## Build Docs
 
-Run `ng build client --prod`
+* `ng build:docs`
+
 ___
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.2.
+## Build Development
+
+* `npm run build:development`
+
+___
+
+## Build Staging
+
+* `npm run build:staging`
+
+___
+
+## Build Production
+
+* `npm run build:production`
+
+___
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.4.
 
 <!--
 

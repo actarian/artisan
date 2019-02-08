@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('ngx-markdown'), require('@angular/forms'), require('@angular/common/http'), require('@angular/router'), require('util'), require('@angular/platform-browser'), require('@angular/common'), require('rxjs'), require('rxjs/operators'), require('@angular/core')) :
-    typeof define === 'function' && define.amd ? define('@artisan/core', ['exports', 'ngx-markdown', '@angular/forms', '@angular/common/http', '@angular/router', 'util', '@angular/platform-browser', '@angular/common', 'rxjs', 'rxjs/operators', '@angular/core'], factory) :
-    (factory((global.artisan = global.artisan || {}, global.artisan.core = {}),global.ngxMarkdown,global.ng.forms,global.ng.common.http,global.ng.router,global.util,global.ng.platformBrowser,global.ng.common,global.rxjs,global.rxjs.operators,global.ng.core));
-}(this, (function (exports,ngxMarkdown,forms,http,i4,util,i1,i1$1,rxjs,operators,i0) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/forms'), require('@angular/common/http'), require('@angular/router'), require('util'), require('@angular/platform-browser'), require('@angular/common'), require('rxjs'), require('rxjs/operators'), require('@angular/core')) :
+    typeof define === 'function' && define.amd ? define('@artisan/core', ['exports', '@angular/forms', '@angular/common/http', '@angular/router', 'util', '@angular/platform-browser', '@angular/common', 'rxjs', 'rxjs/operators', '@angular/core'], factory) :
+    (factory((global.artisan = global.artisan || {}, global.artisan.core = {}),global.ng.forms,global.ng.common.http,global.ng.router,global.util,global.ng.platformBrowser,global.ng.common,global.rxjs,global.rxjs.operators,global.ng.core));
+}(this, (function (exports,forms,http,i4,util,i1,i1$1,rxjs,operators,i0) { 'use strict';
 
     /**
      * @fileoverview added by tsickle
@@ -6629,8 +6629,6 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
-    exports.MarkdownModule = ngxMarkdown.MarkdownModule;
-    exports.MarkedOptions = ngxMarkdown.MarkedOptions;
     exports.FormsModule = forms.FormsModule;
     exports.ReactiveFormsModule = forms.ReactiveFormsModule;
     exports.HTTP_INTERCEPTORS = http.HTTP_INTERCEPTORS;

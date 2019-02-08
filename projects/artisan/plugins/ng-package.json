@@ -3,6 +3,8 @@
 	"dest": "../../../dist/artisan/plugins",
 	"lib": {
 		"entryFile": "src/public_api.ts",
-		"util": "util"
+		"umdModuleIds": {
+			"@artisan/core": "core"
+		}
 	}
 }

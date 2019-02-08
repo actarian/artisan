@@ -18,12 +18,12 @@
 		"build:staging": "npm run build:browser:staging & npm run build:server:staging",
 		"build:production": "npm run build:browser:production & npm run build:server:production",
 		"build:docs": "ng build browser --configuration=docs",
-		"dependency:development:fix": "node -e \"require('./npm/replace.js')('./dist/development/server/main.js', new RegExp('angular-in.memory-web-api(.[^\\\"]*)', 'gm'), 'angular-in-memory-web-api')\"",
-		"dependency:staging:fix": "node -e \"require('./npm/replace.js')('./dist/staging/server/main.js', new RegExp('angular-in.memory-web-api(.[^\\\"]*)', 'gm'), 'angular-in-memory-web-api')\"",
-		"dependency:production:fix": "node -e \"require('./npm/replace.js')('./dist/production/server/main.js', new RegExp('angular-in.memory-web-api(.[^\\\"]*)', 'gm'), 'angular-in-memory-web-api')\"",
-		"debug:development": "node -e \"require('./npm/debug.js')(require('./dist/development/server/main.js').default, 'https://development.labs.it/')\"",
-		"debug:staging": "node -e \"require('./npm/debug.js')(require('./dist/staging/server/main.js').default, 'http://staging.site.it/')\"",
-		"debug:production": "node -e \"require('./npm/debug.js')(require('./dist/production/server/main.js').default, 'https://www.site.it/')\""
+		"dependency:development:fix": "node -e \"require('./utils/replace.js')('./dist/development/server/main.js', new RegExp('angular-in.memory-web-api(.[^\\\"]*)', 'gm'), 'angular-in-memory-web-api')\"",
+		"dependency:staging:fix": "node -e \"require('./utils/replace.js')('./dist/staging/server/main.js', new RegExp('angular-in.memory-web-api(.[^\\\"]*)', 'gm'), 'angular-in-memory-web-api')\"",
+		"dependency:production:fix": "node -e \"require('./utils/replace.js')('./dist/production/server/main.js', new RegExp('angular-in.memory-web-api(.[^\\\"]*)', 'gm'), 'angular-in-memory-web-api')\"",
+		"debug:development": "node -e \"require('./utils/debug.js')(require('./dist/development/server/main.js').default, 'https://development.labs.it/')\"",
+		"debug:staging": "node -e \"require('./utils/debug.js')(require('./dist/staging/server/main.js').default, 'http://staging.site.it/')\"",
+		"debug:production": "node -e \"require('./utils/debug.js')(require('./dist/production/server/main.js').default, 'https://www.site.it/')\""
 	},
 	"private": true,
 	"dependencies": {

@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/common/http'), require('@angular/router'), require('@angular/common'), require('@angular/core'), require('@artisan/core'), require('rxjs'), require('rxjs/operators')) :
     typeof define === 'function' && define.amd ? define('@artisan/plugins', ['exports', '@angular/common/http', '@angular/router', '@angular/common', '@angular/core', '@artisan/core', 'rxjs', 'rxjs/operators'], factory) :
-    (factory((global.artisan = global.artisan || {}, global.artisan.plugins = {}),global.ng.common.http,global.ng.router,global.ng.common,global.ng.core,global.i2,global.rxjs,global.rxjs.operators));
+    (factory((global.artisan = global.artisan || {}, global.artisan.plugins = {}),global.ng.common.http,global.ng.router,global.ng.common,global.ng.core,global.core,global.rxjs,global.rxjs.operators));
 }(this, (function (exports,http,router,common,i0,i2,rxjs,operators) { 'use strict';
 
     /**

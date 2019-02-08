@@ -6,7 +6,6 @@ export { CommonModule } from '@angular/common';
 export { HTTP_INTERCEPTORS } from '@angular/common/http';
 export { ModuleWithProviders, NgModule, Optional, SkipSelf, Type } from '@angular/core';
 export { FormsModule, ReactiveFormsModule } from '@angular/forms';
-export { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 export { AuthService } from './lib/auth/auth.service';
 export { ConfigService } from './lib/config/config.service';
 export { CoreConfig, CORE_CONFIG } from './lib/config/core.config';

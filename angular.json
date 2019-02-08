@@ -127,11 +127,12 @@
 						"styles": ["projects/client/src/styles.scss"],
 						"extractCss": true,
 						"scripts": [
-							{ "input": "./node_modules/marked/lib/marked.js", "lazy": false },
-							{ "input": "./node_modules/jquery/dist/jquery.js", "lazy": false },
 							{ "input": "./node_modules/@fancyapps/fancybox/dist/jquery.fancybox.js", "lazy": false },
+							{ "input": "./node_modules/intersection-observer/intersection-observer.js", "lazy": false },
+							{ "input": "./node_modules/jquery/dist/jquery.js", "lazy": false },
+							{ "input": "./node_modules/json-formatter-js/dist/json-formatter.js", "lazy": true },
 							{ "input": "./node_modules/mapbox-gl/dist/mapbox-gl.js", "lazy": false },
-							{ "input": "./node_modules/json-formatter-js/dist/json-formatter.js", "lazy": true }
+							{ "input": "./node_modules/marked/lib/marked.js", "lazy": false }
 						]
 					},
 					"configurations": {

@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/common/http'), require('@angular/forms'), require('@angular/animations'), require('@angular/common'), require('@angular/core'), require('@artisan/core'), require('ngx-markdown'), require('rxjs/operators')) :
     typeof define === 'function' && define.amd ? define('@artisan/editor', ['exports', '@angular/common/http', '@angular/forms', '@angular/animations', '@angular/common', '@angular/core', '@artisan/core', 'ngx-markdown', 'rxjs/operators'], factory) :
-    (factory((global.artisan = global.artisan || {}, global.artisan.editor = {}),global.ng.common.http,global.ng.forms,global.ng.animations,global.ng.common,global.ng.core,global.core$1,global.ngxMarkdown,global.rxjs.operators));
+    (factory((global.artisan = global.artisan || {}, global.artisan.editor = {}),global.ng.common.http,global.ng.forms,global.ng.animations,global.ng.common,global.ng.core,global.core,global.ngxMarkdown,global.rxjs.operators));
 }(this, (function (exports,http,forms,animations,common,core,core$1,ngxMarkdown,operators) { 'use strict';
 
     /**

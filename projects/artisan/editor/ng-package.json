@@ -3,6 +3,9 @@
 	"dest": "../../../dist/artisan/editor",
 	"lib": {
 		"entryFile": "src/public_api.ts",
-		"ngx-markdown": "ngxMarkdown"
+		"umdModuleIds": {
+			"ngx-markdown": "ngxMarkdown",
+			"@artisan/core": "core"
+		}
 	}
 }

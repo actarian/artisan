@@ -1,4 +1,3 @@
-export { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { FormGroup, NG_VALUE_ACCESSOR, FormControl, Validators, NG_ASYNC_VALIDATORS, NG_VALIDATORS, FormsModule, ReactiveFormsModule } from '@angular/forms';
 export { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpErrorResponse, HttpClient, HttpHeaders, HttpParams, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';

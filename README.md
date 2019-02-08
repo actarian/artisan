@@ -5,7 +5,7 @@
 #### [NodeJs](https://nodejs.org/it/) version 10.15.1
 * `node.js -v`  
 
-#### [NPM]() version 6.4.1
+#### [Npm](https://www.npmjs.com/) version 6.4.1
 * `npm -v`
 
 Upgrading Npm on mac
@@ -45,7 +45,7 @@ ___
 
 ## Build Docs
 
-* `ng build:docs`
+* `npm run build:docs`
 
 ___
 
